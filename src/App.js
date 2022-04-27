@@ -1,5 +1,4 @@
 
-import ChatMainInput from "./components/ChatMain/ChatMainInput";
 
 import ChatContainer from "./components/ChatContainer";
 import {ChatBackground} from "./components/ChatBackground";

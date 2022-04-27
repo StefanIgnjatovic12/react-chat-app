@@ -1,17 +1,68 @@
 import styled from 'styled-components'
+import {useChat} from '../../hooks/useChat'
+import {useState} from "react"
+import {v4 as uuidv4} from "uuid"
+import {
+    StyledChatMainMessages,
+    ChatInputContainer,
+    ChatInputBox,
+    ChatMessageContainer,
+    ChatMessageList,
+    ChatMyMessage,
+    ChatReceivedMessage
+} from '../styles/ChatMainMessages.styled'
 
-const StyledChatMainMessages = styled.div`
-  border-bottom-color: #575D6B;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  height: 75%;
- 
-`
 
 export default function ChatMainMessages() {
-    return (
-        <StyledChatMainMessages>
+    const {roomId} = 'test' // Gets roomId from URL
+    const {messages, sendMessage} = useChat(roomId); // Creates a websocket and manages messaging
+    const [newMessage, setNewMessage] = useState(""); // Message to be sent
 
-        </StyledChatMainMessages>
+    const handleChange = (e) => {
+        setNewMessage(e.target.value)
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        sendMessage(newMessage)
+        setNewMessage("")
+    };
+    return (
+        <>
+
+            <StyledChatMainMessages>
+
+                <ChatMessageContainer>
+
+                    <ChatMessageList>
+
+                        {messages.map((message, i) => (
+                            message.ownedByCurrentUser
+                                ?
+                                <ChatMyMessage
+                                    key={uuidv4()}
+                                >
+                                    {message.body}
+                                </ChatMyMessage>
+                                :
+                                <ChatReceivedMessage
+                                    key={uuidv4()}
+                                >
+                                    {message.body}
+                                </ChatReceivedMessage>
+                        ))}
+                    </ChatMessageList>
+
+                </ChatMessageContainer>
+
+            </StyledChatMainMessages>
+
+            <ChatInputContainer>
+
+                <ChatInputBox type="text" value={newMessage} onChange={handleChange}/>
+                <input type="image" src="/send-message.png" onClick={handleSubmit}/>
+
+            </ChatInputContainer>
+        </>
     )
 }

@@ -1,5 +1,6 @@
 import {StyledChatList} from "../styles/ChatContainer.styled";
 import ChatListItems from "./ChatListItems";
+import {v4 as uuidv4} from "uuid"
 
 export default function ChatList(){
     const demoData = [
@@ -30,6 +31,7 @@ export default function ChatList(){
         <StyledChatList>
             {demoData.map(user => (
                 <ChatListItems
+                    key={uuidv4()}
                     name={user.name}
                     text={user.subtext}
                     avatar={user.avatar}
