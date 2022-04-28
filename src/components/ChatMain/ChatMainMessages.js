@@ -18,6 +18,7 @@ export default function ChatMainMessages() {
     const {messages, sendMessage} = useChat(roomId); // Creates a websocket and manages messaging
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
 
+
     const handleChange = (e) => {
         setNewMessage(e.target.value)
     };
@@ -25,8 +26,20 @@ export default function ChatMainMessages() {
     const handleSubmit = (e) => {
         e.preventDefault()
         sendMessage(newMessage)
+        const requestOption = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newMessage)
+        }
+        fetch(`http://127.0.0.1:5000/api/save-message/`, requestOption)
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
         setNewMessage("")
-    };
+    }
     return (
         <>
 

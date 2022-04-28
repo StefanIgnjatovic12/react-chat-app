@@ -39,7 +39,7 @@ export const ChatMyMessage = styled.li`
   margin: 8px 8px 8px auto;
   padding: 12px 8px;
   word-break: break-word;
-  border-radius: 4px;
+  border-radius: 15px;
   color: white;
 `
 
@@ -49,6 +49,6 @@ export const ChatReceivedMessage = styled.li`
   margin: 8px auto 8px 8px;
   padding: 12px 8px;
   word-break: break-word;
-  border-radius: 4px;
+  border-radius: 15px;
   color: white;
 `

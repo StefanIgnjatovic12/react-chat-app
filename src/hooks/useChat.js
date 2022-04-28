@@ -38,6 +38,7 @@ export const useChat = (roomId) => {
       body: messageBody,
       senderId: socketRef.current.id,
     });
+
   };
 
   return { messages, sendMessage };
