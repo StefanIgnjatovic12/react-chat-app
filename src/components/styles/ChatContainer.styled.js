@@ -4,11 +4,11 @@ export const StyledChatContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  height: 70vh;
+  min-height: 70vh;
   width: 55vw;
   border-radius: 25px;
   background-color: #404757;
-
+  box-shadow: 0 2px 15px rgb(0 0 0 / 68%)
 `
 
 export const StyledChatLinkBar = styled.div`

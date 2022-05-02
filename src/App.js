@@ -1,19 +1,26 @@
 
 
 import ChatContainer from "./components/ChatContainer";
-import {ChatBackground} from "./components/ChatBackground";
-import styled from 'styled-components'
 
-
+import {
+    BrowserRouter as Router, Routes, Route,
+} from "react-router-dom";
+import SignUp from "./components/UserAuth/SignUp";
+import SignIn from "./components/UserAuth/SignIn";
 
 function App() {
 
     return (
+        <Router>
+            <Routes>
+                <Route>
+                    <Route path="chat" element={<ChatContainer/>}/>
+                    <Route path="signup" element={<SignUp/>}/>
+                    <Route path="signin" element={<SignIn/>}/>
 
-        <ChatBackground>
-            <ChatContainer>
-            </ChatContainer>
-        </ChatBackground>
+                </Route>
+            </Routes>
+        </Router>
 
     );
 }
