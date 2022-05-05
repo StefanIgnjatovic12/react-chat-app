@@ -9,20 +9,26 @@ export const StyledChatListItemsContainer = styled.div`
   border-radius: 12px;
   width: 85%;
   height: 10%;
+
   :hover {
     background-color: #726DFE;
   }
 `
 export const StyledChatListItemsText = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 `
+
 export const StyledChatListItemsAvatar = styled.div`
-    background-image: url(${props => props.avatar});
-    width: 60px;
-    height: 60px;
-    background-size: cover;
-    background-position: top center;
-    border-radius: 50%;
+  background-image: url('data:image/png;base64,${props => props.avatar}');
+  width: 23%;
+  height: 80%;
+  max-width: 100%;
+  max-height: 100%;
+  background-size: cover;
+  background-position: top center;
+  border-radius: 50%;
+  align-self: center;
+  margin-right: 5%;
 `

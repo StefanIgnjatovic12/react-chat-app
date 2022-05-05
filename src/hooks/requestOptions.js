@@ -8,3 +8,16 @@ export const requestOptions = (method, body) => {
         body: JSON.stringify(body)
     }
 }
+
+export const authRequestOptions = (method, body) => {
+    console.log(body)
+    return {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(body)
+    }
+}

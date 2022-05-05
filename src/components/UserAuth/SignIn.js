@@ -1,6 +1,6 @@
 import {useForm} from "react-hook-form";
 import {requestOptions} from "../../hooks/requestOptions";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import
 {
     Background,
@@ -8,21 +8,30 @@ import
     Form,
     Button,
     Icon,
-    FieldIconContainer, HaveAccount
+    InputWrapper, HaveAccount, ButtonWrapper
 }
     from "../styles/UserAuth.styled";
 
 export default function SignIn() {
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm()
+    const navigate = useNavigate()
+
 
     const signInUser = async (body) => {
-        const response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
-        console.log(response)
+        let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
+        response.json().then(data => localStorage.setItem('token', data.access_token))
+
+        if (response.status === 200) {
+            navigate('/chat')
+        }
+
     }
     const onSubmit = data => {
-        console.log(data)
+
         signInUser(data)
+
+
     }
 
     const demoAccount = () => console.log('test')
@@ -30,16 +39,16 @@ export default function SignIn() {
     return (
         <Background>
             <Form onSubmit={handleSubmit(onSubmit)} min_height="30vh">
-                <FieldIconContainer>
+                <InputWrapper>
                     <Icon icon={'/username.png'}/>
                     <InputField
                         {...register("username")}
                         placeholder='Username'
                     />
-                </FieldIconContainer>
+                </InputWrapper>
 
 
-                <FieldIconContainer>
+                <InputWrapper>
 
                     <Icon icon={'/password.png'}/>
                     <InputField
@@ -47,18 +56,19 @@ export default function SignIn() {
                         placeholder='Password'
                         type='password'
                     />
-                </FieldIconContainer>
+                </InputWrapper>
 
-
-                <Button type="submit"
-                        value="Sign In"
-                        margin_top='1rem'
-                />
-                <Button type="submit"
-                        value="Sample account"
-                        onClick={handleSubmit(demoAccount)}/>
-
-                />
+                <ButtonWrapper>
+                    <Button type="submit"
+                            value="Sign In"
+                            // margin_top='1.25rem'
+                    />
+                    <Button type="submit"
+                            value="Sample account"
+                            onClick={handleSubmit(demoAccount)}
+                            // margin_top='0.05rem'
+                    />
+                </ButtonWrapper>
 
 
                 <HaveAccount>

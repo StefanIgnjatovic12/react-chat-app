@@ -1,6 +1,6 @@
 import {useForm} from "react-hook-form";
 import {requestOptions} from "../../hooks/requestOptions";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import
 {
@@ -9,22 +9,24 @@ import
     Form,
     Button,
     Icon,
-    FieldIconContainer, HaveAccount
+    InputWrapper, HaveAccount, ButtonWrapper
 }
     from "../styles/UserAuth.styled";
 
 
 export default function SignUp() {
 
-    const {register, handleSubmit, watch, formState: {errors}} = useForm()
-
+    const {register, handleSubmit, watch, formState: {errors}, reset} = useForm()
+    const navigate = useNavigate()
     const registerUser = async (body) => {
         const response = await fetch('http://127.0.0.1:5000/dj-rest-auth/register/', requestOptions('POST', body))
         console.log(response)
+
     }
 
     const onSubmit = data => {
         registerUser(data)
+        reset({username: '', email: '', password1: '', password2: ''})
     }
 
     const demoAccount = () => console.log('test')
@@ -32,25 +34,25 @@ export default function SignUp() {
     return (
         <Background>
             <Form onSubmit={handleSubmit(onSubmit)} min_height="45vh">
-                <FieldIconContainer margin_bottom='1rem'>
+                <InputWrapper margin_bottom='1rem'>
                     <Icon icon={'/username.png'}/>
                     <InputField
                         {...register("username")}
                         placeholder='Username'
                     />
-                </FieldIconContainer>
+                </InputWrapper>
 
-                <FieldIconContainer margin_bottom='1rem'>
+                <InputWrapper margin_bottom='1rem'>
 
                     <Icon icon={'/email.png'}/>
                     <InputField
                         {...register("email")}
                         placeholder='Email'
                     />
-                </FieldIconContainer>
+                </InputWrapper>
 
 
-                <FieldIconContainer margin_bottom='1rem'>
+                <InputWrapper margin_bottom='1rem'>
 
                     <Icon icon={'/password.png'}/>
                     <InputField
@@ -58,26 +60,24 @@ export default function SignUp() {
                         placeholder='Password'
                         type='password'
                     />
-                </FieldIconContainer>
+                </InputWrapper>
 
-                <FieldIconContainer>
+                <InputWrapper>
                     <Icon icon={'/password.png'}/>
                     <InputField
                         {...register("password2")}
                         placeholder='Confirm password'
                         type='password'
                     />
-                </FieldIconContainer>
-
-                <Button type="submit"
-                        value="Sign Up"
-                        margin_top='2rem'
-                />
-                <Button type="submit"
-                        value="Sample account"
-                        margin_top='0.5rem'
-                        onClick={handleSubmit(demoAccount)}/>
-
+                </InputWrapper>
+                <ButtonWrapper>
+                    <Button type="submit"
+                            value="Sign Up"
+                    />
+                    <Button type="submit"
+                            value="Sample account"
+                            onClick={handleSubmit(demoAccount)}/>
+                </ButtonWrapper>
                 <HaveAccount>
                     Already have an account?
                     <Link to='/signin' style={{textDecoration: 'none'}}>

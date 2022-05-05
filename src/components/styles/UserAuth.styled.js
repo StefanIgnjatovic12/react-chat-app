@@ -48,7 +48,7 @@ export const Icon = styled.div`
   color: #F6F6F6;
 `
 
-export const FieldIconContainer = styled.div`
+export const InputWrapper = styled.div`
   display: flex;
   width: 70%;
   border-bottom: 1px solid #4E5566;
@@ -71,7 +71,6 @@ export const Button = styled.input`
   color: #F6F6F6;
   border-radius: 0.625rem;
   padding: 0.625rem;
-  margin-top: ${props => props.margin_top };
   width: 70%;
 
   :hover {
@@ -79,12 +78,20 @@ export const Button = styled.input`
     cursor: pointer;
   }
 `
-
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 5rem;
+  margin-top: 1rem;
+  width: 100%;
+`
 export const HaveAccount = styled.div`
-  font-size: 15px;
+  font-size: 14px;
   font-family: "Quicksand Medium", serif;
   color: #F6F6F6;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   span{
     color: #726DFE;
     margin-left: 5px

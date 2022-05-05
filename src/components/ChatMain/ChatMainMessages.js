@@ -11,7 +11,8 @@ import {
     ChatMyMessage,
     ChatReceivedMessage
 } from '../styles/ChatMainMessages.styled'
-
+import {requestOptions} from "../../hooks/requestOptions";
+import {authRequestOptions} from "../../hooks/requestOptions";
 
 export default function ChatMainMessages() {
     const {roomId} = 'test' // Gets roomId from URL
@@ -26,18 +27,6 @@ export default function ChatMainMessages() {
     const handleSubmit = (e) => {
         e.preventDefault()
         sendMessage(newMessage)
-        const requestOption = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newMessage)
-        }
-        fetch(`http://127.0.0.1:5000/api/save-message/`, requestOption)
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error))
         setNewMessage("")
     }
     return (

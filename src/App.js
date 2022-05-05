@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 import SignUp from "./components/UserAuth/SignUp";
 import SignIn from "./components/UserAuth/SignIn";
+import {CurrentUserProvider} from "./context/CurrentUserContext";
 
 function App() {
 
     return (
+        <CurrentUserProvider>
         <Router>
             <Routes>
                 <Route>
@@ -21,6 +23,7 @@ function App() {
                 </Route>
             </Routes>
         </Router>
+        </CurrentUserProvider>
 
     );
 }
