@@ -4,6 +4,7 @@ export const StyledChatMainMessages = styled.div`
   border-bottom-color: #575D6B;
   border-bottom-style: solid;
   border-bottom-width: 1px;
+  padding-bottom: 2%;
   height: 75%;
 
 `
@@ -26,7 +27,17 @@ export const ChatInputBox = styled.input`
 export const ChatMessageContainer = styled.div`
   flex: 1;
   min-height: 100px;
-  overflow: auto;
+  max-height: 100%;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 0.25vw;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #B1B4BB ;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #525A6D;
+  }
 `
 export const ChatMessageList = styled.ol`
   list-style-type: none;

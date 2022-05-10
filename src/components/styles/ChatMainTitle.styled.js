@@ -43,6 +43,5 @@ export const StyledChatMainTitleAvatar = styled.div`
   border-radius: 50%;
   align-self: center;
   margin-right: 5%;
-  margin-left: 5%;
   margin-bottom: 3%;
 `

@@ -4,13 +4,13 @@ import {v4 as uuidv4} from "uuid"
 import {useEffect, useState} from "react";
 import {requestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
-import {useNewestConvo} from "../../context/NewestConvoContext";
+import {useActiveConvo} from "../../context/ActiveConvoContext";
 
 export default function ChatList() {
     const [sideBarMessages, setSideBarMessages] = useState(null)
     const [loading, setLoading] = useState(null)
     const {fetchCurrentUser} = useCurrentUser()
-    const {setNewestConvo} = useNewestConvo()
+    const {setActiveConvo} = useActiveConvo()
 
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
@@ -18,24 +18,15 @@ export default function ChatList() {
             id !== undefined && fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${id}`, requestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     setSideBarMessages(data)
                     //set newest convo to be used as the chat header
-                    setNewestConvo(data[0])
+                    setActiveConvo(data[0])
                     setLoading(true)
                 })
                 .catch(error => console.log(error))
         })
     }, [])
-
-    // useEffect(() => {
-    //     fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${state}`, requestOptions('GET'))
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setSideBarMessages(data)
-    //             setLoading(true)
-    //         })
-    //         .catch(error => console.log(error))
-    // }, [state])
 
     return (
         loading &&

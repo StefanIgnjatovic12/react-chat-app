@@ -6,13 +6,13 @@ import {
 import SignUp from "./components/UserAuth/SignUp";
 import SignIn from "./components/UserAuth/SignIn";
 import {CurrentUserProvider} from "./context/CurrentUserContext";
-import {NewestConvoProvider} from "./context/NewestConvoContext";
+import {ActiveConvoProvider} from "./context/ActiveConvoContext";
 
 function App() {
 
     return (
         <CurrentUserProvider>
-            <NewestConvoProvider>
+            <ActiveConvoProvider>
                 <Router>
                     <Routes>
                         <Route>
@@ -26,7 +26,7 @@ function App() {
                         </Route>
                     </Routes>
                 </Router>
-            </NewestConvoProvider>
+            </ActiveConvoProvider>
         </CurrentUserProvider>
 
     );

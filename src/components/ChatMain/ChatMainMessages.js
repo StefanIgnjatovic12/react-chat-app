@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {useChat} from '../../hooks/useChat'
-import {useEffect, useState} from "react"
+import {useEffect, useState, useRef} from "react"
 import {v4 as uuidv4} from "uuid"
 import {
     StyledChatMainMessages,
@@ -11,9 +11,9 @@ import {
     ChatMyMessage,
     ChatReceivedMessage
 } from '../styles/ChatMainMessages.styled'
-import {requestOptions} from "../../hooks/requestOptions";
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
+
 
 export default function ChatMainMessages() {
     const {roomId} = 'test' // Gets roomId from URL
@@ -33,51 +33,67 @@ export default function ChatMainMessages() {
         setNewMessage("")
     }
     useEffect(() => {
-        // Get current user ID and save it to localStorage
+
         fetchCurrentUser()
-            .then(id => localStorage.setItem('currentUserID', id))
-            .then(
-                // Get all conversation data for current user to populate chats
-                fetch(`http://127.0.0.1:5000/api/user-conversation/${localStorage.getItem('currentUserID')}`,
-                    authRequestOptions(('GET')))
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(error => console.log(error))
+            .then(id => {
+                    localStorage.setItem('currentUserID', id)
+                    fetch(`http://127.0.0.1:5000/api/user-conversation/${id}`,
+                        authRequestOptions(('GET')))
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data[0])
+                            //set the state with messages from the first convo because it will have the newest message ergo it will be the chat opened by default upon loading
+                            setOldMessages(data[0].messages)
+                        })
+                        .catch(error => console.log(error))
+                }
             )
-        // // Get all conversation data for current user to populate chats
-        // fetch(`http://127.0.0.1:5000/api/user-conversation/${localStorage.getItem('currentUserID')}`,
-        //     authRequestOptions(('GET')))
-        //     .then(response => response.json())
-        //     // .then(data => console.log(data))
-        //     .catch(error => console.log(error))
     }, [])
     return (
         <>
 
             <StyledChatMainMessages>
+                    <ChatMessageContainer>
+                        <ChatMessageList>
+                            {/*Map over messages saved in database and load them in chat*/}
+                            {oldMessages && oldMessages.map((message, i) => (
+                                message.created_by == localStorage.getItem('currentUserID')
+                                    ?
+                                    <ChatMyMessage
+                                        key={uuidv4()}
+                                    >
+                                        {message.message}
+                                    </ChatMyMessage>
+                                    :
+                                    <ChatReceivedMessage
+                                        key={uuidv4()}
+                                    >
+                                        {message.message}
 
-                <ChatMessageContainer>
+                                    </ChatReceivedMessage>
+                            ))}
+                            {/*Map over new messages sent since the chat has been reopened */}
+                            {messages.map((message, i) => (
+                                message.ownedByCurrentUser
+                                    ?
+                                    <ChatMyMessage
+                                        key={uuidv4()}
+                                    >
+                                        {message.body}
+                                    </ChatMyMessage>
+                                    :
+                                    <ChatReceivedMessage
+                                        key={uuidv4()}
+                                    >
+                                        {message.body}
+                                    </ChatReceivedMessage>
+                            ))}
 
-                    <ChatMessageList>
+                        </ChatMessageList>
 
-                        {messages.map((message, i) => (
-                            message.ownedByCurrentUser
-                                ?
-                                <ChatMyMessage
-                                    key={uuidv4()}
-                                >
-                                    {message.body}
-                                </ChatMyMessage>
-                                :
-                                <ChatReceivedMessage
-                                    key={uuidv4()}
-                                >
-                                    {message.body}
-                                </ChatReceivedMessage>
-                        ))}
-                    </ChatMessageList>
+                    </ChatMessageContainer>
 
-                </ChatMessageContainer>
+
 
             </StyledChatMainMessages>
 

@@ -5,6 +5,7 @@ export const StyledChatContainer = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   min-height: 70vh;
+  max-height: 70vh;
   width: 55vw;
   border-radius: 25px;
   background-color: #404757;

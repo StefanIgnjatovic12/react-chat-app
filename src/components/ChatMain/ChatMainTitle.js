@@ -1,27 +1,29 @@
-import {useNewestConvo} from "../../context/NewestConvoContext";
+import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {
     StyledChatMainTitle,
     StyledChatMainTitleContainer,
     StyledChatMainTitleText,
     StyledChatMainTitleAvatar,
     StyledChatMainTitleSubtext
-} from "../styles/ChatMaiNTitle.styled";
+} from "../styles/ChatMainTitle.styled";
 
 
 export default function ChatMainTitle() {
-    const {newestConvo} = useNewestConvo()
+    const {activeConvo} = useActiveConvo()
+
     return (
         <StyledChatMainTitle>
             <StyledChatMainTitleContainer>
-                <StyledChatMainTitleAvatar avatar={newestConvo.avatar}/>
+                {/*{newestConvo.avatar != null && <StyledChatMainTitleAvatar avatar={newestConvo.avatar}/>}*/}
+
                 <StyledChatMainTitleText>
-                    {newestConvo &&
+                    {activeConvo &&
                         <>
                             <div>
-                                {newestConvo.conv_partner}
+                                {activeConvo.conv_partner}
                             </div>
                             <StyledChatMainTitleSubtext>
-                                {newestConvo.last_message}
+                                {activeConvo.last_message}
                             </StyledChatMainTitleSubtext>
 
 
