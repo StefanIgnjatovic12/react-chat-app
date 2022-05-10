@@ -1,19 +1,37 @@
-import styled from 'styled-components'
-
-
-const StyledChatMainTitle = styled.div`
-  border-bottom-color: #575D6B;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  height: 12%;
- 
-`
+import {useNewestConvo} from "../../context/NewestConvoContext";
+import {
+    StyledChatMainTitle,
+    StyledChatMainTitleContainer,
+    StyledChatMainTitleText,
+    StyledChatMainTitleAvatar,
+    StyledChatMainTitleSubtext
+} from "../styles/ChatMaiNTitle.styled";
 
 
 export default function ChatMainTitle() {
+    const {newestConvo} = useNewestConvo()
     return (
         <StyledChatMainTitle>
+            <StyledChatMainTitleContainer>
+                <StyledChatMainTitleAvatar avatar={newestConvo.avatar}/>
+                <StyledChatMainTitleText>
+                    {newestConvo &&
+                        <>
+                            <div>
+                                {newestConvo.conv_partner}
+                            </div>
+                            <StyledChatMainTitleSubtext>
+                                {newestConvo.last_message}
+                            </StyledChatMainTitleSubtext>
 
+
+                        </>
+                    }
+
+
+                </StyledChatMainTitleText>
+            </StyledChatMainTitleContainer>
         </StyledChatMainTitle>
+
     )
 }

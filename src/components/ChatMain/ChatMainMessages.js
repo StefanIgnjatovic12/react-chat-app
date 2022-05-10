@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {useChat} from '../../hooks/useChat'
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {v4 as uuidv4} from "uuid"
 import {
     StyledChatMainMessages,
@@ -13,11 +13,14 @@ import {
 } from '../styles/ChatMainMessages.styled'
 import {requestOptions} from "../../hooks/requestOptions";
 import {authRequestOptions} from "../../hooks/requestOptions";
+import {useCurrentUser} from "../../context/CurrentUserContext";
 
 export default function ChatMainMessages() {
     const {roomId} = 'test' // Gets roomId from URL
     const {messages, sendMessage} = useChat(roomId); // Creates a websocket and manages messaging
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
+    const [oldMessages, setOldMessages] = useState([]) // Previous messages fetched from DB
+    const {fetchCurrentUser} = useCurrentUser()
 
 
     const handleChange = (e) => {
@@ -29,6 +32,25 @@ export default function ChatMainMessages() {
         sendMessage(newMessage)
         setNewMessage("")
     }
+    useEffect(() => {
+        // Get current user ID and save it to localStorage
+        fetchCurrentUser()
+            .then(id => localStorage.setItem('currentUserID', id))
+            .then(
+                // Get all conversation data for current user to populate chats
+                fetch(`http://127.0.0.1:5000/api/user-conversation/${localStorage.getItem('currentUserID')}`,
+                    authRequestOptions(('GET')))
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.log(error))
+            )
+        // // Get all conversation data for current user to populate chats
+        // fetch(`http://127.0.0.1:5000/api/user-conversation/${localStorage.getItem('currentUserID')}`,
+        //     authRequestOptions(('GET')))
+        //     .then(response => response.json())
+        //     // .then(data => console.log(data))
+        //     .catch(error => console.log(error))
+    }, [])
     return (
         <>
 

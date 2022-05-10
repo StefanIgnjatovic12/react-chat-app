@@ -1,7 +1,8 @@
 import {
     StyledChatListItemsText,
     StyledChatListItemsContainer,
-    StyledChatListItemsAvatar
+    StyledChatListItemsAvatar,
+    StyledChatChatListSubtext
 }
     from "../styles/ChatListItems.styled";
 
@@ -13,9 +14,9 @@ export default function ChatListItems({name, text, avatar}) {
                 <div>
                     {name}
                 </div>
-                <div>
+                <StyledChatChatListSubtext>
                     {text}
-                </div>
+                </StyledChatChatListSubtext>
             </StyledChatListItemsText>
         </StyledChatListItemsContainer>
     )

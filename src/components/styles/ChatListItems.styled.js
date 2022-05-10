@@ -18,8 +18,15 @@ export const StyledChatListItemsText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  font-family: "Quicksand Medium", serif;
+  color: #F6F6F6;
 `
 
+export const StyledChatChatListSubtext = styled.div`
+  margin-top: 5%;
+  font-size: 14px;
+  color: #B1B4BB;
+`
 export const StyledChatListItemsAvatar = styled.div`
   background-image: url('data:image/png;base64,${props => props.avatar}');
   width: 23%;

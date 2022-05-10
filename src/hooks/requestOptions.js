@@ -10,7 +10,6 @@ export const requestOptions = (method, body) => {
 }
 
 export const authRequestOptions = (method, body) => {
-    console.log(body)
     return {
         method: method,
         headers: {
