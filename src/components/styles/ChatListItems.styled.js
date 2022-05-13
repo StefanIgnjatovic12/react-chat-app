@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const StyledChatListItemsContainer = styled.div`
   display: flex;
-  background-color: #4E5566;
+  background-color: ${props => props.colored === true ? '#7076FF' : '#4E5566'};
   padding: 2px 5px 2px 10px;
   margin-top: 10px;
   margin-left: 5px;
@@ -11,8 +11,9 @@ export const StyledChatListItemsContainer = styled.div`
   height: 10%;
 
   :hover {
-    background-color: #726DFE;
+    background-color: ${props => props.colored === true ? '#666eff' : '#596073'}
   }
+
 `
 export const StyledChatListItemsText = styled.div`
   display: flex;

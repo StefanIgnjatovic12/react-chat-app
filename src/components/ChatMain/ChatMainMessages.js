@@ -13,14 +13,16 @@ import {
 } from '../styles/ChatMainMessages.styled'
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
+import {useActiveConvo} from "../../context/ActiveConvoContext";
 
 
 export default function ChatMainMessages() {
     const {roomId} = 'test' // Gets roomId from URL
-    const {messages, sendMessage} = useChat(roomId); // Creates a websocket and manages messaging
+    const {sendMessage} = useChat(roomId); // Creates a websocket and manages messaging
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
-    const [oldMessages, setOldMessages] = useState([]) // Previous messages fetched from DB
+    // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
+    const {messages, setMessages, activeConvo, setHeaderConvo, setActiveConvo} = useActiveConvo()
 
 
     const handleChange = (e) => {
@@ -41,9 +43,21 @@ export default function ChatMainMessages() {
                         authRequestOptions(('GET')))
                         .then(response => response.json())
                         .then(data => {
-                            console.log(data[0])
-                            //set the state with messages from the first convo because it will have the newest message ergo it will be the chat opened by default upon loading
-                            setOldMessages(data[0].messages)
+                            console.log(`old message data:`)
+                            console.log(data)
+                            //if active conversation is set, it means a different convo than the default
+                            //one was selected so set messages to that on page reload
+                            //if no activeConvo, set messages to the convo with the newest message
+                            if (activeConvo){
+                                let filteredMessageArr = data.filter(convo => convo.id == activeConvo)
+                                console.log(filteredMessageArr[0].messages)
+                                setMessages(filteredMessageArr[0].messages)
+                            } else {
+                                setActiveConvo(data[0].id)
+                                setMessages(data[0].messages)
+                            }
+
+                            // setMessages(data[0].messages)
                         })
                         .catch(error => console.log(error))
                 }
@@ -56,7 +70,7 @@ export default function ChatMainMessages() {
                     <ChatMessageContainer>
                         <ChatMessageList>
                             {/*Map over messages saved in database and load them in chat*/}
-                            {oldMessages && oldMessages.map((message, i) => (
+                            {messages && messages.map((message, i) => (
                                 message.created_by == localStorage.getItem('currentUserID')
                                     ?
                                     <ChatMyMessage
@@ -73,21 +87,21 @@ export default function ChatMainMessages() {
                                     </ChatReceivedMessage>
                             ))}
                             {/*Map over new messages sent since the chat has been reopened */}
-                            {messages.map((message, i) => (
-                                message.ownedByCurrentUser
-                                    ?
-                                    <ChatMyMessage
-                                        key={uuidv4()}
-                                    >
-                                        {message.body}
-                                    </ChatMyMessage>
-                                    :
-                                    <ChatReceivedMessage
-                                        key={uuidv4()}
-                                    >
-                                        {message.body}
-                                    </ChatReceivedMessage>
-                            ))}
+                            {/*{messages.map((message, i) => (*/}
+                            {/*    message.ownedByCurrentUser*/}
+                            {/*        ?*/}
+                            {/*        <ChatMyMessage*/}
+                            {/*            key={uuidv4()}*/}
+                            {/*        >*/}
+                            {/*            {message.body}*/}
+                            {/*        </ChatMyMessage>*/}
+                            {/*        :*/}
+                            {/*        <ChatReceivedMessage*/}
+                            {/*            key={uuidv4()}*/}
+                            {/*        >*/}
+                            {/*            {message.body}*/}
+                            {/*        </ChatReceivedMessage>*/}
+                            {/*))}*/}
 
                         </ChatMessageList>
 

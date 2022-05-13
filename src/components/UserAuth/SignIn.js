@@ -11,16 +11,23 @@ import
     InputWrapper, HaveAccount, ButtonWrapper
 }
     from "../styles/UserAuth.styled";
+import {useActiveConvo} from "../../context/ActiveConvoContext";
 
 export default function SignIn() {
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm()
     const navigate = useNavigate()
+    const {setActiveConvo} = useActiveConvo()
 
 
     const signInUser = async (body) => {
         let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
-        response.json().then(data => localStorage.setItem('token', data.access_token))
+        response.json().then(data => {
+                localStorage.setItem('token', data.access_token)
+                //reset active convo to default
+                setActiveConvo('')
+            }
+        )
 
         if (response.status === 200) {
             navigate('/chat')
@@ -61,12 +68,12 @@ export default function SignIn() {
                 <ButtonWrapper>
                     <Button type="submit"
                             value="Sign In"
-                            // margin_top='1.25rem'
+                        // margin_top='1.25rem'
                     />
                     <Button type="submit"
                             value="Sample account"
                             onClick={handleSubmit(demoAccount)}
-                            // margin_top='0.05rem'
+                        // margin_top='0.05rem'
                     />
                 </ButtonWrapper>
 

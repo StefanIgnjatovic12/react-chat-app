@@ -2,25 +2,19 @@ import {useEffect, useRef, useState} from "react";
 import socketIOClient from "socket.io-client";
 import {authRequestOptions} from "./requestOptions";
 import {useCurrentUser} from "../context/CurrentUserContext";
+import {useActiveConvo} from "../context/ActiveConvoContext";
 
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 const SOCKET_SERVER_URL = "http://localhost:4000";
 
 export const useChat = (roomId) => {
-    const [messages, setMessages] = useState([]); // Sent and received messages
+    // const [messages, setMessages] = useState([]); // Sent and received messages
     const socketRef = useRef();
     const {fetchCurrentUser} = useCurrentUser()
+    const {messages, setMessages, activeConvo, reloadSideBar, setReloadSideBar} = useActiveConvo()
 
     useEffect(() => {
-        // // Get current user ID and save it to localStorage
-        // fetchCurrentUser().then(id => localStorage.setItem('currentUserID', id))
-        // // Get all conversation data for current user to populate chats
-        // fetch(`http://127.0.0.1:5000/api/user-conversation/${localStorage.getItem('currentUserID')}`,
-        //     authRequestOptions(('GET')))
-        //     .then(response => response.json())
-        //     .then(data => console.log(data))
-        //     .catch(error => console.log(error))
         // Creates a WebSocket connection
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
             query: {roomId},
@@ -28,10 +22,16 @@ export const useChat = (roomId) => {
 
         // Listens for incoming messages
         socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
-
+            // console.log(message)
+            // const incomingMessage = {
+            //     ...message,
+            //     ownedByCurrentUser: message.senderId === socketRef.current.id,
+            // };
+            // setMessages((messages) => [...messages, incomingMessage]);
             const incomingMessage = {
-                ...message,
-                ownedByCurrentUser: message.senderId === socketRef.current.id,
+                message: message.body,
+                created_by: localStorage.getItem('currentUserID'),
+
             };
             setMessages((messages) => [...messages, incomingMessage]);
 
@@ -53,11 +53,15 @@ export const useChat = (roomId) => {
         });
         const fetchContents = {
             message: messageBody,
-            created_by: localStorage.getItem('currentUserID')
+            created_by: localStorage.getItem('currentUserID'),
+            // convo_id: oldMessages[0]['convo_id']
+            convo_id: activeConvo
+
         }
         fetch(`http://127.0.0.1:5000/api/save-message/`, authRequestOptions(('POST'), fetchContents))
             .then(response => response.json())
             .then(console.log('Fetched'))
+            .then(setReloadSideBar(reloadSideBar + 1))
             .catch(error => console.log(error))
 
 

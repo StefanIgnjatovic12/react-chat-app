@@ -6,37 +6,53 @@ import {requestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 
+
 export default function ChatList() {
     const [sideBarMessages, setSideBarMessages] = useState(null)
     const [loading, setLoading] = useState(null)
     const {fetchCurrentUser} = useCurrentUser()
-    const {setActiveConvo} = useActiveConvo()
-
+    const {setHeaderConvo, activeConvo, reloadSideBar} = useActiveConvo()
+    const [coloredArray, setColoredArray] = useState([]);
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
         fetchCurrentUser().then(id => {
             id !== undefined && fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${id}`, requestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
+                    //have an array of booleans that signify whether a chat on the left has been clicked
+                    // start array with only false with the same length as the data
+
+                    setColoredArray(Array(data.length).fill(false))
+                    // setNumberChats(data.length)
                     setSideBarMessages(data)
-                    //set newest convo to be used as the chat header
-                    setActiveConvo(data[0])
+                    //if active conversation is set, it means a different convo than the default
+                    //one was selected so set headerConvo to that on page reload
+                    //if no activeConvo, set headerConvo to the convo with the newest message
+                    if (activeConvo) {
+                        let filteredMessageArr = data.filter(convo => convo.conv_id == activeConvo)
+                        setHeaderConvo(filteredMessageArr[0])
+                    } else {
+                        console.log('no active convo')
+                        setHeaderConvo(data[0])
+                    }
                     setLoading(true)
                 })
                 .catch(error => console.log(error))
         })
-    }, [])
+    }, [reloadSideBar])
 
     return (
         loading &&
         <StyledChatList>
-            {sideBarMessages.map(convo => (
+            {sideBarMessages.map((convo, index) => (
                 <ChatListItems
                     key={uuidv4()}
                     name={convo.conv_partner}
                     text={convo.last_message}
                     avatar={convo.avatar}
+                    index={index}
+                    coloredArray={coloredArray}
+
 
                 />
             ))}

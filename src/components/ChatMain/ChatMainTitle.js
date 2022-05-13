@@ -9,21 +9,22 @@ import {
 
 
 export default function ChatMainTitle() {
-    const {activeConvo} = useActiveConvo()
-
+    const {headerConvo} = useActiveConvo()
+    // console.log('headerConvo:')
+    // console.log(headerConvo)
     return (
         <StyledChatMainTitle>
             <StyledChatMainTitleContainer>
                 {/*{newestConvo.avatar != null && <StyledChatMainTitleAvatar avatar={newestConvo.avatar}/>}*/}
 
                 <StyledChatMainTitleText>
-                    {activeConvo &&
+                    {headerConvo &&
                         <>
                             <div>
-                                {activeConvo.conv_partner}
+                                {headerConvo.conv_partner}
                             </div>
                             <StyledChatMainTitleSubtext>
-                                {activeConvo.last_message}
+                                {headerConvo.last_message}
                             </StyledChatMainTitleSubtext>
 
 
