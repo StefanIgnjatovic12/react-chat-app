@@ -13,6 +13,10 @@ export const StyledChatContainer = styled.div`
 `
 
 export const StyledChatLinkBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   background-color: #3A3F4D;
   width: 5%;
   border-right-color: #575D6B;

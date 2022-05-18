@@ -16,9 +16,10 @@ export const StyledChatMainTitle = styled.div`
 export const StyledChatMainTitleContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   background-color: transparent;
-  width: 40%;
+  width: 90%;
   height: 80%;
   margin-left: 5%;
 `
@@ -44,4 +45,58 @@ export const StyledChatMainTitleAvatar = styled.div`
   align-self: center;
   margin-right: 5%;
   margin-bottom: 3%;
+`
+
+
+export const StyledChatMainTitleRevealButton = styled.div`
+  border: 2px solid #7076FF;
+  border-radius: 1rem;
+  max-height: 30%;
+  max-width: 17%;
+  text-align: center;
+  color: #7076FF;
+  background-color: transparent;
+  font-family: "Quicksand Medium", serif;
+  overflow: hidden;
+  padding: 0.75rem;
+  position: relative;
+  text-decoration: none;
+  transition: .2s transform ease-in-out;
+  will-change: transform;
+  z-index: 0;
+  cursor: pointer;
+
+  &::after {
+  background-color: #7076FF;
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-100%, 0) rotate(10deg);
+  transform-origin: top left;
+  transition: .2s transform ease-out;
+  will-change: transform;
+  z-index: -1;  
+  }
+
+
+  &:hover::after {
+    transform: translate(0, 0);
+  }
+
+  &:hover {
+    border: 2px solid transparent;
+    color: white;
+    transform: scale(1.05);
+    will-change: transform;
+  }
+`
+
+export const StyledChatMainTitlePopup = styled.div`
+height: 100px;
+  width: 100px;
+  background-color: yellow;
 `

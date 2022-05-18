@@ -33,6 +33,7 @@ export default function ChatList() {
                         setHeaderConvo(filteredMessageArr[0])
                     } else {
                         console.log('no active convo')
+                        console.log(data[0])
                         setHeaderConvo(data[0])
                     }
                     setLoading(true)
