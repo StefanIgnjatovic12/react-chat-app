@@ -52,7 +52,7 @@ export const StyledChatMainTitleRevealButton = styled.div`
   border: 2px solid #7076FF;
   border-radius: 1rem;
   max-height: 30%;
-  max-width: 17%;
+  max-width: 23%;
   text-align: center;
   color: #7076FF;
   background-color: transparent;
@@ -95,8 +95,8 @@ export const StyledChatMainTitleRevealButton = styled.div`
   }
 `
 
-export const StyledChatMainTitlePopup = styled.div`
-height: 100px;
-  width: 100px;
-  background-color: yellow;
+export const Test = styled.div`
+height: 300px;
+  width: 300px;
+ 
 `
