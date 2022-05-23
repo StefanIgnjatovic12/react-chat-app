@@ -67,19 +67,19 @@ export const StyledChatMainTitleRevealButton = styled.div`
   cursor: pointer;
 
   &::after {
-  background-color: #7076FF;
-  content: '';
-  display: block;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translate(-100%, 0) rotate(10deg);
-  transform-origin: top left;
-  transition: .2s transform ease-out;
-  will-change: transform;
-  z-index: -1;  
+    background-color: #7076FF;
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-100%, 0) rotate(10deg);
+    transform-origin: top left;
+    transition: .2s transform ease-out;
+    will-change: transform;
+    z-index: -1;
   }
 
 
@@ -94,9 +94,24 @@ export const StyledChatMainTitleRevealButton = styled.div`
     will-change: transform;
   }
 `
+export const AccessDeniedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Quicksand Medium", serif;
+  font-size: 16px;
+`
+export const AccessDeniedMessage = styled.div`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: white;
 
-export const Test = styled.div`
-height: 300px;
-  width: 300px;
- 
+`
+export const AccessDeniedImage = styled.div`
+  background-image: url(${props => props.image});
+  height: 7.5rem;
+  width: 7.5rem;
+  background-size: cover;
+  background-position: top center;
 `

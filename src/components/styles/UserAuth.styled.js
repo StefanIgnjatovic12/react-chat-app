@@ -50,9 +50,21 @@ export const Icon = styled.div`
 
 export const InputWrapper = styled.div`
   display: flex;
-  width: 70%;
+  width: ${props => {
+    if (props.width) {
+      return props.width
+    } else {
+      return '70%'
+    }
+  }};
+  margin-top: ${props => {
+    if (props.margin_top) {
+      return props.margin_top
+    } 
+  }};
   border-bottom: 1px solid #4E5566;
   margin-bottom: ${props => props.margin_bottom};
+
   :hover {
     border-bottom: 1px solid #726DFE
   }
@@ -92,7 +104,8 @@ export const HaveAccount = styled.div`
   font-family: "Quicksand Medium", serif;
   color: #F6F6F6;
   margin-top: 0.5rem;
-  span{
+
+  span {
     color: #726DFE;
     margin-left: 5px
   }

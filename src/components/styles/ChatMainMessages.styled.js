@@ -52,6 +52,7 @@ export const ChatMyMessage = styled.li`
   word-break: break-word;
   border-radius: 15px;
   color: white;
+  font-family: "Quicksand Medium", serif;
 `
 
 export const ChatReceivedMessage = styled.li`
@@ -62,4 +63,5 @@ export const ChatReceivedMessage = styled.li`
   word-break: break-word;
   border-radius: 15px;
   color: white;
+  font-family: "Quicksand Medium", serif;
 `
