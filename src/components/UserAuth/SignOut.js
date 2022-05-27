@@ -8,7 +8,8 @@ export default function SignOut() {
         fetch('http://127.0.0.1:5000/dj-rest-auth/logout/', authRequestOptions('POST'))
             .then(response => response.json())
             .then(data => {
-                localStorage.setItem('token', '')
+                // localStorage.setItem('token', '')
+                localStorage.clear()
                 console.log(data)
             })
             .then(navigate('/signin'))

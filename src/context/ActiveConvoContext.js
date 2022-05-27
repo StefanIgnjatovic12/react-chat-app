@@ -14,6 +14,10 @@ export const ActiveConvoProvider = ({children}) => {
     //put into dependency array for ChatList. Increment it on new message sent
     //so that ChatList wil update
     const [reloadSideBar, setReloadSideBar] = useState(0)
+
+    //state that is changed every time a convo is deleted > put into
+    //useEffect of ChatMainMessages and ChatList so it's updated automatically
+    const [convoDeleteDone, setConvoDeleteDone] = useState(0)
     return (
         <ActiveConvoContext.Provider value={{
             activeConvo,
@@ -23,7 +27,9 @@ export const ActiveConvoProvider = ({children}) => {
             headerConvo,
             setHeaderConvo,
             reloadSideBar,
-            setReloadSideBar
+            setReloadSideBar,
+            convoDeleteDone,
+            setConvoDeleteDone
         }}>
             {children}
         </ActiveConvoContext.Provider>

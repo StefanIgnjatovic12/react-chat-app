@@ -12,21 +12,43 @@ import
     InputWrapper, HaveAccount, ButtonWrapper
 }
     from "../styles/UserAuth.styled";
+import {useActiveConvo} from "../../context/ActiveConvoContext";
 
 
 export default function SignUp() {
 
     const {register, handleSubmit, watch, formState: {errors}, reset} = useForm()
+    const {setActiveConvo} = useActiveConvo()
     const navigate = useNavigate()
+
     const registerUser = async (body) => {
         const response = await fetch('http://127.0.0.1:5000/dj-rest-auth/register/', requestOptions('POST', body))
         console.log(response)
 
     }
+    const signInUser = async (body) => {
+        let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
+        response.json().then(data => {
+                localStorage.setItem('token', data.access_token)
+                //reset active convo to default
+                setActiveConvo('')
+            }
+        )
 
+        if (response.status === 200) {
+            navigate('/chat')
+        }
+
+    }
     const onSubmit = data => {
         registerUser(data)
+
+        // console.log(`username: ${data.username}, pass: ${data.password}`)
+
         reset({username: '', email: '', password1: '', password2: ''})
+        //after user fills out initial profile data, send them to fill out additional ones
+        // navigate('/set-profile-details')
+        navigate('/signin', {state : true})
     }
 
     const demoAccount = () => console.log('test')

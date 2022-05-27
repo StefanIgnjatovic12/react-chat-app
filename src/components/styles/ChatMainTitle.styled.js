@@ -47,18 +47,23 @@ export const StyledChatMainTitleAvatar = styled.div`
   margin-bottom: 3%;
 `
 
-
-export const StyledChatMainTitleRevealButton = styled.div`
+export const StyledChatMainTitleButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+  max-height: 100%;
+`
+export const StyledChatMainTitleButton = styled.div`
   border: 2px solid #7076FF;
   border-radius: 1rem;
-  max-height: 30%;
-  max-width: 23%;
+  max-height: 100%;
+  max-width: 40%;
   text-align: center;
   color: #7076FF;
   background-color: transparent;
   font-family: "Quicksand Medium", serif;
   overflow: hidden;
-  padding: 0.75rem;
+  padding: 0.5rem;
   position: relative;
   text-decoration: none;
   transition: .2s transform ease-in-out;

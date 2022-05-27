@@ -1,6 +1,6 @@
 import {useForm} from "react-hook-form";
 import {requestOptions} from "../../hooks/requestOptions";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import
 {
     Background,
@@ -12,12 +12,33 @@ import
 }
     from "../styles/UserAuth.styled";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {StyledToastContainer} from "../styles/ToastContainer.styled";
+import {useEffect} from "react";
 
 export default function SignIn() {
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm()
     const navigate = useNavigate()
     const {setActiveConvo} = useActiveConvo()
+    const {state : showAlert} = useLocation()
+
+    //alert when redirected from sign up page
+    const openAlert = () => toast('You have succesfuly registered, please sign in.', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+
+    //checks if
+    useEffect(() => {
+        if (showAlert) {openAlert()}
+    },[showAlert])
 
 
     const signInUser = async (body) => {
@@ -35,16 +56,18 @@ export default function SignIn() {
 
     }
     const onSubmit = data => {
-
+        console.log(data)
         signInUser(data)
 
 
     }
 
-    const demoAccount = () => console.log('test')
+    const demoAccount = () => openAlert()
 
     return (
         <Background>
+            {/*alert component*/}
+            <StyledToastContainer style={{width: '25%'}}/>
             <Form onSubmit={handleSubmit(onSubmit)} min_height="30vh">
                 <InputWrapper>
                     <Icon icon={'/username.png'}/>

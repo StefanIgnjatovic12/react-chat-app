@@ -22,7 +22,14 @@ export default function ChatMainMessages() {
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
-    const {messages, setMessages, activeConvo, setHeaderConvo, setActiveConvo} = useActiveConvo()
+    const {
+        messages,
+        setMessages,
+        activeConvo,
+        setHeaderConvo,
+        setActiveConvo,
+        convoDeleteDone,
+    } = useActiveConvo()
 
 
     const handleChange = (e) => {
@@ -48,7 +55,7 @@ export default function ChatMainMessages() {
                             //if active conversation is set, it means a different convo than the default
                             //one was selected so set messages to that on page reload
                             //if no activeConvo, set messages to the convo with the newest message
-                            if (activeConvo){
+                            if (activeConvo) {
                                 let filteredMessageArr = data.filter(convo => convo.id == activeConvo)
                                 // console.log(filteredMessageArr[0].messages)
                                 setMessages(filteredMessageArr[0].messages)
@@ -62,51 +69,34 @@ export default function ChatMainMessages() {
                         .catch(error => console.log(error))
                 }
             )
-    }, [])
+    }, [convoDeleteDone])
     return (
         <>
 
             <StyledChatMainMessages>
-                    <ChatMessageContainer>
-                        <ChatMessageList>
-                            {/*Map over messages saved in database and load them in chat*/}
-                            {messages && messages.map((message, i) => (
-                                message.created_by == localStorage.getItem('currentUserID')
-                                    ?
-                                    <ChatMyMessage
-                                        key={uuidv4()}
-                                    >
-                                        {message.message}
-                                    </ChatMyMessage>
-                                    :
-                                    <ChatReceivedMessage
-                                        key={uuidv4()}
-                                    >
-                                        {message.message}
+                <ChatMessageContainer>
+                    <ChatMessageList>
+                        {/*Map over messages saved in database and load them in chat*/}
+                        {messages && messages.map((message, i) => (
+                            message.created_by == localStorage.getItem('currentUserID')
+                                ?
+                                <ChatMyMessage
+                                    key={uuidv4()}
+                                >
+                                    {message.message}
+                                </ChatMyMessage>
+                                :
+                                <ChatReceivedMessage
+                                    key={uuidv4()}
+                                >
+                                    {message.message}
 
-                                    </ChatReceivedMessage>
-                            ))}
-                            {/*Map over new messages sent since the chat has been reopened */}
-                            {/*{messages.map((message, i) => (*/}
-                            {/*    message.ownedByCurrentUser*/}
-                            {/*        ?*/}
-                            {/*        <ChatMyMessage*/}
-                            {/*            key={uuidv4()}*/}
-                            {/*        >*/}
-                            {/*            {message.body}*/}
-                            {/*        </ChatMyMessage>*/}
-                            {/*        :*/}
-                            {/*        <ChatReceivedMessage*/}
-                            {/*            key={uuidv4()}*/}
-                            {/*        >*/}
-                            {/*            {message.body}*/}
-                            {/*        </ChatReceivedMessage>*/}
-                            {/*))}*/}
+                                </ChatReceivedMessage>
+                        ))}
 
-                        </ChatMessageList>
+                    </ChatMessageList>
 
-                    </ChatMessageContainer>
-
+                </ChatMessageContainer>
 
 
             </StyledChatMainMessages>

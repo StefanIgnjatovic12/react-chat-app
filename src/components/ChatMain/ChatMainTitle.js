@@ -5,8 +5,8 @@ import {
     StyledChatMainTitleText,
     StyledChatMainTitleAvatar,
     StyledChatMainTitleSubtext,
-    StyledChatMainTitleRevealButton,
-    Test
+    StyledChatMainTitleButton,
+    Test, StyledChatMainTitleButtonContainer
 } from "../styles/ChatMainTitle.styled";
 import {useEffect, useState} from "react";
 import {useCurrentUser} from "../../context/CurrentUserContext";
@@ -62,13 +62,15 @@ const deniedModalStyle = {
     }
 }
 export default function ChatMainTitle() {
-    const {headerConvo, activeConvo} = useActiveConvo()
+    const {headerConvo, activeConvo, setActiveConvo, convoDeleteDone, setConvoDeleteDone} = useActiveConvo()
     //state for managing in-session clicks on reveal button ie locally and not from DB
     const [localRevealStatus, setLocalRevealStatus] = useState([])
     //state for managing reveal status for convo partner in the active convo from the DB
     const [storedRevealStatus, setStoredRevealStatus] = useState(false)
     //state for managing if the Modal is opened or not
     const [modalOpen, setModalOpen] = useState(false)
+
+
 
     useEffect(() => {
         //Call to the check if partner in convo has revealed their profile for that convo
@@ -122,13 +124,21 @@ export default function ChatMainTitle() {
                 clicked: true
             }])
         }
-
-
     }
     //Filter the revealClicked array to get a new array if there existed an object for the
     //convo in question within the original array
     let filteredRevealArray = localRevealStatus.filter(c => (c.convo === activeConvo && c.clicked === true) || (c.convo === headerConvo.conv_id && c.clicked === true))
 
+    const handleDelete = () => {
+        fetch(`http://127.0.0.1:5000/api/delete-convo/${activeConvo ? activeConvo : headerConvo.conv_id}`, authRequestOptions('DELETE'))
+                .then(response => response.json())
+                .catch(error => console.log(error))
+        setConvoDeleteDone(convoDeleteDone + 1)
+        //once a convo is deleted, set the active convo to the first convo remaining
+        //ie set the active convo to the first convo ID in the array in LS
+        setActiveConvo(localStorage.getItem('convoIDArrayLocalStorage')[1])
+
+    }
     return (
 
 
@@ -140,7 +150,7 @@ export default function ChatMainTitle() {
                     isOpen={modalOpen}
                     // onAfterOpen={afterOpenModal}
                     onRequestClose={handleModalClose}
-                    style={filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo) ?  deniedModalStyle : profileModalStyle}
+                    style={filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo) ? deniedModalStyle : profileModalStyle}
                     contentLabel="Example Modal"
                 >
                     <ProfilePopup/>
@@ -162,19 +172,25 @@ export default function ChatMainTitle() {
 
                 </StyledChatMainTitleText>
 
-                <StyledChatMainTitleRevealButton
-                    //
-                    onClick={filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo)
-                        ? handleModalOpen : handleReveal}
-                    // onMouseEnter={() => setShowPopup(true)}
-                    // onMouseLeave={() => setShowPopup(false)}
-                >
-                    {filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo) ? 'See partners' +
-                        ' profile' : 'Reveal your profile'}
+                <StyledChatMainTitleButtonContainer>
+                    <StyledChatMainTitleButton
+                        //
+                        onClick={filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo)
+                            ? handleModalOpen : handleReveal}
+                        // onMouseEnter={() => setShowPopup(true)}
+                        // onMouseLeave={() => setShowPopup(false)}
+                    >
+                        {filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo) ? 'See partners' +
+                            ' profile' : 'Reveal your profile'}
 
-                </StyledChatMainTitleRevealButton>
+                    </StyledChatMainTitleButton>
 
-
+                    <StyledChatMainTitleButton
+                    onClick={handleDelete}
+                    >
+                        Delete chat
+                    </StyledChatMainTitleButton>
+                </StyledChatMainTitleButtonContainer>
             </StyledChatMainTitleContainer>
         </StyledChatMainTitle>
 

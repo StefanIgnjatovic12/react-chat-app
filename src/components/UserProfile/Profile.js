@@ -12,7 +12,7 @@ import {
     ProfileLargeTextBox
 } from "../styles/Profile.styled";
 
-import {StyledChatMainTitleRevealButton} from "../styles/ChatMainTitle.styled";
+import {StyledChatMainTitleButton} from "../styles/ChatMainTitle.styled";
 
 import Modal from 'react-modal';
 import ProfilePopup from "./ProfilePopup";
@@ -84,7 +84,7 @@ export default function Profile() {
                     <ProfileAvatar
                         avatar={profileInfo.real_avatar}
                     />
-                    <ProfileNameTextBox>{profileInfo.real_name}, {profileInfo.age}</ProfileNameTextBox>
+                    <ProfileNameTextBox>{profileInfo.real_name}, {profileInfo.age}, {profileInfo.gender}</ProfileNameTextBox>
                     <ProfileSmallTextBox>Lives in {profileInfo.location}</ProfileSmallTextBox>
 
                 </ProfileSmallContainer>
@@ -98,9 +98,9 @@ export default function Profile() {
                 <ProfileTextBoxHeading>Reason</ProfileTextBoxHeading>
                 <ProfileLargeTextBox>{profileInfo.reason}</ProfileLargeTextBox>
 
-                <StyledChatMainTitleRevealButton onClick={handleModalOpen}>
+                <StyledChatMainTitleButton onClick={handleModalOpen}>
                     Edit your profile
-                </StyledChatMainTitleRevealButton>
+                </StyledChatMainTitleButton>
             </ProfileMainContainer>
         </ProfileBackground>
 

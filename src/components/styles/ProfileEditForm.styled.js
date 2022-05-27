@@ -16,17 +16,24 @@ export const SelectDropdown = styled.select`
   width: 70%;
   background-color: #404757;
   color: #f6f6f6;
+
   :required:invalid {
     color: #757575;
-}
+  }
+
   font-size: 15px;
   font-family: "Quicksand Medium", serif;
-  border: 1px solid #4E5566;
-  border-radius: 0.625rem;
+  border: none;
+  border-bottom: 1px solid #4E5566;
+  //border-radius: 0.625rem;
   margin-top: 5%;
   padding: 0.625rem 0.5rem 0.625rem 0.5rem;
+
+  :hover {
+    border-bottom: 1px solid #726DFE;
+  }
   
-  
+
   //remove default styling 
   overflow: auto;
   outline: none;
@@ -40,10 +47,10 @@ export const SelectOption = styled.option`
   :not(:checked) {
     color: #757575;
   }
-  
-  
-  
-  
+
+
+
+
 `
 export const LargeInputWrapper = styled.div`
   display: flex;
@@ -64,7 +71,7 @@ export const LargeInputWrapper = styled.div`
 export const LargeInputField = styled.textarea`
   background-color: transparent;
   border: 0;
-
+  width: 100%;
   font-size: 15px;
   font-family: "Quicksand Medium", serif;
   color: #F6F6F6;
@@ -83,4 +90,23 @@ export const LargeInputField = styled.textarea`
   box-shadow: none;
   resize: none;
   //
+`
+
+export const ImageUploadWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  margin-top: 1.5rem;
+  border: 1px dashed #4E5566;
+  border-radius: 0.625rem;
+  height: ${props => props.height};
+
+  :hover {
+    border: 1px dashed #726DFE
+  }
+
+  :focus {
+    border: 1px dashed #726DFE
+  }
 `

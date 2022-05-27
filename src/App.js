@@ -10,6 +10,8 @@ import Profile from "./components/UserProfile/Profile";
 import {CurrentUserProvider} from "./context/CurrentUserContext";
 import {ActiveConvoProvider} from "./context/ActiveConvoContext";
 import {ProfileRevealProvider} from "./context/ProfileRevealContext";
+import ProfileEditForm from "./components/UserProfile/ProfileEditForm";
+import ProfileCreateForm from "./components/UserProfile/ProfileCreateForm";
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
                                 <Route path="signout" element={<SignOut/>}/>
                                 <Route path="/" element={<SignIn/>}/>
                                 <Route path="profile" element={<Profile/>}/>
+                                <Route path="set-profile-details" element={<ProfileCreateForm/>}/>
+
 
 
                             </Route>

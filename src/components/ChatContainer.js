@@ -4,6 +4,11 @@ import ChatList from "./ChatList/ChatList"
 import ChatMain from "./ChatMain/ChatMain";
 
 import styled from 'styled-components'
+import {useEffect, useState} from "react";
+import {authRequestOptions} from "../hooks/requestOptions";
+import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
+
+
 
 export const ChatBackground = styled.div`
   display: flex;
@@ -14,14 +19,33 @@ export const ChatBackground = styled.div`
 `
 
 export default function ChatContainer() {
+    const [userProfileFilledOut, setUserProfileFilledOut] = useState()
+
+    useEffect(() => {
+        console.log('useEffect Ran')
+        fetch(`http://127.0.0.1:5000/api/profile-check-first-signin/`,
+            authRequestOptions('GET'))
+            .then(response => response.json())
+            .then(data => setUserProfileFilledOut(data.profile_filled_check))
+            .catch(error => console.log(error))
+    }, [])
+
+
+
     return (
-        <ChatBackground>
-            <StyledChatContainer>
-                <ChatLinkBar/>
-                <ChatList/>
-                <ChatMain/>
-            </StyledChatContainer>
-        </ChatBackground>
+
+        userProfileFilledOut
+            ? <ChatBackground>
+                <StyledChatContainer>
+                    <ChatLinkBar/>
+                    <ChatList/>
+                    <ChatMain/>
+                </StyledChatContainer>
+            </ChatBackground>
+            : <ChatBackground>
+                <ProfileCreateForm/>
+            </ChatBackground>
+
 
     )
 }

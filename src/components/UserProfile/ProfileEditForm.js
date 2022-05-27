@@ -1,27 +1,28 @@
 import {useForm} from "react-hook-form";
 import
 {
-    Background,
     InputField,
-    Form,
     Button,
-    Icon,
     InputWrapper, HaveAccount, ButtonWrapper
 }
     from "../styles/UserAuth.styled";
-import {Link} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+
 import {
-    EditForm,
+    EditForm, ImageUploadWrapper,
     LargeInputField,
     LargeInputWrapper,
     SelectDropdown,
     SelectOption
 } from "../styles/ProfileEditForm.styled";
 import {authRequestOptions} from "../../hooks/requestOptions";
+import ImageUpload from "./ImageUpload";
+
 
 export default function ProfileEditForm({handleModalClose}) {
     const {register, handleSubmit, watch, formState: {errors}} = useForm()
-
+    const location = useLocation().pathname
+    const navigate = useNavigate()
     const onSubmit = (formData) => {
         // console.log(formData)
         fetch(`http://127.0.0.1:5000/api/edit-profile/`,
@@ -30,19 +31,24 @@ export default function ProfileEditForm({handleModalClose}) {
             .then(data => console.log(data)
             )
             .catch(error => console.log(error))
-
-        handleModalClose()
+        //if location is profile, the user is editing their existing profile
+        //otherwise they are setting profile details following signing up
+        location === '/profile' ? handleModalClose() : navigate('/signin')
     }
 
 
     return (
         <EditForm onSubmit={handleSubmit(onSubmit)} min_height="30vh">
-            <InputWrapper>
-                <InputField
-                    {...register("username")}
-                    placeholder='Username'
-                />
-            </InputWrapper>
+
+            {location === '/profile' &&
+                <InputWrapper>
+                    <InputField
+                        {...register("username")}
+                        placeholder='Username'
+                    />
+                </InputWrapper>
+            }
+
 
             <InputWrapper margin_top={'1.5rem'}>
                 <InputField
@@ -67,10 +73,10 @@ export default function ProfileEditForm({handleModalClose}) {
             </InputWrapper>
 
             <SelectDropdown  {...register("gender")} required>
-                <SelectOption defaultValue="" value="" disabled selected hidden>Gender</SelectOption>
-                <SelectOption defaultValue="" value="Male">Male</SelectOption>
-                <SelectOption defaultValue="" value="Female">Female</SelectOption>
-                <SelectOption defaultValue="" value="Other">Other</SelectOption>
+                <SelectOption value="" disabled selected hidden>Gender</SelectOption>
+                <SelectOption value="Male">Male</SelectOption>
+                <SelectOption value="Female">Female</SelectOption>
+                <SelectOption value="Other">Other</SelectOption>
 
             </SelectDropdown>
 
@@ -89,6 +95,9 @@ export default function ProfileEditForm({handleModalClose}) {
             <LargeInputWrapper {...register("interests")} height={'6rem'}>
                 <LargeInputField placeholder="Interests"/>
             </LargeInputWrapper>
+
+            {/*<ImageUpload/>*/}
+
 
             <ButtonWrapper>
                 <Button type="submit"
