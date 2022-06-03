@@ -1,0 +1,64 @@
+Fix messages not appearing for correct user before refresh
+Auto update the subtext on the chatlist on the left when a new message is sent - done but below
+Check why the reload on message sent isn't working properly > happens when messages are sent within 1
+minute of each other > maybe add seconds in created_by - DONE
+CLEAR localstorage when a user logs out
+
+change hover color on chatlist to lighter gray and make it change color once its clicked
+
+buttons:
+- on hover when it isn't selected, change color to lighter gray - done
+- on click, change color to purple - done
+- if 1 button is purple and another button is clicked, remove the purple from the first button- done
+- ? if hovered while purple, change color to lighter purple? - done
+Remaining:
+make it so that the color doesnt change back once a message is sent in the convo > happenning because of component
+rerender
+
+
+chatlist
+- make it scrollable like main chat
+
+
+JWT
+-check to see how youre probably supposed to store the token received from the server
+
+General
+-make default names and avatars
+-make text in profile responsive
+-make profile reveal only apply to other person in that 1 chat - done
+-figure out a way to determine if both users in convo have clicked reveal - done
+-add option to re-hide profile after youve revealed it
+-add option to delete convo - done
+
+-IMPORTANT - make it so that the same ID cant be for the first_member and second_member
+-make conversation that opens after sign in highlighted in chatlist by default
+-change font for chat messages to the Q - done
+-make your own profile editable - done
+-registration page with required fields - done
+- change color for hover StyledChatLinkIcon
+-error handling on login and register
+-demo account
+-add upload for real_avatar in profile edit form
+-CHECK WHY CHATMAINTITLE LINE 143 DOESNT WORK - IMP.
+-Fix height of drop zone in profile edit form
+- convo with no messages breaks the app >
+  File "C:\Users\Stefan\Desktop\python\chat_app_backend\api\views.py", line 62, in <lambda>
+    max(datetime.datetime.strptime(msg['created_on'], '%d.%m.%Y %H:%M:%S') for msg in x['messages']),
+KeyError: 'messages'
+
+-handle registration email conf
+-when profile is revealed, change the data/names being shown in the chattitle - IMP
+- Yeah, for reveal/hide profile a toggle could work. Then I could use an icon for delete chat. For see partners profile I'd need something intuitive. Maybe if the toggle is set to reveal, I could display a popup above the icon for see partners profile with some brief instructions. Thanks
+
+MAIN STUFF
+- Chat functionality - 90%
+- See and edit your own profile page - 90%
+- Reveal feature - 90%
+- Sign in - 100%
+- Sign out - 100
+- Sign up - 70%
+- Create anon chat with random user upon first login + have a button to do it on
+demand - 0%
+- Delete chat - 0 %
+- Demo account - 0%

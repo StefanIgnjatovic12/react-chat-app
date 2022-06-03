@@ -13,7 +13,7 @@ export const  ProfileMainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 70vh;
-  max-height: 70vh;
+  max-height: 90vh;
   width: 30vw;
   border-radius: 25px;
   background-color: #404757;
@@ -86,15 +86,28 @@ export const  ProfileTextBoxHeading = styled.div`
 `
 export const  ProfileLargeTextBox = styled.div`
   font-family: "Quicksand Medium", serif;
-  min-height: 50px; // fix this
+  font-size: 15px;
+  //min-height: 10rem; // fix this
+  //max-height: 3rem;
+  height: 6rem;
   width: 80%;
   margin-top: 10px;
   color: #B1B4BB; // same color as heading subtext
+  padding: 0.5rem 0 0.5rem 0;
+  align-items: center;
   //
 `
 export const  ProfileSmallTextBox = styled.div`
   font-family: "Quicksand Medium", serif;
-  min-height: 30px; // fix this
+  min-height: 2rem;
+  width: 15rem;// fix this
   color: #B1B4BB; // same color as heading subtext
+  display: flex;
+  justify-content: center;
   
+`
+
+export const ProfileSmallTextColored = styled.div`
+  color: #F6F6F6;
+  margin-left: 3%;
 `

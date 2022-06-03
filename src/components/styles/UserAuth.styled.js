@@ -20,7 +20,15 @@ export const Form = styled.form`
   background-color: #404757;
   box-shadow: 0 2px 15px rgb(0 0 0 / 68%)
 `
-
+export const FormTitle = styled.div`
+  font-family: "Quicksand Medium", serif;
+  font-size: 20px;
+  color: #F6F6F6;
+  text-shadow: -1px 1px 0px rgba(255, 255, 255, 0.1), 1px -1px 0px rgba(0, 0, 0, 0.4);
+  opacity: 0.4;
+  margin-bottom: 1rem;
+ 
+`
 export const InputField = styled.input`
   background-color: transparent;
   font-size: 15px;
@@ -60,7 +68,7 @@ export const InputWrapper = styled.div`
   margin-top: ${props => {
     if (props.margin_top) {
       return props.margin_top
-    } 
+    }
   }};
   border-bottom: 1px solid #4E5566;
   margin-bottom: ${props => props.margin_bottom};
@@ -110,4 +118,9 @@ export const HaveAccount = styled.div`
     margin-left: 5px
   }
 
+`
+
+export const ErrorMessageText = styled.div`
+  color: #ff4d4d;,
+  font-family: "Quicksand Medium", serif;
 `

@@ -23,10 +23,10 @@ export const StyledChatMainTitleContainer = styled.div`
   height: 80%;
   margin-left: 5%;
 `
-export const StyledChatMainTitleText = styled.div`
+export const StyledChatMainTitleTextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
 `
 export const StyledChatMainTitleSubtext = styled.div`
   margin-top: 5%;
@@ -35,8 +35,8 @@ export const StyledChatMainTitleSubtext = styled.div`
 `
 export const StyledChatMainTitleAvatar = styled.div`
   background-image: url('data:image/png;base64,${props => props.avatar}');
-  width: 17%;
-  height: 80%;
+  width: 3.5rem;
+  height: 3.2rem;
   max-width: 100%;
   max-height: 100%;
   background-size: cover;
@@ -44,26 +44,34 @@ export const StyledChatMainTitleAvatar = styled.div`
   border-radius: 50%;
   align-self: center;
   margin-right: 5%;
-  margin-bottom: 3%;
+  margin-bottom: 10%;
 `
+export const StyledChatMainTitleAvatarTextContainer = styled.div`
+  display: flex;
+  height: 100%;
 
+`
 export const StyledChatMainTitleButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 45%;
+  justify-content: space-evenly;
+  width: 25%;
   max-height: 100%;
 `
 export const StyledChatMainTitleButton = styled.div`
   border: 2px solid #7076FF;
   border-radius: 1rem;
   max-height: 100%;
-  max-width: 40%;
+  width: 30%;
+  max-width: 50%;
   text-align: center;
+  font-size: 15px;
   color: #7076FF;
   background-color: transparent;
   font-family: "Quicksand Medium", serif;
   overflow: hidden;
   padding: 0.5rem;
+  margin-top: ${props => props.margin_top};
+  margin-bottom: ${props => props.margin_bottom};
   position: relative;
   text-decoration: none;
   transition: .2s transform ease-in-out;
@@ -119,4 +127,36 @@ export const AccessDeniedImage = styled.div`
   width: 7.5rem;
   background-size: cover;
   background-position: top center;
+`
+
+export const TogglerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+`
+
+export const StyledChatMainTitlePopup = styled.div`
+  display: inline-block;
+  color: #F6F6F6;
+  font-size: 11px;
+  font-family: "Quicksand Medium", serif;
+  padding: 0.5rem;
+  border-radius: 10px;
+  background-color: #586074;
+  box-shadow: 0px 10px 5px -7px #2c303a, 5px 5px 15px 5px rgba(99, 108, 131, 0);
+
+`
+
+export const StyledChatMainTitleClickableIcon = styled.div`
+  background-image: url(${props => props.icon});
+  width: 25px;
+  height: 25px;
+  
+  margin-bottom: 3px;
+  background-size: cover;
+  background-position: top center;
+  align-self: center;
+  color: #F6F6F6;
+  cursor: pointer;
 `

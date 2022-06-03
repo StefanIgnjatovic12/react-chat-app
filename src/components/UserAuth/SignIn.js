@@ -1,4 +1,5 @@
 import {useForm} from "react-hook-form";
+import {ErrorMessage} from '@hookform/error-message';
 import {requestOptions} from "../../hooks/requestOptions";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import
@@ -8,11 +9,11 @@ import
     Form,
     Button,
     Icon,
-    InputWrapper, HaveAccount, ButtonWrapper
+    InputWrapper, HaveAccount, ButtonWrapper, FormTitle, ErrorMessageText
 }
     from "../styles/UserAuth.styled";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {StyledToastContainer} from "../styles/ToastContainer.styled";
 import {useEffect} from "react";
@@ -22,7 +23,7 @@ export default function SignIn() {
     const {register, handleSubmit, watch, formState: {errors}} = useForm()
     const navigate = useNavigate()
     const {setActiveConvo} = useActiveConvo()
-    const {state : showAlert} = useLocation()
+    const {state: showAlert} = useLocation()
 
     //alert when redirected from sign up page
     const openAlert = () => toast('You have succesfuly registered, please sign in.', {
@@ -37,8 +38,10 @@ export default function SignIn() {
 
     //checks if
     useEffect(() => {
-        if (showAlert) {openAlert()}
-    },[showAlert])
+        if (showAlert) {
+            openAlert()
+        }
+    }, [showAlert])
 
 
     const signInUser = async (body) => {
@@ -69,10 +72,21 @@ export default function SignIn() {
             {/*alert component*/}
             <StyledToastContainer style={{width: '25%'}}/>
             <Form onSubmit={handleSubmit(onSubmit)} min_height="30vh">
+                <FormTitle>Sign in</FormTitle>
+                <ErrorMessage
+                    errors={errors}
+                    name="username"
+                    render={({message}) => <ErrorMessageText>{message}</ErrorMessageText>}
+                />
+                <ErrorMessage
+                    errors={errors}
+                    name="password"
+                    render={({message}) => <ErrorMessageText>{message}</ErrorMessageText>}
+                />
                 <InputWrapper>
                     <Icon icon={'/username.png'}/>
                     <InputField
-                        {...register("username")}
+                        {...register("username", {required: "Please enter your username"})}
                         placeholder='Username'
                     />
                 </InputWrapper>
@@ -82,7 +96,7 @@ export default function SignIn() {
 
                     <Icon icon={'/password.png'}/>
                     <InputField
-                        {...register("password")}
+                        {...register("password", {required: "Please enter your password."})}
                         placeholder='Password'
                         type='password'
                     />
@@ -90,7 +104,7 @@ export default function SignIn() {
 
                 <ButtonWrapper>
                     <Button type="submit"
-                            value="Sign In"
+                            value="Submit"
                         // margin_top='1.25rem'
                     />
                     <Button type="submit"

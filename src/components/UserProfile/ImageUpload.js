@@ -1,42 +1,52 @@
-import {useState} from 'react';
+import {useCallback} from 'react';
 import {ImageUploadWrapper} from "../styles/ProfileEditForm.styled";
-import {Dropzone, FileItem} from "@dropzone-ui/react";
+import {useDropzone} from 'react-dropzone';
+import {ImageUploadMainText} from "../styles/ImageUpload.styled";
+import {useImageUploadData} from "../../context/ImageUploadDataContext";
 
 export default function ImageUpload() {
-    const [files, setFiles] = useState([]);
-    const updateFiles = (incomingFiles) => {
-        console.log(incomingFiles)
-        //do something with the files
-        setFiles(incomingFiles);
-        //even your own upload implementation
-    };
-    const removeFile = (id) => {
-        setFiles(files.filter((x) => x.id !== id));
-    };
-    return (
-        <ImageUploadWrapper height={'6rem'}>
-            <Dropzone
+    const {uploadedImage, setUploadedImage} = useImageUploadData()
+    const onDrop = useCallback((acceptedFiles) => {
+        acceptedFiles.forEach((file) => {
+            const reader = new FileReader()
 
-                style={
+            reader.onabort = () => console.log('file reading was aborted')
+            reader.onerror = () => console.log('file reading has failed')
+            reader.onload = () => {
+                // Do whatever you want with the file contents
+                const avatarBase64 = reader.result
+                //using context so the image data can be sent from the ProfileEditForm component
+                setUploadedImage(avatarBase64)
+                // console.log(binaryStr)
+            }
+            reader.readAsDataURL(file)
+        })
+
+    }, [])
+    const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop})
+
+    const files = acceptedFiles.map(file => (
+        <li
+            key={file.path}
+            style={{listStyleType: 'none'}}
+        >
+            {file.path}
+        </li>
+    ));
+    return (
+        <ImageUploadWrapper height={'8rem'}>
+
+            <div {...getRootProps({className: 'dropzone'})}>
+                <input {...getInputProps()} />
+                <ImageUploadMainText>
                     {
-                        maxWidth: '100%',
-                        maxHeight: '100%',
-                        backgroundColor: 'transparent',
-                        border: 0,
-                        fontSize: '12px',
-                        fontFamily: '"Quicksand Medium", serif'
+                        files.length !== 0
+                            ? files
+                            : 'Drag & drop or choose your avatar'
                     }
-                }
-                onChange={updateFiles}
-                value={files}
-                label={'Drag your avatar image here or click on this area'}
-                header={false}
-                footer={false}
-            >
-                {files.map((file) => (
-                    <FileItem {...file} onDelete={removeFile} key={file.id} info/>
-                ))}
-            </Dropzone>
+
+                </ImageUploadMainText>
+            </div>
         </ImageUploadWrapper>
 
     )

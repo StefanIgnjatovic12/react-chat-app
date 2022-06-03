@@ -6,6 +6,7 @@ export const EditForm = styled.form`
   justify-content: space-evenly;
   align-items: center;
   min-height: ${props => props.min_height};
+  max-height: 85vh;
   width: 25vw;
   padding: 1rem;
   border-radius: 25px;
@@ -27,7 +28,7 @@ export const SelectDropdown = styled.select`
   border-bottom: 1px solid #4E5566;
   //border-radius: 0.625rem;
   margin-top: 5%;
-  padding: 0.625rem 0.5rem 0.625rem 0.5rem;
+  padding: 0.625rem 0.5rem 0.625rem 0;
 
   :hover {
     border-bottom: 1px solid #726DFE;
@@ -100,7 +101,8 @@ export const ImageUploadWrapper = styled.div`
   margin-top: 1.5rem;
   border: 1px dashed #4E5566;
   border-radius: 0.625rem;
-  height: ${props => props.height};
+  max-height: ${props => props.height};
+  min-height: 4rem;
 
   :hover {
     border: 1px dashed #726DFE
@@ -110,3 +112,4 @@ export const ImageUploadWrapper = styled.div`
     border: 1px dashed #726DFE
   }
 `
+

@@ -16,12 +16,21 @@ export const ChatInputContainer = styled.div`
 `
 export const ChatInputBox = styled.input`
   font-size: 14px;
+  color: white;
+  font-family: "Quicksand Medium", serif;
   padding: 10px;
   background-color: #4E5566;
   border: none;
   border-radius: 25px;
-  width: 80%
-
+  width: 85%;
+  //remove default styling 
+  overflow: auto;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+  //
 `
 
 export const ChatMessageContainer = styled.div`

@@ -13,7 +13,6 @@ export default function ChatMain(){
         <StyledChatMain>
             <ChatMainTitle/>
             <ChatMainMessages/>
-            {/*<ChatMainInput/>*/}
         </StyledChatMain>
     )
 }

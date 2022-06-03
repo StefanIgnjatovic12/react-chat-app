@@ -12,7 +12,7 @@ export const useChat = (roomId) => {
     // const [messages, setMessages] = useState([]); // Sent and received messages
     const socketRef = useRef();
     const {fetchCurrentUser} = useCurrentUser()
-    const {messages, setMessages, activeConvo, reloadSideBar, setReloadSideBar} = useActiveConvo()
+    const {messages, setMessages, activeConvo, headerConvo, reloadSideBar, setReloadSideBar} = useActiveConvo()
 
     useEffect(() => {
         // Creates a WebSocket connection
@@ -55,7 +55,7 @@ export const useChat = (roomId) => {
             message: messageBody,
             created_by: localStorage.getItem('currentUserID'),
             // convo_id: oldMessages[0]['convo_id']
-            convo_id: activeConvo
+            convo_id: activeConvo ? activeConvo : headerConvo
 
         }
         fetch(`http://127.0.0.1:5000/api/save-message/`, authRequestOptions(('POST'), fetchContents))

@@ -3,7 +3,7 @@ import
 {
     InputField,
     Button,
-    InputWrapper, HaveAccount, ButtonWrapper
+    InputWrapper, HaveAccount, ButtonWrapper, FormTitle
 }
     from "../styles/UserAuth.styled";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -17,29 +17,38 @@ import {
 } from "../styles/ProfileEditForm.styled";
 import {authRequestOptions} from "../../hooks/requestOptions";
 import ImageUpload from "./ImageUpload";
+import {useImageUploadData} from "../../context/ImageUploadDataContext";
 
 
-export default function ProfileEditForm({handleModalClose}) {
+export default function ProfileEditForm({handleModalClose, firstTimeFIllingProfile}) {
     const {register, handleSubmit, watch, formState: {errors}} = useForm()
+    const {uploadedImage} = useImageUploadData()
     const location = useLocation().pathname
     const navigate = useNavigate()
     const onSubmit = (formData) => {
-        // console.log(formData)
+        //get base64 of image uploaded within the form from the ImageUploadDataContext
+        let formDataFinal = {real_avatar: uploadedImage, ...formData}
         fetch(`http://127.0.0.1:5000/api/edit-profile/`,
-            authRequestOptions('PATCH', formData))
+            authRequestOptions('PATCH', formDataFinal))
             .then(response => response.json())
             .then(data => console.log(data)
             )
             .catch(error => console.log(error))
         //if location is profile, the user is editing their existing profile
         //otherwise they are setting profile details following signing up
-        location === '/profile' ? handleModalClose() : navigate('/signin')
+        location === '/profile' ? handleModalClose() : navigate('/chat')
     }
 
 
     return (
-        <EditForm onSubmit={handleSubmit(onSubmit)} min_height="30vh">
-
+        <EditForm onSubmit={handleSubmit(onSubmit)} min_height="50vh">
+            <FormTitle>
+                {
+                    firstTimeFIllingProfile
+                        ? 'Please fill out your profile'
+                        : 'Edit your profile'
+                }
+            </FormTitle>
             {location === '/profile' &&
                 <InputWrapper>
                     <InputField
@@ -96,7 +105,7 @@ export default function ProfileEditForm({handleModalClose}) {
                 <LargeInputField placeholder="Interests"/>
             </LargeInputWrapper>
 
-            {/*<ImageUpload/>*/}
+            <ImageUpload/>
 
 
             <ButtonWrapper>

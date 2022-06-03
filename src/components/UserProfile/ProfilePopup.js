@@ -61,8 +61,7 @@ export default function ProfilePopup() {
                 <AccessDeniedImage
                     image={'/oops2.png'}
                 />
-                <AccessDeniedMessage>Your conversation partner has not revealed their profile to you
-                    yet.
+                <AccessDeniedMessage>One of the chat members has not revealed their profile yet.
                 </AccessDeniedMessage>
             </AccessDeniedContainer>
 

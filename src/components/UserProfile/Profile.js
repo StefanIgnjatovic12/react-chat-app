@@ -9,7 +9,7 @@ import {
     ProfileNameTextBox,
     ProfileSmallTextBox,
     ProfileSmallContainer,
-    ProfileLargeTextBox
+    ProfileLargeTextBox, ProfileSmallTextColored
 } from "../styles/Profile.styled";
 
 import {StyledChatMainTitleButton} from "../styles/ChatMainTitle.styled";
@@ -17,6 +17,8 @@ import {StyledChatMainTitleButton} from "../styles/ChatMainTitle.styled";
 import Modal from 'react-modal';
 import ProfilePopup from "./ProfilePopup";
 import ProfileEditForm from "./ProfileEditForm";
+import {ButtonWrapper} from "../styles/UserAuth.styled";
+import {useNavigate} from "react-router-dom";
 
 Modal.setAppElement(document.getElementById('root'));
 const editProfileModalStyle = {
@@ -45,7 +47,7 @@ export default function Profile() {
     const {fetchCurrentUser} = useCurrentUser()
     const [profileInfo, setProfileInfo] = useState([])
     const [modalOpen, setModalOpen] = useState(false)
-
+    const navigate = useNavigate()
     //modalOpen in dep. array so that profile data is refreshed on modalClose
     useEffect(() => {
         fetchCurrentUser().then(id => {
@@ -76,7 +78,7 @@ export default function Profile() {
                     contentLabel="Example Modal"
                 >
                     <ProfileEditForm
-                    handleModalClose={handleModalClose}
+                        handleModalClose={handleModalClose}
                     />
                 </Modal>
                 <ProfileSmallContainer>
@@ -85,7 +87,14 @@ export default function Profile() {
                         avatar={profileInfo.real_avatar}
                     />
                     <ProfileNameTextBox>{profileInfo.real_name}, {profileInfo.age}, {profileInfo.gender}</ProfileNameTextBox>
-                    <ProfileSmallTextBox>Lives in {profileInfo.location}</ProfileSmallTextBox>
+
+                    <ProfileSmallTextBox>
+                        Lives in <ProfileSmallTextColored>{profileInfo.location}</ProfileSmallTextColored>
+                    </ProfileSmallTextBox>
+
+                    <ProfileSmallTextBox>
+                        Here <ProfileSmallTextColored>{profileInfo.reason}</ProfileSmallTextColored>
+                    </ProfileSmallTextBox>
 
                 </ProfileSmallContainer>
 
@@ -95,12 +104,21 @@ export default function Profile() {
                 <ProfileTextBoxHeading>Interests</ProfileTextBoxHeading>
                 <ProfileLargeTextBox>{profileInfo.interests}</ProfileLargeTextBox>
 
-                <ProfileTextBoxHeading>Reason</ProfileTextBoxHeading>
-                <ProfileLargeTextBox>{profileInfo.reason}</ProfileLargeTextBox>
+                {/*<ProfileTextBoxHeading>Reason</ProfileTextBoxHeading>*/}
+                {/*<ProfileLargeTextBox>{profileInfo.reason}</ProfileLargeTextBox>*/}
 
-                <StyledChatMainTitleButton onClick={handleModalOpen}>
-                    Edit your profile
-                </StyledChatMainTitleButton>
+                <ButtonWrapper>
+                    <StyledChatMainTitleButton onClick={handleModalOpen}>
+                        Edit your profile
+                    </StyledChatMainTitleButton>
+                    <StyledChatMainTitleButton
+                        onClick={() => navigate('/chat')}
+                        margin_top={'10px'}
+                        margin_bottom={'10px'}
+                    >
+                        Return to chat
+                    </StyledChatMainTitleButton>
+                </ButtonWrapper>
             </ProfileMainContainer>
         </ProfileBackground>
 
