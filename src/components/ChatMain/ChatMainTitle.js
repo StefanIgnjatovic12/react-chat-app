@@ -148,6 +148,7 @@ export default function ChatMainTitle() {
     let filteredRevealArray = localRevealStatus.filter(c => (c.convo === activeConvo && c.clicked === true) || (c.convo === headerConvo.conv_id && c.clicked === true))
 
     const handleHide = () => {
+
         let payload = {
             //if active convo is set, use the ID of that convo, else use the id of the convo for the header convo
             conversation: activeConvo ? activeConvo : headerConvo.conv_id

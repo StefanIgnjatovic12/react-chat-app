@@ -2,12 +2,12 @@ import {ProfileBackground, ProfileMainContainer} from "../styles/Profile.styled"
 import ProfileEditForm from "./ProfileEditForm";
 
 export default function ProfileCreateForm() {
-    const firstTimeFIllingProfile = true
+    const firstTimeFillingProfile = true
     return (
         <ProfileBackground>
             <ProfileMainContainer>
                 <ProfileEditForm
-                firstTimeFIllingProfile={firstTimeFIllingProfile}
+                firstTimeFillingProfile={firstTimeFillingProfile}
                 />
             </ProfileMainContainer>
         </ProfileBackground>

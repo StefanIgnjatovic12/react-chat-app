@@ -1,6 +1,5 @@
 import {createContext, useState, useContext} from "react";
 import {authRequestOptions} from "../hooks/requestOptions";
-import useStateCallback from "../hooks/useStateCallback";
 // import {authRequestOptions} from "../hooks/requestOptions";
 
 export const CurrentUserContext = createContext()

@@ -20,12 +20,13 @@ import ImageUpload from "./ImageUpload";
 import {useImageUploadData} from "../../context/ImageUploadDataContext";
 
 
-export default function ProfileEditForm({handleModalClose, firstTimeFIllingProfile}) {
+export default function ProfileEditForm({handleModalClose, firstTimeFillingProfile}) {
     const {register, handleSubmit, watch, formState: {errors}} = useForm()
     const {uploadedImage} = useImageUploadData()
     const location = useLocation().pathname
     const navigate = useNavigate()
     const onSubmit = (formData) => {
+        console.log(formData)
         //get base64 of image uploaded within the form from the ImageUploadDataContext
         let formDataFinal = {real_avatar: uploadedImage, ...formData}
         fetch(`http://127.0.0.1:5000/api/edit-profile/`,
@@ -44,7 +45,7 @@ export default function ProfileEditForm({handleModalClose, firstTimeFIllingProfi
         <EditForm onSubmit={handleSubmit(onSubmit)} min_height="50vh">
             <FormTitle>
                 {
-                    firstTimeFIllingProfile
+                    firstTimeFillingProfile
                         ? 'Please fill out your profile'
                         : 'Edit your profile'
                 }
@@ -91,18 +92,18 @@ export default function ProfileEditForm({handleModalClose, firstTimeFIllingProfi
 
             <SelectDropdown {...register("reason")} required>
                 <SelectOption value="" disabled selected hidden>Reason for using chat</SelectOption>
-                <SelectOption value="To meet friends">To meet friends</SelectOption>
-                <SelectOption value="To kill time">To kill time</SelectOption>
-                <SelectOption value="To test out the chat app">To test out the chat app</SelectOption>
+                <SelectOption value="to meet friends">To meet friends</SelectOption>
+                <SelectOption value="to kill time">To kill time</SelectOption>
+                <SelectOption value="to test out the chat app">To test out the chat app</SelectOption>
                 <SelectOption value="Other">Other</SelectOption>
             </SelectDropdown>
 
-            <LargeInputWrapper {...register("description")} height={'6rem'}>
-                <LargeInputField placeholder="Description"/>
+            <LargeInputWrapper  height={'6rem'}>
+                <LargeInputField {...register("description")} placeholder="Description"/>
             </LargeInputWrapper>
 
-            <LargeInputWrapper {...register("interests")} height={'6rem'}>
-                <LargeInputField placeholder="Interests"/>
+            <LargeInputWrapper  height={'6rem'}>
+                <LargeInputField {...register("interests")} placeholder="Interests"/>
             </LargeInputWrapper>
 
             <ImageUpload/>
