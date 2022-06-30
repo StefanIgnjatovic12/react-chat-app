@@ -20,6 +20,7 @@ import Profile from "../UserProfile/Profile";
 import ProfilePopup from "../UserProfile/ProfilePopup";
 import ToggleButton from 'react-toggle-button'
 import {usePopper} from 'react-popper';
+import {useProfileReveal} from "../../context/ProfileRevealContext";
 
 Modal.setAppElement(document.getElementById('root'));
 //style to use for Modal when it contains the profile data
@@ -75,7 +76,12 @@ export default function ChatMainTitle() {
     const [storedRevealStatus, setStoredRevealStatus] = useState(false)
     //state for managing if the Modal is opened or not
     const [modalOpen, setModalOpen] = useState(false)
+
+    //togglerState is the state of the toggler within the component
+    // which corresponds to the profile reveal status
     const [togglerState, setTogglerState] = useState(false)
+    //profileReveal is that same state but available globally
+    const {setProfileReveal} = useProfileReveal()
 
     const [elementHoveredOn, setElementHoveredOn] = useState(null)
     const [referenceElement, setReferenceElement] = useState()
@@ -88,10 +94,14 @@ export default function ChatMainTitle() {
             fetch(`http://127.0.0.1:5000/api/check-reveal-status/${activeConvo}`, authRequestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
+                        console.log('This is reveal status:')
                         console.log(data)
-                        console.log(`Clicked: ${data.revealed}`)
-                        console.log(`Convo match: ${data.convo_id == activeConvo}`)
+                        // console.log(`Clicked: ${data.revealed}`)
+                        // console.log(`Convo match: ${data.convo_id == activeConvo}`)
                         setStoredRevealStatus(data)
+                        //set the toggler on page load based on revealed status fetched from DB
+                        setTogglerState(data.revealed)
+                        setProfileReveal(data.revealed)
                     }
                 )
                 .catch(error => console.log(error))
@@ -111,36 +121,22 @@ export default function ChatMainTitle() {
     const handleModalClose = () => setModalOpen(false)
 
 
-
     const handleReveal = () => {
 
-        // //if there is 1 or more object in the array and if setLocalRevealStatus has already been done for the
-        // //current convo
-        // if (localRevealStatus.length > 0 && localRevealStatus.some(c => c.convo === activeConvo)) {
-        //     //used for SEE PARTNERS PROFILE
-        //     //if profile has been revealed, the click should fetch the partners profile data
-        //     //temp, in future will just redirect to page where this data will be performed
-        //     fetch(`http://127.0.0.1:5000/api/revealed-profile-data/${activeConvo ? activeConvo : headerConvo.conv_id}`, authRequestOptions('GET'))
-        //         .then(response => response.json())
-        //         .then(data => console.log('revealed profile data fetch'))
-        //         .catch(error => console.log(error))
-        // } else {
-            //used for REVEAL PROFILE
-            //else perform the fetch to reveal the profile
-            let payload = {
-                //if active convo is set, use the ID of that convo, else use the id of the convo for the header convo
-                conversation: activeConvo ? activeConvo : headerConvo.conv_id
-            }
-            fetch(`http://127.0.0.1:5000/api/reveal-profile/`, authRequestOptions('POST', payload))
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.log(error))
-            //set the revealed status on the 'local' state so as not to have to make another
-            //call to get the updated reveal status after making the call to set it
-            setLocalRevealStatus(revealClicked => [...revealClicked, {
-                convo: activeConvo ? activeConvo : headerConvo.conv_id,
-                clicked: true
-            }])
+        let payload = {
+            //if active convo is set, use the ID of that convo, else use the id of the convo for the header convo
+            conversation: activeConvo ? activeConvo : headerConvo.conv_id
+        }
+        fetch(`http://127.0.0.1:5000/api/reveal-profile/`, authRequestOptions('POST', payload))
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+        //set the revealed status on the 'local' state so as not to have to make another
+        //call to get the updated reveal status after making the call to set it
+        setLocalRevealStatus(revealClicked => [...revealClicked, {
+            convo: activeConvo ? activeConvo : headerConvo.conv_id,
+            clicked: true
+        }])
         // }
     }
     //Filter the revealClicked array to get a new array if there existed an object for the
@@ -173,7 +169,6 @@ export default function ChatMainTitle() {
 
 
         <StyledChatMainTitle>
-
             <StyledChatMainTitleContainer>
                 {/*{newestConvo.avatar != null && <StyledChatMainTitleAvatar avatar={newestConvo.avatar}/>}*/}
                 <Modal
@@ -190,8 +185,13 @@ export default function ChatMainTitle() {
                     <StyledChatMainTitleTextContainer>
                         {headerConvo &&
                             <>
+                                {/*finish this so the avatar also shows in the title*/}
+                                {/*<div>*/}
+                                {/*    {togglerState ? headerConvo.avatar : headerConvo.real_avatar}*/}
+
+                                {/*</div>*/}
                                 <div>
-                                    {headerConvo.conv_partner}
+                                    {togglerState ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}
                                 </div>
                                 <StyledChatMainTitleSubtext>
                                     {headerConvo.last_message}
@@ -236,7 +236,9 @@ export default function ChatMainTitle() {
                         <ToggleButton
                             value={togglerState}
                             onToggle={(value) => {
+
                                 setTogglerState(!value)
+                                setProfileReveal(!value)
                                 setShowPopper(false)
                                 //if it says ON on the toggler, run handleReveal. If OFF, handleHide
                                 if (!value) {
@@ -275,11 +277,14 @@ export default function ChatMainTitle() {
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         name={'seeProfile'}
-                        icon={'/binoculars.png'}
+                        icon={togglerState ? '/binoculars.png' : '/binocularscolored.png'}
                         onClick={() => {
-                            if (filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo)) {
-                                handleModalOpen()
-                            }
+                            //if toggler is showing ON then open the modal
+                            handleModalOpen()
+                            // togglerState && handleModalOpen()
+                            // if (filteredRevealArray.length > 0 || (storedRevealStatus.revealed && storedRevealStatus.convo_id === activeConvo)) {
+                            //     handleModalOpen()
+                            // }
                         }}
                     />
 

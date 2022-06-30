@@ -28,7 +28,7 @@ General
 -make text in profile responsive
 -make profile reveal only apply to other person in that 1 chat - done
 -figure out a way to determine if both users in convo have clicked reveal - done
--add option to re-hide profile after youve revealed it
+-add option to re-hide profile after youve revealed it - done
 -add option to delete convo - done
 
 -IMPORTANT - make it so that the same ID cant be for the first_member and second_member
@@ -39,7 +39,7 @@ General
 - change color for hover StyledChatLinkIcon
 -error handling on login and register
 -demo account
--add upload for real_avatar in profile edit form
+-add upload for real_avatar in profile edit form - done
 -CHECK WHY CHATMAINTITLE LINE 143 DOESNT WORK - IMP.
 -Fix height of drop zone in profile edit form
 - convo with no messages breaks the app >
@@ -48,9 +48,12 @@ General
 KeyError: 'messages'
 
 -handle registration email conf
--when profile is revealed, change the data/names being shown in the chattitle - IMP
-- Yeah, for reveal/hide profile a toggle could work. Then I could use an icon for delete chat. For see partners profile I'd need something intuitive. Maybe if the toggle is set to reveal, I could display a popup above the icon for see partners profile with some brief instructions. Thanks
-
+-when profile is revealed, change the data/names being shown in the chattitle - IMP - halfway done
+- Yeah, for reveal/hide profile a toggle could work.
+Then I could use an icon for delete chat. For see partners profile I'd need something intuitive.
+Maybe if the toggle is set to reveal, I could display a popup above the icon for see partners profile with some brief instructions. Thanks
+- Check why user with filled out profile redirected to profile fill out on login
+- make subtext in chat title and sidebar items shorten to X characters (ie: 'blabla we shou...'
 MAIN STUFF
 - Chat functionality - 90%
 - See and edit your own profile page - 90%
