@@ -89,13 +89,14 @@ export default function ChatMainTitle() {
     const [showPopper, setShowPopper] = useState(false)
     let {styles, attributes} = usePopper(referenceElement, popperElement, {placement: "top"})
     useEffect(() => {
+        console.log(headerConvo)
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
             fetch(`http://127.0.0.1:5000/api/check-reveal-status/${activeConvo}`, authRequestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
-                        console.log('This is reveal status:')
-                        console.log(data)
+                        // console.log('This is reveal status:')
+                        // console.log(data)
                         // console.log(`Clicked: ${data.revealed}`)
                         // console.log(`Convo match: ${data.convo_id == activeConvo}`)
                         setStoredRevealStatus(data)
