@@ -76,66 +76,33 @@ export default function ChatMainMessages() {
                 ? <StyledChatMainMessages>
                     <ChatNoMessagesYetContainer>
                         There are no messages in this chat yet...
-
                     </ChatNoMessagesYetContainer>
-
                 </StyledChatMainMessages>
 
                 : <StyledChatMainMessages>
-                <ChatMessageContainer>
-                    <ChatMessageList>
-                        {/*Map over messages saved in database and load them in chat*/}
-                        {messages && messages.map((message, i) => (
-                            message.created_by == localStorage.getItem('currentUserID')
-                                ?
-                                <ChatMyMessage
-                                    key={uuidv4()}
-                                >
-                                    {message.message}
-                                </ChatMyMessage>
-                                :
-                                <ChatReceivedMessage
-                                    key={uuidv4()}
-                                >
-                                    {message.message}
+                    <ChatMessageContainer>
+                        <ChatMessageList>
+                            {/*Map over messages saved in database and load them in chat*/}
+                            {messages && messages.map((message, i) => (
+                                message.created_by == localStorage.getItem('currentUserID')
+                                    ?
+                                    <ChatMyMessage
+                                        key={uuidv4()}
+                                    >
+                                        {message.message}
+                                    </ChatMyMessage>
+                                    :
+                                    <ChatReceivedMessage
+                                        key={uuidv4()}
+                                    >
+                                        {message.message}
 
-                                </ChatReceivedMessage>
-                        ))}
-
-                    </ChatMessageList>
-
-                </ChatMessageContainer>
-
-
-            </StyledChatMainMessages>
+                                    </ChatReceivedMessage>
+                            ))}
+                        </ChatMessageList>
+                    </ChatMessageContainer>
+                </StyledChatMainMessages>
             }
-            {/*<StyledChatMainMessages>*/}
-            {/*    <ChatMessageContainer>*/}
-            {/*        <ChatMessageList>*/}
-            {/*            /!*Map over messages saved in database and load them in chat*!/*/}
-            {/*            {messages && messages.map((message, i) => (*/}
-            {/*                message.created_by == localStorage.getItem('currentUserID')*/}
-            {/*                    ?*/}
-            {/*                    <ChatMyMessage*/}
-            {/*                        key={uuidv4()}*/}
-            {/*                    >*/}
-            {/*                        {message.message}*/}
-            {/*                    </ChatMyMessage>*/}
-            {/*                    :*/}
-            {/*                    <ChatReceivedMessage*/}
-            {/*                        key={uuidv4()}*/}
-            {/*                    >*/}
-            {/*                        {message.message}*/}
-
-            {/*                    </ChatReceivedMessage>*/}
-            {/*            ))}*/}
-
-            {/*        </ChatMessageList>*/}
-
-            {/*    </ChatMessageContainer>*/}
-
-
-            {/*</StyledChatMainMessages>*/}
 
             <ChatInputContainer>
 

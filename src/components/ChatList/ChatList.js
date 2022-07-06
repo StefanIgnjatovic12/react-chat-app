@@ -1,4 +1,9 @@
-import {StyledChatList} from "../styles/ChatContainer.styled";
+import {
+    StyledChatList,
+    StyledNoChatsYetModal,
+    StyledNoChatsYetModalContainer, StyledNoChatsYetModalImage,
+    StyledNoChatsYetModalText
+} from "../styles/ChatContainer.styled";
 import ChatListItems from "./ChatListItems";
 import {v4 as uuidv4} from "uuid"
 import {useEffect, useState} from "react";
@@ -92,24 +97,30 @@ export default function ChatList() {
                 // onRequestClose={handleModalClose}
                 style={modalStyle}
             >
-                <p
-                onClick={() => {
+                <StyledNoChatsYetModalContainer>
+                    <StyledNoChatsYetModalText>
+                        Welcome to AnonChat, please click below to start chatting with a random user!
 
-                        fetch(`http://127.0.0.1:5000/api/create-new-chat/`, authRequestOptions('GET'))
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log(data)
-                                //state in context that will be used to tell
-                                //other components to re-render once a new chat is created
-                                setNewChatCreated(newChatCreated + 1)
-                            })
-                            .catch(error => console.log(error))
+                    </StyledNoChatsYetModalText>
+                    <StyledNoChatsYetModalImage
+                        image={'/newchat.png'}
+                        onClick={() => {
 
-                        setModalOpen(false)
-                    }}
-                >
-                    X
-                </p>
+                            fetch(`http://127.0.0.1:5000/api/create-new-chat/`, authRequestOptions('GET'))
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data)
+                                    //state in context that will be used to tell
+                                    //other components to re-render once a new chat is created
+                                    setNewChatCreated(newChatCreated + 1)
+                                })
+                                .catch(error => console.log(error))
+
+                            setModalOpen(false)
+                        }}
+                    >
+                    </StyledNoChatsYetModalImage>
+                </StyledNoChatsYetModalContainer>
             </Modal>
             <StyledChatList>
                 {sideBarMessages.map((convo, index) => (

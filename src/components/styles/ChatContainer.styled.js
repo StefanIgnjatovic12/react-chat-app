@@ -33,12 +33,15 @@ export const StyledChatList = styled.div`
   border-right-width: 1px;
   padding: 10px 0 10px 0;
   overflow-y: auto;
+
   ::-webkit-scrollbar {
     width: 0.25vw;
   }
+
   ::-webkit-scrollbar-thumb {
-    background-color: #B1B4BB ;
+    background-color: #B1B4BB;
   }
+
   ::-webkit-scrollbar-track {
     background-color: #525A6D;
   }
@@ -49,5 +52,27 @@ export const StyledChatMain = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+
+`
+
+export const StyledNoChatsYetModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Quicksand Medium", serif;
+  font-size: 14px;
+`
+export const StyledNoChatsYetModalText = styled.div`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: white;
+`
+export const StyledNoChatsYetModalImage = styled.div`
+  background-image: url(${props => props.image});
+  height: 6rem;
+  width: 6rem;
+  background-size: cover;
+  background-position: top center;
+  cursor: pointer;
 `
