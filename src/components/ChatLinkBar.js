@@ -2,6 +2,7 @@ import {StyledChatLinkBar} from "./styles/ChatContainer.styled";
 import styled from 'styled-components'
 import {Link, useNavigate} from "react-router-dom";
 import {authRequestOptions} from "../hooks/requestOptions";
+import {useCreateNewChat} from "../context/CreateNewChatContext";
 
 const StyledChatLinkIcon = styled.div`
   background-image: url(${props => props.icon});
@@ -27,6 +28,7 @@ const StyledChatLinkIconContainer = styled.div`
   align-items: center;
 `
 export default function ChatLinkBar() {
+    const {newChatCreated, setNewChatCreated} = useCreateNewChat()
     const navigate = useNavigate()
     return (
         <StyledChatLinkBar>
@@ -42,7 +44,12 @@ export default function ChatLinkBar() {
 
                         fetch(`http://127.0.0.1:5000/api/create-new-chat/`, authRequestOptions('GET'))
                             .then(response => response.json())
-                            .then(data => console.log(data))
+                            .then(data => {
+                                console.log(data)
+                                //state in context that will be used to tell
+                                //other components to re-render once a new chat is created
+                                setNewChatCreated(newChatCreated + 1)
+                            })
                             .catch(error => console.log(error))
 
 

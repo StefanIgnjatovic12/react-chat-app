@@ -31,7 +31,17 @@ export const StyledChatList = styled.div`
   border-right-color: #575D6B;
   border-right-style: solid;
   border-right-width: 1px;
-  padding: 10px 0 10px 0
+  padding: 10px 0 10px 0;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 0.25vw;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #B1B4BB ;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #525A6D;
+  }
 `
 
 export const StyledChatMain = styled.div`

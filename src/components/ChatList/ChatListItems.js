@@ -45,7 +45,12 @@ export default function ChatListItems({name, text, avatar, index, coloredArray})
                     {name}
                 </div>
                 <StyledChatChatListSubtext>
-                    {text}
+
+                    {
+                        text.length > 15
+                        ? text.substring(0, 15) + "..."
+                        : text
+                    }
                 </StyledChatChatListSubtext>
             </StyledChatListItemsText>
         </StyledChatListItemsContainer>

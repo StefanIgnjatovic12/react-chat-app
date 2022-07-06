@@ -2,12 +2,38 @@ import {StyledChatList} from "../styles/ChatContainer.styled";
 import ChatListItems from "./ChatListItems";
 import {v4 as uuidv4} from "uuid"
 import {useEffect, useState} from "react";
-import {requestOptions} from "../../hooks/requestOptions";
+import {useNavigate} from "react-router-dom";
+import {authRequestOptions, requestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 import useLocalStorage from "use-local-storage";
+import {useCreateNewChat} from "../../context/CreateNewChatContext";
+//Modal
+import Modal from 'react-modal';
 
-
+Modal.setAppElement(document.getElementById('root'));
+const modalStyle = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#404757',
+        borderRadius: '25px',
+        boxShadow: '0 2px 15px rgb(0 0 0 / 68%)',
+        padding: '2%',
+        border: '0',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '20vh',
+        width: '28vw',
+        // overflowY: 'auto'
+    }
+}
 export default function ChatList() {
     const [sideBarMessages, setSideBarMessages] = useState(null)
     const [loading, setLoading] = useState(null)
@@ -15,12 +41,19 @@ export default function ChatList() {
     const {setHeaderConvo, activeConvo, reloadSideBar, convoDeleteDone} = useActiveConvo()
     const [coloredArray, setColoredArray] = useState([]);
     const [convoIDArrayLocalStorage, setConvoIDArrayLocalStorage] = useLocalStorage('convoIDArrayLocalStorage', [])
+    const {newChatCreated, setNewChatCreated} = useCreateNewChat()
+    const [modalOpen, setModalOpen] = useState(false)
+    const navigate = useNavigate()
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
         fetchCurrentUser().then(id => {
             id !== undefined && fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${id}`, requestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
+                    //if user has no existing convos on redirect to chat, open modal
+                    if (data.length == 0) {
+                        setModalOpen(true)
+                    }
                     //set localstorage with the IDs of all convos loaded
                     let convoIDArray = []
                     data.forEach(convo => convoIDArray.push(convo.conv_id))
@@ -47,25 +80,52 @@ export default function ChatList() {
                 })
                 .catch(error => console.log(error))
         })
-    }, [reloadSideBar, convoDeleteDone])
+    }, [reloadSideBar, convoDeleteDone, newChatCreated])
 
+
+    const handleModalClose = () => setModalOpen(false)
     return (
         loading &&
-        <StyledChatList>
-            {sideBarMessages.map((convo, index) => (
-                <ChatListItems
-                    key={uuidv4()}
-                    name={convo.conv_partner}
-                    text={convo.last_message}
-                    avatar={convo.avatar}
-                    index={index}
-                    coloredArray={coloredArray}
+        <>
+            <Modal
+                isOpen={modalOpen}
+                // onRequestClose={handleModalClose}
+                style={modalStyle}
+            >
+                <p
+                onClick={() => {
+
+                        fetch(`http://127.0.0.1:5000/api/create-new-chat/`, authRequestOptions('GET'))
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data)
+                                //state in context that will be used to tell
+                                //other components to re-render once a new chat is created
+                                setNewChatCreated(newChatCreated + 1)
+                            })
+                            .catch(error => console.log(error))
+
+                        setModalOpen(false)
+                    }}
+                >
+                    X
+                </p>
+            </Modal>
+            <StyledChatList>
+                {sideBarMessages.map((convo, index) => (
+                    <ChatListItems
+                        key={uuidv4()}
+                        name={convo.conv_partner}
+                        text={convo.last_message}
+                        avatar={convo.avatar}
+                        index={index}
+                        coloredArray={coloredArray}
 
 
-                />
-            ))}
-        </StyledChatList>
-
+                    />
+                ))}
+            </StyledChatList>
+        </>
 
     )
 }

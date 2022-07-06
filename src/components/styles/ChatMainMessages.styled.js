@@ -6,6 +6,7 @@ export const StyledChatMainMessages = styled.div`
   border-bottom-width: 1px;
   padding-bottom: 2%;
   height: 75%;
+  
 
 `
 export const ChatInputContainer = styled.div`
@@ -73,4 +74,14 @@ export const ChatReceivedMessage = styled.li`
   border-radius: 15px;
   color: white;
   font-family: "Quicksand Medium", serif;
+`
+
+export const ChatNoMessagesYetContainer = styled.div`
+  font-size: 15px;
+  font-family: "Quicksand Medium", serif;
+  color: white;
+  height: 100% ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

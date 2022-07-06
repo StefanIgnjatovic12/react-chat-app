@@ -13,6 +13,7 @@ import {ProfileRevealProvider} from "./context/ProfileRevealContext";
 import ProfileEditForm from "./components/UserProfile/ProfileEditForm";
 import ProfileCreateForm from "./components/UserProfile/ProfileCreateForm";
 import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
+import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 
 function App() {
 
@@ -21,22 +22,24 @@ function App() {
             <ActiveConvoProvider>
                 <ProfileRevealProvider>
                     <ImageUploadDataProvider>
-                        <Router>
-                            <Routes>
-                                <Route>
+                        <CreateNewChatProvider>
+                            <Router>
+                                <Routes>
+                                    <Route>
 
-                                    <Route path="chat" element={<ChatContainer/>}/>
-                                    <Route path="signup" element={<SignUp/>}/>
-                                    <Route path="signin" element={<SignIn/>}/>
-                                    <Route path="signout" element={<SignOut/>}/>
-                                    <Route path="/" element={<SignIn/>}/>
-                                    <Route path="profile" element={<Profile/>}/>
-                                    <Route path="set-profile-details" element={<ProfileCreateForm/>}/>
+                                        <Route path="chat" element={<ChatContainer/>}/>
+                                        <Route path="signup" element={<SignUp/>}/>
+                                        <Route path="signin" element={<SignIn/>}/>
+                                        <Route path="signout" element={<SignOut/>}/>
+                                        <Route path="/" element={<SignIn/>}/>
+                                        <Route path="profile" element={<Profile/>}/>
+                                        <Route path="set-profile-details" element={<ProfileCreateForm/>}/>
 
 
-                                </Route>
-                            </Routes>
-                        </Router>
+                                    </Route>
+                                </Routes>
+                            </Router>
+                        </CreateNewChatProvider>
                     </ImageUploadDataProvider>
                 </ProfileRevealProvider>
             </ActiveConvoProvider>

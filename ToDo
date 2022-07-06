@@ -17,7 +17,7 @@ rerender
 
 
 chatlist
-- make it scrollable like main chat
+- make it scrollable like main chat - DONE
 
 
 JWT
@@ -41,11 +41,13 @@ General
 -demo account
 -add upload for real_avatar in profile edit form - done
 -CHECK WHY CHATMAINTITLE LINE 143 DOESNT WORK - IMP.
--Fix height of drop zone in profile edit form
-- convo with no messages breaks the app >
-  File "C:\Users\Stefan\Desktop\python\chat_app_backend\api\views.py", line 62, in <lambda>
-    max(datetime.datetime.strptime(msg['created_on'], '%d.%m.%Y %H:%M:%S') for msg in x['messages']),
-KeyError: 'messages'
+-Fix height of drop zone in profile edit form - done
+- convo with no messages breaks the app - done
+-MAKE ACTIVE CONVO SWITCH TO NEW CHAT WHEN CREATED
+-HANDLE CASE WHEN USER FIRST REGISTERS AND HAS NO CONVOS > POPUP TELLING THEM TO CLICK THE BUTTON TO GENERATE
+- STYLING FOR THE WELCOME, CLICK HERE TO BE MATCHED WITH A RANDOM USER MODAL
+- DONT SHOW THE ICONS IN MAINTITLE IF NO CHAT IS SELECTED
+- SHOW IF CONVO PARTNER IS ONLINE IN CHAT LIST
 
 -handle registration email conf
 -when profile is revealed, change the data/names being shown in the chattitle - IMP - halfway done

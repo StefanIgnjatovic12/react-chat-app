@@ -9,7 +9,7 @@ import {
     ChatMessageContainer,
     ChatMessageList,
     ChatMyMessage,
-    ChatReceivedMessage
+    ChatReceivedMessage, ChatNoMessagesYetContainer
 } from '../styles/ChatMainMessages.styled'
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
@@ -72,8 +72,16 @@ export default function ChatMainMessages() {
     }, [convoDeleteDone])
     return (
         <>
+            {messages == null || messages.length == 0
+                ? <StyledChatMainMessages>
+                    <ChatNoMessagesYetContainer>
+                        There are no messages in this chat yet...
 
-            <StyledChatMainMessages>
+                    </ChatNoMessagesYetContainer>
+
+                </StyledChatMainMessages>
+
+                : <StyledChatMainMessages>
                 <ChatMessageContainer>
                     <ChatMessageList>
                         {/*Map over messages saved in database and load them in chat*/}
@@ -100,6 +108,34 @@ export default function ChatMainMessages() {
 
 
             </StyledChatMainMessages>
+            }
+            {/*<StyledChatMainMessages>*/}
+            {/*    <ChatMessageContainer>*/}
+            {/*        <ChatMessageList>*/}
+            {/*            /!*Map over messages saved in database and load them in chat*!/*/}
+            {/*            {messages && messages.map((message, i) => (*/}
+            {/*                message.created_by == localStorage.getItem('currentUserID')*/}
+            {/*                    ?*/}
+            {/*                    <ChatMyMessage*/}
+            {/*                        key={uuidv4()}*/}
+            {/*                    >*/}
+            {/*                        {message.message}*/}
+            {/*                    </ChatMyMessage>*/}
+            {/*                    :*/}
+            {/*                    <ChatReceivedMessage*/}
+            {/*                        key={uuidv4()}*/}
+            {/*                    >*/}
+            {/*                        {message.message}*/}
+
+            {/*                    </ChatReceivedMessage>*/}
+            {/*            ))}*/}
+
+            {/*        </ChatMessageList>*/}
+
+            {/*    </ChatMessageContainer>*/}
+
+
+            {/*</StyledChatMainMessages>*/}
 
             <ChatInputContainer>
 

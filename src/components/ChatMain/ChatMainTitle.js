@@ -195,7 +195,11 @@ export default function ChatMainTitle() {
                                     {togglerState ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}
                                 </div>
                                 <StyledChatMainTitleSubtext>
-                                    {headerConvo.last_message}
+                                    {
+                                        headerConvo.last_message.length > 25
+                                        ? headerConvo.last_message.substring(0, 40) + "..."
+                                        : headerConvo.last_message
+                                    }
                                 </StyledChatMainTitleSubtext>
 
 
