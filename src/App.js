@@ -14,6 +14,7 @@ import ProfileEditForm from "./components/UserProfile/ProfileEditForm";
 import ProfileCreateForm from "./components/UserProfile/ProfileCreateForm";
 import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
 import {CreateNewChatProvider} from "./context/CreateNewChatContext";
+import {TogglerStateProvider} from "./context/TogglerStateContext";
 
 function App() {
 
@@ -23,22 +24,24 @@ function App() {
                 <ProfileRevealProvider>
                     <ImageUploadDataProvider>
                         <CreateNewChatProvider>
-                            <Router>
-                                <Routes>
-                                    <Route>
+                            <TogglerStateProvider>
+                                <Router>
+                                    <Routes>
+                                        <Route>
 
-                                        <Route path="chat" element={<ChatContainer/>}/>
-                                        <Route path="signup" element={<SignUp/>}/>
-                                        <Route path="signin" element={<SignIn/>}/>
-                                        <Route path="signout" element={<SignOut/>}/>
-                                        <Route path="/" element={<SignIn/>}/>
-                                        <Route path="profile" element={<Profile/>}/>
-                                        <Route path="set-profile-details" element={<ProfileCreateForm/>}/>
+                                            <Route path="chat" element={<ChatContainer/>}/>
+                                            <Route path="signup" element={<SignUp/>}/>
+                                            <Route path="signin" element={<SignIn/>}/>
+                                            <Route path="signout" element={<SignOut/>}/>
+                                            <Route path="/" element={<SignIn/>}/>
+                                            <Route path="profile" element={<Profile/>}/>
+                                            <Route path="set-profile-details" element={<ProfileCreateForm/>}/>
 
 
-                                    </Route>
-                                </Routes>
-                            </Router>
+                                        </Route>
+                                    </Routes>
+                                </Router>
+                            </TogglerStateProvider>
                         </CreateNewChatProvider>
                     </ImageUploadDataProvider>
                 </ProfileRevealProvider>

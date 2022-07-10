@@ -107,7 +107,12 @@ export default function ChatMainMessages() {
             <ChatInputContainer>
 
                 <ChatInputBox type="text" value={newMessage} onChange={handleChange}/>
-                <input type="image" src="/send-message.png" onClick={handleSubmit}/>
+                <input
+                    type="image"
+                    src="/send-message-test.png"
+                    // style={{width: '3rem', height: '3rem'}}
+                    onClick={handleSubmit}
+                />
 
             </ChatInputContainer>
         </>

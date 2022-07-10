@@ -15,6 +15,7 @@ import useLocalStorage from "use-local-storage";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
 //Modal
 import Modal from 'react-modal';
+import {useTogglerState} from "../../context/TogglerStateContext";
 
 Modal.setAppElement(document.getElementById('root'));
 const modalStyle = {
@@ -49,12 +50,17 @@ export default function ChatList() {
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
     const [modalOpen, setModalOpen] = useState(false)
     const navigate = useNavigate()
+    const {togglerStateArray, setTogglerStateArray} = useTogglerState()
+    const testArray = [true, false, false]
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
+        // console.log('togglerStateArray:')
+        // console.log(togglerStateArray)
         fetchCurrentUser().then(id => {
             id !== undefined && fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${id}`, requestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
+
                     //if user has no existing convos on redirect to chat, open modal
                     if (data.length == 0) {
                         setModalOpen(true)
@@ -78,14 +84,14 @@ export default function ChatList() {
                         setHeaderConvo(filteredMessageArr[0])
                     } else {
                         console.log('no active convo')
-                        console.log(data[0])
+                        // console.log(data[0])
                         setHeaderConvo(data[0])
                     }
                     setLoading(true)
                 })
                 .catch(error => console.log(error))
         })
-    }, [reloadSideBar, convoDeleteDone, newChatCreated])
+    }, [reloadSideBar, convoDeleteDone, newChatCreated, togglerStateArray])
 
 
     const handleModalClose = () => setModalOpen(false)
@@ -126,11 +132,16 @@ export default function ChatList() {
                 {sideBarMessages.map((convo, index) => (
                     <ChatListItems
                         key={uuidv4()}
-                        name={convo.conv_partner}
+                        name={ convo.conv_partner}
+                        conv_partner_real_name={convo.conv_partner_real_name}
+                        conv_id={convo.conv_id}
                         text={convo.last_message}
                         avatar={convo.avatar}
                         index={index}
                         coloredArray={coloredArray}
+                        //array which contains the state of the toggler for each convo
+                        togglerStateArray={togglerStateArray}
+
 
 
                     />

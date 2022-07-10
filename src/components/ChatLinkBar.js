@@ -37,10 +37,9 @@ export default function ChatLinkBar() {
                     icon={'/profile.png'}
                     onClick={() => navigate('/profile')}
                 />
-
                 <StyledChatLinkIcon
-                    icon={'/github.png'}
-                    onClick={() => {
+                  icon={'/newchatgray.png'}
+                  onClick={() => {
 
                         fetch(`http://127.0.0.1:5000/api/create-new-chat/`, authRequestOptions('GET'))
                             .then(response => response.json())
@@ -55,11 +54,18 @@ export default function ChatLinkBar() {
 
                     }}
                 />
+                <StyledChatLinkIcon
+                    icon={'/github.png'}
+
+                />
+
 
                 <StyledChatLinkIcon
                     icon={'/log-out.png'}
                     onClick={() => navigate('/signout')}
                 />
+
+
             </StyledChatLinkIconContainer>
         </StyledChatLinkBar>
     )

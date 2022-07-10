@@ -21,6 +21,8 @@ import ProfilePopup from "../UserProfile/ProfilePopup";
 import ToggleButton from 'react-toggle-button'
 import {usePopper} from 'react-popper';
 import {useProfileReveal} from "../../context/ProfileRevealContext";
+import useLocalStorage from "use-local-storage";
+import {useTogglerState} from "../../context/TogglerStateContext";
 
 Modal.setAppElement(document.getElementById('root'));
 //style to use for Modal when it contains the profile data
@@ -79,7 +81,13 @@ export default function ChatMainTitle() {
 
     //togglerState is the state of the toggler within the component
     // which corresponds to the profile reveal status
-    const [togglerState, setTogglerState] = useState(false)
+    const [togglerState, setTogglerState] = useLocalStorage('togglerState', false)
+    //Array which contains the toggler state and id of each of the conversations
+    //required in order for the individual ChatListItems to know what the state
+    //of their individual togglers is and for the name on there to change at the
+    //same time as the name in the ChatMainTitle
+    const {togglerStateArray, setTogglerStateArray} = useTogglerState()
+
     //profileReveal is that same state but available globally
     const {setProfileReveal} = useProfileReveal()
 
@@ -89,19 +97,29 @@ export default function ChatMainTitle() {
     const [showPopper, setShowPopper] = useState(false)
     let {styles, attributes} = usePopper(referenceElement, popperElement, {placement: "top"})
     useEffect(() => {
-        console.log(headerConvo)
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
             fetch(`http://127.0.0.1:5000/api/check-reveal-status/${activeConvo}`, authRequestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
-                        // console.log('This is reveal status:')
-                        // console.log(data)
-                        // console.log(`Clicked: ${data.revealed}`)
-                        // console.log(`Convo match: ${data.convo_id == activeConvo}`)
                         setStoredRevealStatus(data)
                         //set the toggler on page load based on revealed status fetched from DB
                         setTogglerState(data.revealed)
+                        //togglerStateArray is updated each time the user clicks on another convo
+                        //from the ChatList. Function prevents duplicates from being added
+                        setTogglerStateArray((prevState) => {
+                            if (prevState && prevState.every((convo) => convo !== undefined)) {
+                                if (prevState.some(({
+                                                        user_id,
+                                                        convo_id,
+                                                        revealed
+                                                    }) => user_id === data.user_id && convo_id === data.convo_id && revealed === data.revealed)) {
+                                    return prevState
+                                } else {
+                                    return [...prevState, data]
+                                }
+                            }
+                        })
                         setProfileReveal(data.revealed)
                     }
                 )
@@ -130,7 +148,9 @@ export default function ChatMainTitle() {
         }
         fetch(`http://127.0.0.1:5000/api/reveal-profile/`, authRequestOptions('POST', payload))
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data)
+            })
             .catch(error => console.log(error))
         //set the revealed status on the 'local' state so as not to have to make another
         //call to get the updated reveal status after making the call to set it
@@ -152,7 +172,9 @@ export default function ChatMainTitle() {
         }
         fetch(`http://127.0.0.1:5000/api/hide-profile/`, authRequestOptions('POST', payload))
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data)
+            })
             .catch(error => console.log(error))
 
     }
@@ -197,8 +219,8 @@ export default function ChatMainTitle() {
                                 <StyledChatMainTitleSubtext>
                                     {
                                         headerConvo.last_message.length > 25
-                                        ? headerConvo.last_message.substring(0, 40) + "..."
-                                        : headerConvo.last_message
+                                            ? headerConvo.last_message.substring(0, 40) + "..."
+                                            : headerConvo.last_message
                                     }
                                 </StyledChatMainTitleSubtext>
 
@@ -241,8 +263,20 @@ export default function ChatMainTitle() {
                         <ToggleButton
                             value={togglerState}
                             onToggle={(value) => {
-
                                 setTogglerState(!value)
+                                //map through the array of togglers (1 for each convo) and match each to
+                                //the active/header convo; if match found, change the revealed status for
+                                //that convo
+                                 setTogglerStateArray(
+                                    togglerStateArray.map((toggler) => {
+                                            if (toggler.convo_id === activeConvo || toggler.convo_id === headerConvo.conv_id) {
+                                                return {...toggler, 'revealed': !toggler.revealed }
+                                            } else {
+                                                return toggler
+                                            }
+                                        }
+                                    )
+                                )
                                 setProfileReveal(!value)
                                 setShowPopper(false)
                                 //if it says ON on the toggler, run handleReveal. If OFF, handleHide
@@ -252,7 +286,8 @@ export default function ChatMainTitle() {
                                     handleHide()
                                 }
 
-                            }}
+                            }
+                            }
                             colors={{
                                 activeThumb: {
                                     base: '#F6F6F6',

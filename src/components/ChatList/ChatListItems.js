@@ -7,12 +7,18 @@ import {
     from "../styles/ChatListItems.styled";
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-export default function ChatListItems({name, text, avatar, index, coloredArray}) {
+
+export default function ChatListItems({name,conv_partner_real_name, conv_id, text, avatar, index, coloredArray, togglerStateArray}) {
     const {activeConvo, setActiveConvo, messages, setMessages, setHeaderConvo} = useActiveConvo()
     const [changeColor, setChangeColor] = useState(false)
+
+
     let id = localStorage.getItem('currentUserID')
+    //filter array which contains the state of the toggler for each convo to get
+    //the one matching this specific ChatListItem
+    let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === conv_id)
 
     const handleClick = () => {
         //change all the values that signify whether a button is colored to false because we want to un-color all
@@ -42,7 +48,8 @@ export default function ChatListItems({name, text, avatar, index, coloredArray})
             <StyledChatListItemsAvatar avatar={avatar}/>
             <StyledChatListItemsText>
                 <div>
-                    {name}
+
+                    {revealed_status_individual_convo[0]['revealed'] ? conv_partner_real_name : name}
                 </div>
                 <StyledChatChatListSubtext>
 
