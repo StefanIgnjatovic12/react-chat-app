@@ -20,7 +20,7 @@ import Profile from "../UserProfile/Profile";
 import ProfilePopup from "../UserProfile/ProfilePopup";
 import ToggleButton from 'react-toggle-button'
 import {usePopper} from 'react-popper';
-import {useProfileReveal} from "../../context/ProfileRevealContext";
+
 import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
 
@@ -89,14 +89,16 @@ export default function ChatMainTitle() {
     const {togglerStateArray, setTogglerStateArray} = useTogglerState()
 
     //profileReveal is that same state but available globally
-    const {setProfileReveal} = useProfileReveal()
-
     const [elementHoveredOn, setElementHoveredOn] = useState(null)
     const [referenceElement, setReferenceElement] = useState()
     const [popperElement, setPopperElement] = useState()
     const [showPopper, setShowPopper] = useState(false)
     let {styles, attributes} = usePopper(referenceElement, popperElement, {placement: "top"})
+    //filtered toggleStateArray to only contain the data for the active convo
+    let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === activeConvo)
+
     useEffect(() => {
+
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
             fetch(`http://127.0.0.1:5000/api/check-reveal-status/${activeConvo}`, authRequestOptions('GET'))
@@ -105,27 +107,17 @@ export default function ChatMainTitle() {
                         setStoredRevealStatus(data)
                         //set the toggler on page load based on revealed status fetched from DB
                         setTogglerState(data.revealed)
-                        //togglerStateArray is updated each time the user clicks on another convo
-                        //from the ChatList. Function prevents duplicates from being added
-                        setTogglerStateArray((prevState) => {
-                            if (prevState && prevState.every((convo) => convo !== undefined)) {
-                                if (prevState.some(({
-                                                        user_id,
-                                                        convo_id,
-                                                        revealed
-                                                    }) => user_id === data.user_id && convo_id === data.convo_id && revealed === data.revealed)) {
-                                    return prevState
-                                } else {
-                                    return [...prevState, data]
-                                }
-                            }
-                        })
-                        setProfileReveal(data.revealed)
+
                     }
                 )
                 .catch(error => console.log(error))
+            fetch(`http://127.0.0.1:5000/api/reveal-status-for-all-user-convos/`, authRequestOptions('GET'))
+                            .then(response => response.json())
+                            .then(data => {
+                                setTogglerStateArray(data)
+                            })
+                            .catch(error => console.log(error))
         }
-
     }, [activeConvo])
 
     const handleMouseEnter = (e) => {
@@ -158,6 +150,7 @@ export default function ChatMainTitle() {
             convo: activeConvo ? activeConvo : headerConvo.conv_id,
             clicked: true
         }])
+
         // }
     }
     //Filter the revealClicked array to get a new array if there existed an object for the
@@ -214,7 +207,9 @@ export default function ChatMainTitle() {
 
                                 {/*</div>*/}
                                 <div>
-                                    {togglerState ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}
+                                    {/*only show partners real name if both user and partner have revealed their
+                                     profiles*/}
+                                    {revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}
                                 </div>
                                 <StyledChatMainTitleSubtext>
                                     {
@@ -267,17 +262,17 @@ export default function ChatMainTitle() {
                                 //map through the array of togglers (1 for each convo) and match each to
                                 //the active/header convo; if match found, change the revealed status for
                                 //that convo
-                                 setTogglerStateArray(
+                                setTogglerStateArray(
                                     togglerStateArray.map((toggler) => {
                                             if (toggler.convo_id === activeConvo || toggler.convo_id === headerConvo.conv_id) {
-                                                return {...toggler, 'revealed': !toggler.revealed }
+                                                return {...toggler, 'revealed': !toggler.revealed}
                                             } else {
                                                 return toggler
                                             }
                                         }
                                     )
                                 )
-                                setProfileReveal(!value)
+                                // setProfileReveal(!value)
                                 setShowPopper(false)
                                 //if it says ON on the toggler, run handleReveal. If OFF, handleHide
                                 if (!value) {

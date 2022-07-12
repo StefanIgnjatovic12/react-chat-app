@@ -50,17 +50,14 @@ export default function ChatList() {
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
     const [modalOpen, setModalOpen] = useState(false)
     const navigate = useNavigate()
-    const {togglerStateArray, setTogglerStateArray} = useTogglerState()
-    const testArray = [true, false, false]
+    const {togglerStateArray} = useTogglerState()
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
-        // console.log('togglerStateArray:')
-        // console.log(togglerStateArray)
+
         fetchCurrentUser().then(id => {
             id !== undefined && fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${id}`, requestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
-
                     //if user has no existing convos on redirect to chat, open modal
                     if (data.length == 0) {
                         setModalOpen(true)
@@ -136,13 +133,10 @@ export default function ChatList() {
                         conv_partner_real_name={convo.conv_partner_real_name}
                         conv_id={convo.conv_id}
                         text={convo.last_message}
+                        real_avatar={convo.real_avatar}
                         avatar={convo.avatar}
                         index={index}
                         coloredArray={coloredArray}
-                        //array which contains the state of the toggler for each convo
-                        togglerStateArray={togglerStateArray}
-
-
 
                     />
                 ))}

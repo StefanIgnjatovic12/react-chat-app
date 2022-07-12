@@ -8,18 +8,31 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {useEffect, useState} from "react";
+import {useTogglerState} from "../../context/TogglerStateContext";
 
 
-export default function ChatListItems({name,conv_partner_real_name, conv_id, text, avatar, index, coloredArray, togglerStateArray}) {
-    const {activeConvo, setActiveConvo, messages, setMessages, setHeaderConvo} = useActiveConvo()
+export default function ChatListItems({
+                                          name,
+                                          conv_partner_real_name,
+                                          conv_id,
+                                          text,
+                                          avatar,
+                                          real_avatar,
+                                          index,
+                                          coloredArray,
+                                          // togglerStateArray
+                                      }) {
+    const {activeConvo, setActiveConvo, messages, setMessages, headerConvo, setHeaderConvo} = useActiveConvo()
     const [changeColor, setChangeColor] = useState(false)
+    const [otherUserNotRevealed, setOtherUserNotRevealed] = useState(false)
+    const {togglerStateArray} = useTogglerState()
 
 
     let id = localStorage.getItem('currentUserID')
     //filter array which contains the state of the toggler for each convo to get
     //the one matching this specific ChatListItem
-    let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === conv_id)
 
+    let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === conv_id)
     const handleClick = () => {
         //change all the values that signify whether a button is colored to false because we want to un-color all
         //buttons that were previously colored so not more than 1 at a time is colored
@@ -45,18 +58,24 @@ export default function ChatListItems({name,conv_partner_real_name, conv_id, tex
     }
     return (
         <StyledChatListItemsContainer onClick={handleClick} colored={coloredArray[index]}>
-            <StyledChatListItemsAvatar avatar={avatar}/>
+            <StyledChatListItemsAvatar
+
+                avatar={togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? real_avatar : avatar}
+                />
+
+
             <StyledChatListItemsText>
                 <div>
+                    {togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? conv_partner_real_name : name}
 
-                    {revealed_status_individual_convo[0]['revealed'] ? conv_partner_real_name : name}
+
                 </div>
                 <StyledChatChatListSubtext>
 
                     {
                         text.length > 15
-                        ? text.substring(0, 15) + "..."
-                        : text
+                            ? text.substring(0, 15) + "..."
+                            : text
                     }
                 </StyledChatChatListSubtext>
             </StyledChatListItemsText>

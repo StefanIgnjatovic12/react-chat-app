@@ -56,7 +56,6 @@ export default function ChatLinkBar() {
                 />
                 <StyledChatLinkIcon
                     icon={'/github.png'}
-
                 />
 
 
