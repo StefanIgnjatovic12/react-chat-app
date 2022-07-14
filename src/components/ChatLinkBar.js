@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import {Link, useNavigate} from "react-router-dom";
 import {authRequestOptions} from "../hooks/requestOptions";
 import {useCreateNewChat} from "../context/CreateNewChatContext";
+import {usePopper} from "react-popper";
+import {StyledChatMainTitlePopup} from "./styles/ChatMainTitle.styled";
+import {useState} from "react";
 
 const StyledChatLinkIcon = styled.div`
   background-image: url(${props => props.icon});
@@ -30,12 +33,47 @@ const StyledChatLinkIconContainer = styled.div`
 export default function ChatLinkBar() {
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
     const navigate = useNavigate()
+    const [elementHoveredOn, setElementHoveredOn] = useState(null)
+    const [referenceElement, setReferenceElement] = useState()
+    const [popperElement, setPopperElement] = useState()
+    const [showPopper, setShowPopper] = useState(false)
+    let {styles, attributes} = usePopper(referenceElement, popperElement, {placement: "top"})
+    const handleMouseEnter = (e) => {
+        setElementHoveredOn(e.target.getAttribute('name'))
+        setShowPopper(true)
+    }
+    const handleMouseLeave = () => {
+        setElementHoveredOn(null)
+        setShowPopper(false)
+    }
     return (
         <StyledChatLinkBar>
             <StyledChatLinkIconContainer>
+                {showPopper && <StyledChatMainTitlePopup
+                        ref={setPopperElement}
+                        style={styles.popper}
+                        {...attributes.popper}
+                    >
+                        {
+                            elementHoveredOn === 'profile'
+                                ? "Profile"
+                                : elementHoveredOn === "newchat"
+                                    ? 'Create new chat'
+                                    : elementHoveredOn === "github"
+                                        ? 'Github'
+                                        : elementHoveredOn === "signout"
+                                            ? 'Sign Out'
+                                            : null
+
+                        }
+                    </StyledChatMainTitlePopup>}
                 <StyledChatLinkIcon
                     icon={'/profile.png'}
                     onClick={() => navigate('/profile')}
+                    ref={elementHoveredOn === 'profile' ? setReferenceElement : null}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        name={'profile'}
                 />
                 <StyledChatLinkIcon
                   icon={'/newchatgray.png'}
@@ -53,15 +91,28 @@ export default function ChatLinkBar() {
 
 
                     }}
+                  ref={elementHoveredOn === 'newchat' ? setReferenceElement : null}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        name={'newchat'}
                 />
                 <StyledChatLinkIcon
                     icon={'/github.png'}
+                    ref={elementHoveredOn === 'github' ? setReferenceElement : null}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        name={'github'}
                 />
 
 
                 <StyledChatLinkIcon
                     icon={'/log-out.png'}
                     onClick={() => navigate('/signout')}
+                    ref={elementHoveredOn === 'signout' ? setReferenceElement : null}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        name={'signout'}
+
                 />
 
 

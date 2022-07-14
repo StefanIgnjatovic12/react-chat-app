@@ -145,7 +145,7 @@ export const StyledChatMainTitlePopup = styled.div`
   border-radius: 10px;
   background-color: #586074;
   box-shadow: 0px 10px 5px -7px #2c303a, 5px 5px 15px 5px rgba(99, 108, 131, 0);
-
+  margin-bottom: 5px;
 `
 
 export const StyledChatMainTitleClickableIcon = styled.div`
