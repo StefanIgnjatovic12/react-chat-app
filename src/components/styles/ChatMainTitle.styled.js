@@ -27,24 +27,25 @@ export const StyledChatMainTitleTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
 `
 export const StyledChatMainTitleSubtext = styled.div`
-  margin-top: 5%;
+  margin-top: 0.125rem;
   font-size: 14px;
   color: #B1B4BB;
 `
 export const StyledChatMainTitleAvatar = styled.div`
   background-image: url('data:image/png;base64,${props => props.avatar}');
-  width: 3.5rem;
-  height: 3.2rem;
+  width: 5rem;
+  height: 3.4rem;
   max-width: 100%;
   max-height: 100%;
   background-size: cover;
   background-position: top center;
   border-radius: 50%;
   align-self: center;
-  margin-right: 5%;
-  margin-bottom: 10%;
+  margin-right: 20%;
+  //margin-bottom: 10%;
 `
 export const StyledChatMainTitleAvatarTextContainer = styled.div`
   display: flex;

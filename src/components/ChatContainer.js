@@ -20,7 +20,6 @@ export const ChatBackground = styled.div`
 
 export default function ChatContainer() {
     const [userProfileFilledOut, setUserProfileFilledOut] = useState()
-
     useEffect(() => {
         console.log('useEffect Ran')
         fetch(`http://127.0.0.1:5000/api/profile-check-first-signin/`,

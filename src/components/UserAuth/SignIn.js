@@ -20,7 +20,7 @@ import {useEffect} from "react";
 
 export default function SignIn() {
 
-    const {register, handleSubmit, watch, formState: {errors}} = useForm()
+    const {register, handleSubmit, watch, formState: {errors}, setError, clearErrors} = useForm()
     const navigate = useNavigate()
     const {setActiveConvo} = useActiveConvo()
     const {state: showAlert} = useLocation()
@@ -55,9 +55,15 @@ export default function SignIn() {
 
         if (response.status === 200) {
             navigate('/chat')
+        } else if (response.status === 400) {
+            setError('server', {
+                type: "server",
+                message: 'Incorrect credentials, please try again',
+            })
         }
 
     }
+
     const onSubmit = data => {
         console.log(data)
         signInUser(data)
@@ -71,17 +77,27 @@ export default function SignIn() {
         <Background>
             {/*alert component*/}
             <StyledToastContainer style={{width: '25%'}}/>
-            <Form onSubmit={handleSubmit(onSubmit)} min_height="30vh">
+            <Form
+                onSubmit={handleSubmit(onSubmit)}
+                min_height="30vh"
+                onClick={() => clearErrors(['server', 'username', 'password'])}
+
+            >
                 <FormTitle>Sign in</FormTitle>
                 <ErrorMessage
                     errors={errors}
+                    name="server"
+                    render={({message}) => <ErrorMessageText message_length={message.length}>{message}</ErrorMessageText>}
+                />
+                <ErrorMessage
+                    errors={errors}
                     name="username"
-                    render={({message}) => <ErrorMessageText>{message}</ErrorMessageText>}
+                    render={({message}) => <ErrorMessageText message_length={message.length}>{message}</ErrorMessageText>}
                 />
                 <ErrorMessage
                     errors={errors}
                     name="password"
-                    render={({message}) => <ErrorMessageText>{message}</ErrorMessageText>}
+                    render={({message}) => <ErrorMessageText message_length={message.length}>{message}</ErrorMessageText>}
                 />
                 <InputWrapper>
                     <Icon icon={'/username.png'}/>

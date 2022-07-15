@@ -33,6 +33,7 @@ export default function ChatListItems({
     //the one matching this specific ChatListItem
 
     let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === conv_id)
+
     const handleClick = () => {
         //change all the values that signify whether a button is colored to false because we want to un-color all
         //buttons that were previously colored so not more than 1 at a time is colored
@@ -48,6 +49,7 @@ export default function ChatListItems({
                 // console.log(data[0])
 
                 //set activeConvo  the ID of the convo clicked on the left
+                console.log(`activeConvo data from ChatListItems: ${data[0].convo_id}`)
                 setActiveConvo(data[0].convo_id)
                 //use [0] because only 1 convo is returned in the data
                 setMessages(data[0].messages)
@@ -59,14 +61,15 @@ export default function ChatListItems({
     return (
         <StyledChatListItemsContainer onClick={handleClick} colored={coloredArray[index]}>
             <StyledChatListItemsAvatar
-
-                avatar={togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? real_avatar : avatar}
+                avatar={avatar}
+                // avatar={togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? real_avatar : avatar}
                 />
 
 
             <StyledChatListItemsText>
                 <div>
-                    {togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? conv_partner_real_name : name}
+                    {name}
+                    {/*{togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? conv_partner_real_name : name}*/}
 
 
                 </div>

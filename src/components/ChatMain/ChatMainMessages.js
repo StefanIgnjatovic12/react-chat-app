@@ -50,16 +50,21 @@ export default function ChatMainMessages() {
                         authRequestOptions(('GET')))
                         .then(response => response.json())
                         .then(data => {
+
                             // console.log(`old message data:`)
                             // console.log(data)
                             //if active conversation is set, it means a different convo than the default
                             //one was selected so set messages to that on page reload
                             //if no activeConvo, set messages to the convo with the newest message
                             if (activeConvo) {
+                                // console.log(`activeConvo from ChatMainMessages: ${activeConvo}`)
+                                // console.log(`activeConvo data from ChatMainMessages: ${data[0].id}`)
+
                                 let filteredMessageArr = data.filter(convo => convo.id == activeConvo)
                                 // console.log(filteredMessageArr[0].messages)
                                 setMessages(filteredMessageArr[0].messages)
                             } else {
+                                // console.log(`activeConvo data from ChatMainMessages: ${data[0].id}`)
                                 setActiveConvo(data[0].id)
                                 setMessages(data[0].messages)
                             }

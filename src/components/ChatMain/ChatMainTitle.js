@@ -23,6 +23,7 @@ import {usePopper} from 'react-popper';
 
 import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
+import {useCreateNewChat} from "../../context/CreateNewChatContext";
 
 Modal.setAppElement(document.getElementById('root'));
 //style to use for Modal when it contains the profile data
@@ -87,7 +88,7 @@ export default function ChatMainTitle() {
     //of their individual togglers is and for the name on there to change at the
     //same time as the name in the ChatMainTitle
     const {togglerStateArray, setTogglerStateArray} = useTogglerState()
-
+    const {newChatCreated} = useCreateNewChat()
     //profileReveal is that same state but available globally
     const [elementHoveredOn, setElementHoveredOn] = useState(null)
     const [referenceElement, setReferenceElement] = useState()
@@ -96,11 +97,13 @@ export default function ChatMainTitle() {
     let {styles, attributes} = usePopper(referenceElement, popperElement, {placement: "top"})
     //filtered toggleStateArray to only contain the data for the active convo
     let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === activeConvo)
-
+    // console.log('revealed_status_individual_convo')
+    // console.log(revealed_status_individual_convo)
     useEffect(() => {
 
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
+            // console.log(`This is activeConvo: ${activeConvo}`)
             fetch(`http://127.0.0.1:5000/api/check-reveal-status/${activeConvo}`, authRequestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
@@ -114,11 +117,12 @@ export default function ChatMainTitle() {
             fetch(`http://127.0.0.1:5000/api/reveal-status-for-all-user-convos/`, authRequestOptions('GET'))
                             .then(response => response.json())
                             .then(data => {
+
                                 setTogglerStateArray(data)
                             })
                             .catch(error => console.log(error))
         }
-    }, [activeConvo])
+    }, [activeConvo, newChatCreated, convoDeleteDone])
 
     const handleMouseEnter = (e) => {
         setElementHoveredOn(e.target.getAttribute('name'))
@@ -178,7 +182,7 @@ export default function ChatMainTitle() {
         setConvoDeleteDone(convoDeleteDone + 1)
         //once a convo is deleted, set the active convo to the first convo remaining
         //ie set the active convo to the first convo ID in the array in LS
-        setActiveConvo(localStorage.getItem('convoIDArrayLocalStorage')[1])
+        setActiveConvo((JSON.parse(localStorage.getItem('convoIDArrayLocalStorage')))[0])
 
     }
     return (
@@ -197,19 +201,21 @@ export default function ChatMainTitle() {
                     <ProfilePopup/>
                 </Modal>
                 <StyledChatMainTitleAvatarTextContainer>
-                    {/*<StyledChatMainTitleAvatar avatar={headerConvo.avatar}/>*/}
+                    {/*<StyledChatMainTitleAvatar avatar={togglerState ? headerConvo.real_avatar : headerConvo.avatar}/>*/}
                     <StyledChatMainTitleTextContainer>
                         {headerConvo &&
                             <>
                                 {/*finish this so the avatar also shows in the title*/}
                                 {/*<div>*/}
+
                                 {/*    {togglerState ? headerConvo.avatar : headerConvo.real_avatar}*/}
 
                                 {/*</div>*/}
                                 <div>
                                     {/*only show partners real name if both user and partner have revealed their
                                      profiles*/}
-                                    {revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}
+                                    {/*{revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}*/}
+                                    {headerConvo.conv_partner_real_name}
                                 </div>
                                 <StyledChatMainTitleSubtext>
                                     {
