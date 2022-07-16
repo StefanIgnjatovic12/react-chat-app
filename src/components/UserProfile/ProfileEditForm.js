@@ -3,12 +3,13 @@ import
 {
     InputField,
     Button,
-    InputWrapper, HaveAccount, ButtonWrapper, FormTitle
+    InputWrapper, HaveAccount, ButtonWrapper, FormTitle, ErrorMessageText
 }
     from "../styles/UserAuth.styled";
 import {useLocation, useNavigate} from "react-router-dom";
 
 import {
+    ColoredText,
     EditForm, ImageUploadWrapper,
     LargeInputField,
     LargeInputWrapper,
@@ -18,31 +19,59 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import ImageUpload from "./ImageUpload";
 import {useImageUploadData} from "../../context/ImageUploadDataContext";
+import {useProfileInfo} from "../../context/ProfileInfoContext";
+import {ErrorMessage} from "@hookform/error-message";
 
 
-export default function ProfileEditForm({handleModalClose, firstTimeFillingProfile}) {
-    const {register, handleSubmit, watch, formState: {errors}} = useForm()
+export default function ProfileEditForm({handleModalClose, firstTimeFillingProfile, setUserProfileFilledOut}) {
+    const {register, handleSubmit, watch, formState: {errors}, setError, clearErrors} = useForm()
     const {uploadedImage} = useImageUploadData()
     const location = useLocation().pathname
     const navigate = useNavigate()
+    const {profileInfo, setProfileInfo} = useProfileInfo()
     const onSubmit = (formData) => {
-        console.log(formData)
+        console.log(Object.values(formData))
+        if (Object.values(formData).every(value => value === '')) {
+            setError('all_fields_empty', {
+                type: "server",
+                message: 'Please edit at least 1 field before submitting'
+            })
+        }
+
         //get base64 of image uploaded within the form from the ImageUploadDataContext
-        let formDataFinal = {real_avatar: uploadedImage, ...formData}
-        fetch(`http://127.0.0.1:5000/api/edit-profile/`,
-            authRequestOptions('PATCH', formDataFinal))
-            .then(response => response.json())
-            .then(data => console.log(data)
-            )
-            .catch(error => console.log(error))
-        //if location is profile, the user is editing their existing profile
-        //otherwise they are setting profile details following signing up
-        location === '/profile' ? handleModalClose() : navigate('/chat')
+        else {
+            let formDataFinal = {real_avatar: uploadedImage, ...formData}
+            fetch(`http://127.0.0.1:5000/api/edit-profile/`,
+                authRequestOptions('PATCH', formDataFinal))
+                .then(response => response.json())
+                .then(data => {
+                        console.log(data)
+                        console.log(location)
+                        if (location === '/profile') {
+                            navigate('/chat')
+                        } else if (location === '/chat') {
+                            setUserProfileFilledOut(true)
+                        }
+                    }
+                )
+                .catch(error => console.log(error))
+
+        }
+
+
+        //for ChatContainer component so the proper info is shown
+        // setUserProfileFilledOut(true)
     }
 
 
     return (
-        <EditForm onSubmit={handleSubmit(onSubmit)} min_height="50vh">
+        <EditForm
+            onSubmit={handleSubmit(onSubmit)}
+            onClick={() => clearErrors(['all_fields_empty'])}
+
+            min_height="50vh"
+
+        >
             <FormTitle>
                 {
                     firstTimeFillingProfile
@@ -50,11 +79,21 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
                         : 'Edit your profile'
                 }
             </FormTitle>
+            <ErrorMessage
+                errors={errors}
+                name="all_fields_empty"
+                render={({message}) => <ErrorMessageText message_length={message.length}>{message}</ErrorMessageText>}
+            />
             {location === '/profile' &&
                 <InputWrapper>
                     <InputField
                         {...register("username")}
-                        placeholder='Username'
+                        placeholder={
+                            firstTimeFillingProfile
+                                ? 'Username:'
+                                : `Username: ` + profileInfo.username
+
+                        }
                     />
                 </InputWrapper>
             }
@@ -63,14 +102,22 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
             <InputWrapper margin_top={'1.5rem'}>
                 <InputField
                     {...register("real_name")}
-                    placeholder='Real name'
+                    placeholder={
+                        firstTimeFillingProfile
+                            ? 'Real name:'
+                            : `Real name: ` + profileInfo.real_name
+                    }
                 />
             </InputWrapper>
 
             <InputWrapper margin_top={'1.5rem'}>
                 <InputField
                     {...register("age")}
-                    placeholder='Age'
+                    placeholder={
+                        firstTimeFillingProfile
+                            ? 'Age'
+                            : `Age: ` + profileInfo.age
+                    }
                 />
             </InputWrapper>
 
@@ -78,7 +125,11 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
 
                 <InputField
                     {...register("location")}
-                    placeholder='Location'
+                    placeholder={
+                        firstTimeFillingProfile
+                            ? 'Location:'
+                            : `Location: ` + profileInfo.location
+                    }
                 />
             </InputWrapper>
 
@@ -98,12 +149,25 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
                 <SelectOption value="Other">Other</SelectOption>
             </SelectDropdown>
 
-            <LargeInputWrapper  height={'6rem'}>
-                <LargeInputField {...register("description")} placeholder="Description"/>
+            <LargeInputWrapper height={'6rem'}>
+                <LargeInputField
+                    {...register("description")}
+                    placeholder={
+                        firstTimeFillingProfile
+                            ? 'Description:'
+                            : `Description: ` + profileInfo.description
+                    }/>
             </LargeInputWrapper>
 
-            <LargeInputWrapper  height={'6rem'}>
-                <LargeInputField {...register("interests")} placeholder="Interests"/>
+            <LargeInputWrapper height={'6rem'}>
+                <LargeInputField
+                    {...register("interests")}
+                    placeholder={
+                        firstTimeFillingProfile
+                            ? 'Interests:'
+                            : `Interests: ` + profileInfo.interests
+                    }
+                />
             </LargeInputWrapper>
 
             <ImageUpload/>
@@ -118,6 +182,11 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
                 <Button type="submit"
                         value="Cancel"
                         onClick={handleSubmit(handleModalClose)}
+                    // onClick={
+                    //     firstTimeFillingProfile
+                    //     ? navigate('/signout')
+                    //     : handleSubmit(handleModalClose)
+                    // }
                     // margin_top='0.05rem'
                 />
             </ButtonWrapper>

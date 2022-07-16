@@ -19,6 +19,7 @@ import ProfilePopup from "./ProfilePopup";
 import ProfileEditForm from "./ProfileEditForm";
 import {ButtonWrapper} from "../styles/UserAuth.styled";
 import {useNavigate} from "react-router-dom";
+import {useProfileInfo} from "../../context/ProfileInfoContext";
 
 Modal.setAppElement(document.getElementById('root'));
 const editProfileModalStyle = {
@@ -45,9 +46,10 @@ const editProfileModalStyle = {
 
 export default function Profile() {
     const {fetchCurrentUser} = useCurrentUser()
-    const [profileInfo, setProfileInfo] = useState([])
+    // const [profileInfo, setProfileInfo] = useState([])
     const [modalOpen, setModalOpen] = useState(false)
     const navigate = useNavigate()
+    const {profileInfo, setProfileInfo} = useProfileInfo()
     //modalOpen in dep. array so that profile data is refreshed on modalClose
     useEffect(() => {
         fetchCurrentUser().then(id => {

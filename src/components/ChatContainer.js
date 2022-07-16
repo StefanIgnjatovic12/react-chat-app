@@ -42,7 +42,7 @@ export default function ChatContainer() {
                 </StyledChatContainer>
             </ChatBackground>
             : <ChatBackground>
-                <ProfileCreateForm/>
+                <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
             </ChatBackground>
 
 

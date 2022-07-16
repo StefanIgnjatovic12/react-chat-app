@@ -15,6 +15,7 @@ import ProfileCreateForm from "./components/UserProfile/ProfileCreateForm";
 import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
 import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
+import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 
 
 function App() {
@@ -22,10 +23,10 @@ function App() {
     return (
         <CurrentUserProvider>
             <ActiveConvoProvider>
-
                     <ImageUploadDataProvider>
                         <CreateNewChatProvider>
                             <TogglerStateProvider>
+                                <ProfileInfoProvider>
                                     <Router>
                                         <Routes>
                                             <Route>
@@ -42,6 +43,7 @@ function App() {
                                             </Route>
                                         </Routes>
                                     </Router>
+                                    </ProfileInfoProvider>
                             </TogglerStateProvider>
                         </CreateNewChatProvider>
                     </ImageUploadDataProvider>
