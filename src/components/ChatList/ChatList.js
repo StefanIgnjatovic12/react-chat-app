@@ -137,6 +137,7 @@ export default function ChatList() {
                         avatar={convo.avatar}
                         index={index}
                         coloredArray={coloredArray}
+                        is_online={convo.is_online}
 
                     />
                 ))}

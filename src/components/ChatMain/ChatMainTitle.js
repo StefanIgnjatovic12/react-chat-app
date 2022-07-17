@@ -24,6 +24,7 @@ import {usePopper} from 'react-popper';
 import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
+import {StyledOfflineIndicatorDot, StyledOnlineIndicatorDot} from "../styles/ChatListItems.styled";
 
 Modal.setAppElement(document.getElementById('root'));
 //style to use for Modal when it contains the profile data
@@ -215,7 +216,7 @@ export default function ChatMainTitle() {
                                     {/*only show partners real name if both user and partner have revealed their
                                      profiles*/}
                                     {/*{revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}*/}
-                                    {headerConvo.conv_partner_real_name}
+                                    {headerConvo.conv_partner_real_name} {headerConvo.is_online ?  <StyledOnlineIndicatorDot>●</StyledOnlineIndicatorDot> : <StyledOfflineIndicatorDot>●</StyledOfflineIndicatorDot>}
                                 </div>
                                 <StyledChatMainTitleSubtext>
                                     {

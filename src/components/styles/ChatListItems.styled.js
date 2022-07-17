@@ -39,4 +39,12 @@ export const StyledChatListItemsAvatar = styled.div`
   border-radius: 50%;
   align-self: center;
   margin-right: 5%;
+  
+`
+export const StyledOnlineIndicatorDot = styled.span`
+  color: #49A661;
+`
+
+export const StyledOfflineIndicatorDot = styled.span`
+  color: #F5222D;
 `

@@ -30,7 +30,7 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
     const navigate = useNavigate()
     const {profileInfo, setProfileInfo} = useProfileInfo()
     const onSubmit = (formData) => {
-        console.log(Object.values(formData))
+       //check if user edited at least 1 field of form
         if (Object.values(formData).every(value => value === '')) {
             setError('all_fields_empty', {
                 type: "server",
