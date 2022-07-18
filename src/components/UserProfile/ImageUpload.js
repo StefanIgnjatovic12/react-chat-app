@@ -42,7 +42,7 @@ export default function ImageUpload() {
                     {
                         files.length !== 0
                             ? files
-                            : 'Drag & drop or choose your avatar'
+                            : 'Drag & drop or choose your real avatar'
                     }
 
                 </ImageUploadMainText>

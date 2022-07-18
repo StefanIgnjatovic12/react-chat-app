@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const EditForm = styled.form`
   display: flex;
@@ -33,7 +33,7 @@ export const SelectDropdown = styled.select`
   :hover {
     border-bottom: 1px solid #726DFE;
   }
-  
+
 
   //remove default styling 
   overflow: auto;
@@ -103,6 +103,7 @@ export const ImageUploadWrapper = styled.div`
   border-radius: 0.625rem;
   max-height: ${props => props.height};
   min-height: 4rem;
+  cursor: pointer;
 
   :hover {
     border: 1px dashed #726DFE
@@ -113,3 +114,55 @@ export const ImageUploadWrapper = styled.div`
   }
 `
 
+export const AvatarSelectModalContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+
+
+`
+
+export const AvatarSelectModalImage = styled.div`
+  background-image: url(${props => props.avatar});
+  background-size: cover;
+  background-position: top center;
+  background-color: transparent;
+  cursor: pointer;
+  height: 5rem;
+  width: 5rem;
+  margin: 5px;
+  border-radius: 50%;
+  
+  ${({ avatarSelectedArray, index }) => {
+        return css`
+            opacity: ${avatarSelectedArray[index].selected ? '50%' : '100%'};
+        `;
+    }}
+`
+export const AvatarSelectModalButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 5rem;
+  margin-top: 0.5rem;
+  width: 50%;
+  
+`
+
+export const AvatarSelectModalButton = styled.input`
+  background-color: #726DFE;
+  font-size: 13px;
+  font-family: "Quicksand Medium", serif;
+  border: none;
+  color: #F6F6F6;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
+  width: 45%;
+
+  :hover {
+    background-color: #7F7AF8;
+    cursor: pointer;
+  }
+`
