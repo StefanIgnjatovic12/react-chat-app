@@ -36,7 +36,7 @@ export const StyledChatMainTitleSubtext = styled.div`
 `
 export const StyledChatMainTitleAvatar = styled.div`
   background-image: url('data:image/png;base64,${props => props.avatar}');
-  width: 5rem;
+  width: 3.5rem;
   height: 3.4rem;
   max-width: 100%;
   max-height: 100%;
@@ -44,7 +44,7 @@ export const StyledChatMainTitleAvatar = styled.div`
   background-position: top center;
   border-radius: 50%;
   align-self: center;
-  margin-right: 20%;
+  margin-right: 2%;
   //margin-bottom: 10%;
 `
 export const StyledChatMainTitleAvatarTextContainer = styled.div`

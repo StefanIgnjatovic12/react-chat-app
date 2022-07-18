@@ -101,7 +101,7 @@ export default function ChatMainTitle() {
     // console.log('revealed_status_individual_convo')
     // console.log(revealed_status_individual_convo)
     useEffect(() => {
-
+        console.log(revealed_status_individual_convo)
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
             // console.log(`This is activeConvo: ${activeConvo}`)
@@ -115,13 +115,15 @@ export default function ChatMainTitle() {
                     }
                 )
                 .catch(error => console.log(error))
-            fetch(`http://127.0.0.1:5000/api/reveal-status-for-all-user-convos/`, authRequestOptions('GET'))
-                            .then(response => response.json())
-                            .then(data => {
 
-                                setTogglerStateArray(data)
-                            })
-                            .catch(error => console.log(error))
+            fetch(`http://127.0.0.1:5000/api/reveal-status-for-all-user-convos/`, authRequestOptions('GET'))
+                .then(response => response.json())
+                .then(data => {
+                    // console.log('togglerStateArray api call made')
+                    // console.log(data.togglerStateArray.filter(convo => convo.convo_id === activeConvo))
+                    setTogglerStateArray(data)
+                })
+                .catch(error => console.log(error))
         }
     }, [activeConvo, newChatCreated, convoDeleteDone])
 
@@ -202,21 +204,26 @@ export default function ChatMainTitle() {
                     <ProfilePopup/>
                 </Modal>
                 <StyledChatMainTitleAvatarTextContainer>
-                    {/*<StyledChatMainTitleAvatar avatar={togglerState ? headerConvo.real_avatar : headerConvo.avatar}/>*/}
+                    <StyledChatMainTitleAvatar
+                        avatar={revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
+                            ? headerConvo.real_avatar
+                            : headerConvo.avatar
+                        }
+                    />
                     <StyledChatMainTitleTextContainer>
                         {headerConvo &&
                             <>
-                                {/*finish this so the avatar also shows in the title*/}
-                                {/*<div>*/}
-
-                                {/*    {togglerState ? headerConvo.avatar : headerConvo.real_avatar}*/}
-
-                                {/*</div>*/}
                                 <div>
                                     {/*only show partners real name if both user and partner have revealed their
                                      profiles*/}
-                                    {/*{revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? headerConvo.conv_partner_real_name : headerConvo.conv_partner}*/}
-                                    {headerConvo.conv_partner_real_name} {headerConvo.is_online ?  <StyledOnlineIndicatorDot>●</StyledOnlineIndicatorDot> : <StyledOfflineIndicatorDot>●</StyledOfflineIndicatorDot>}
+                                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
+                                        ? headerConvo.conv_partner_real_name
+                                        : headerConvo.conv_partner}
+
+                                    {headerConvo.is_online
+                                        ? <StyledOnlineIndicatorDot> ●</StyledOnlineIndicatorDot>
+                                        : <StyledOfflineIndicatorDot> ●</StyledOfflineIndicatorDot>}
+                                    {/*{headerConvo.conv_partner_real_name} {headerConvo.is_online ?  <StyledOnlineIndicatorDot>●</StyledOnlineIndicatorDot> : <StyledOfflineIndicatorDot>●</StyledOfflineIndicatorDot>}*/}
                                 </div>
                                 <StyledChatMainTitleSubtext>
                                     {

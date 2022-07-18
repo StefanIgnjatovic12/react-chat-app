@@ -63,18 +63,22 @@ export default function ChatListItems({
         <StyledChatListItemsContainer onClick={handleClick} colored={coloredArray[index]}>
 
             <StyledChatListItemsAvatar
-                avatar={avatar}/>
 
-                {/*// avatar={togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? real_avatar : avatar}*/}
-                {/*/>*/}
+                avatar={revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
+                                            ? real_avatar
+                                            : avatar}
+                // avatar={togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? real_avatar : avatar}
+                />
 
 
             <StyledChatListItemsText>
                 <div>
-                    {name} {is_online ? <StyledOnlineIndicatorDot>●</StyledOnlineIndicatorDot> : <StyledOfflineIndicatorDot>●</StyledOfflineIndicatorDot>}
+                    {/*{name} {is_online ? <StyledOnlineIndicatorDot>●</StyledOnlineIndicatorDot> : <StyledOfflineIndicatorDot>●</StyledOfflineIndicatorDot>}*/}
 
-                    {/*{togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? conv_partner_real_name : name}*/}
-
+                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed'] ? conv_partner_real_name : name}
+                    {is_online
+                        ? <StyledOnlineIndicatorDot> ●</StyledOnlineIndicatorDot>
+                        : <StyledOfflineIndicatorDot> ●</StyledOfflineIndicatorDot>}
 
                 </div>
                 <StyledChatChatListSubtext>
