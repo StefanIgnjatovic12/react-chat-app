@@ -16,6 +16,7 @@ import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
 import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
+import RequireAuth from "./components/UserAuth/RequireAuth";
 
 
 function App() {
@@ -30,16 +31,14 @@ function App() {
                                     <Router>
                                         <Routes>
                                             <Route>
-
-                                                <Route path="chat" element={<ChatContainer/>}/>
+                                                <Route element={<RequireAuth/>}>
+                                                    <Route path="chat" element={<ChatContainer/>}/>
+                                                    <Route path="profile" element={<Profile/>}/>
+                                                    <Route path="signout" element={<SignOut/>}/>
+                                                </Route>
                                                 <Route path="signup" element={<SignUp/>}/>
                                                 <Route path="signin" element={<SignIn/>}/>
-                                                <Route path="signout" element={<SignOut/>}/>
                                                 <Route path="/" element={<SignIn/>}/>
-                                                <Route path="profile" element={<Profile/>}/>
-                                                <Route path="set-profile-details" element={<ProfileCreateForm/>}/>
-
-
                                             </Route>
                                         </Routes>
                                     </Router>

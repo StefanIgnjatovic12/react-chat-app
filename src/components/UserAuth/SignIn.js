@@ -17,14 +17,16 @@ import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {StyledToastContainer} from "../styles/ToastContainer.styled";
 import {useEffect} from "react";
+import {useCurrentUser} from "../../context/CurrentUserContext";
 
 export default function SignIn() {
 
     const {register, handleSubmit, watch, formState: {errors}, setError, clearErrors} = useForm()
     const navigate = useNavigate()
     const {setActiveConvo} = useActiveConvo()
-    const {state: showAlert} = useLocation()
-
+    const {setUserIsSignedIn} = useCurrentUser()
+    const {state: showAlert, pathname: path} = useLocation()
+    // console.log(path)
     //alert when redirected from sign up page
     const openAlert = () => toast('You have succesfuly registered, please sign in.', {
         position: "top-center",
@@ -38,7 +40,12 @@ export default function SignIn() {
 
     //checks if
     useEffect(() => {
-        if (showAlert) {
+
+        //don't show the alert if the user came from the chat url
+
+        if (path === '/') {
+            console.log('alert not shown')
+        } else if (showAlert) {
             openAlert()
         }
     }, [showAlert])
@@ -47,13 +54,15 @@ export default function SignIn() {
     const signInUser = async (body) => {
         let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
         response.json().then(data => {
+                // localStorage.setItem('userIsSignedIn', true)
                 localStorage.setItem('token', data.access_token)
                 //reset active convo to default
                 setActiveConvo('')
             }
         )
 
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
+            setUserIsSignedIn(true)
             navigate('/chat')
         } else if (response.status === 400) {
             setError('server', {
@@ -87,17 +96,20 @@ export default function SignIn() {
                 <ErrorMessage
                     errors={errors}
                     name="server"
-                    render={({message}) => <ErrorMessageText message_length={message.length}>{message}</ErrorMessageText>}
+                    render={({message}) => <ErrorMessageText
+                        message_length={message.length}>{message}</ErrorMessageText>}
                 />
                 <ErrorMessage
                     errors={errors}
                     name="username"
-                    render={({message}) => <ErrorMessageText message_length={message.length}>{message}</ErrorMessageText>}
+                    render={({message}) => <ErrorMessageText
+                        message_length={message.length}>{message}</ErrorMessageText>}
                 />
                 <ErrorMessage
                     errors={errors}
                     name="password"
-                    render={({message}) => <ErrorMessageText message_length={message.length}>{message}</ErrorMessageText>}
+                    render={({message}) => <ErrorMessageText
+                        message_length={message.length}>{message}</ErrorMessageText>}
                 />
                 <InputWrapper>
                     <Icon icon={'/username.png'}/>

@@ -205,9 +205,10 @@ export default function ChatMainTitle() {
                 </Modal>
                 <StyledChatMainTitleAvatarTextContainer>
                     <StyledChatMainTitleAvatar
+
                         avatar={revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
-                            ? headerConvo.real_avatar
-                            : headerConvo.avatar
+                            ? headerConvo?.real_avatar
+                            : headerConvo?.avatar
                         }
                     />
                     <StyledChatMainTitleTextContainer>
@@ -217,8 +218,9 @@ export default function ChatMainTitle() {
                                     {/*only show partners real name if both user and partner have revealed their
                                      profiles*/}
                                     {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
-                                        ? headerConvo.conv_partner_real_name
-                                        : headerConvo.conv_partner}
+                                        ? headerConvo?.conv_partner_real_name.substring(0, 40) + "..."
+                                        : headerConvo?.conv_partner.substring(0, 40) + "..."
+                                    }
 
                                     {headerConvo.is_online
                                         ? <StyledOnlineIndicatorDot> ●</StyledOnlineIndicatorDot>
@@ -228,8 +230,8 @@ export default function ChatMainTitle() {
                                 <StyledChatMainTitleSubtext>
                                     {
                                         headerConvo.last_message.length > 25
-                                            ? headerConvo.last_message.substring(0, 40) + "..."
-                                            : headerConvo.last_message
+                                            ? headerConvo?.last_message.substring(0, 40) + "..."
+                                            : headerConvo?.last_message
                                     }
                                 </StyledChatMainTitleSubtext>
 

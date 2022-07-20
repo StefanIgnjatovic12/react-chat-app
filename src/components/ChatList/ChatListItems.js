@@ -73,9 +73,16 @@ export default function ChatListItems({
 
             <StyledChatListItemsText>
                 <div>
-                    {/*{name} {is_online ? <StyledOnlineIndicatorDot>●</StyledOnlineIndicatorDot> : <StyledOfflineIndicatorDot>●</StyledOfflineIndicatorDot>}*/}
 
-                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed'] ? conv_partner_real_name : name}
+                    {/*if both users revealed, then use partners real name > also check if real name and name are
+                     over 10 characters long and shorten them if so*/}
+                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed'] && conv_partner_real_name.length > 10
+                        ? conv_partner_real_name.substring(0, 10) + "..."
+                        : name.length > 10
+                            ? name.substring(0, 10) + "..."
+                            : name
+                    }
+
                     {is_online
                         ? <StyledOnlineIndicatorDot> ●</StyledOnlineIndicatorDot>
                         : <StyledOfflineIndicatorDot> ●</StyledOfflineIndicatorDot>}

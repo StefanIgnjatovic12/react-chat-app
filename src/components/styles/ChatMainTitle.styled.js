@@ -22,11 +22,15 @@ export const StyledChatMainTitleContainer = styled.div`
   width: 90%;
   height: 80%;
   margin-left: 5%;
+  
 `
 export const StyledChatMainTitleTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
+  
+  
   
 `
 export const StyledChatMainTitleSubtext = styled.div`
@@ -50,7 +54,8 @@ export const StyledChatMainTitleAvatar = styled.div`
 export const StyledChatMainTitleAvatarTextContainer = styled.div`
   display: flex;
   height: 100%;
-
+  //background-color: black;
+  width: 70%;
 `
 export const StyledChatMainTitleButtonContainer = styled.div`
   display: flex;

@@ -6,6 +6,7 @@ export const CurrentUserContext = createContext()
 
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null)
+  const [userIsSignedIn, setUserIsSignedIn] = useState(false)
   const fetchCurrentUser = async () => {
     let response = await fetch("http://127.0.0.1:5000/dj-rest-auth/user/", authRequestOptions('GET'))
     const result = await response.json()
@@ -13,7 +14,7 @@ export const CurrentUserProvider = ({ children }) => {
   }
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, fetchCurrentUser }}>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, fetchCurrentUser, userIsSignedIn, setUserIsSignedIn }}>
       {children}
     </CurrentUserContext.Provider>
   )
