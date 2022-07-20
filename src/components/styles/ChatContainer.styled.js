@@ -45,6 +45,8 @@ export const StyledChatList = styled.div`
   ::-webkit-scrollbar-track {
     background-color: #525A6D;
   }
+  
+
 `
 
 export const StyledChatMain = styled.div`

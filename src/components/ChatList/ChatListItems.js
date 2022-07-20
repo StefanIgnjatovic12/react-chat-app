@@ -25,22 +25,22 @@ export default function ChatListItems({
                                       }) {
     const {activeConvo, setActiveConvo, messages, setMessages, headerConvo, setHeaderConvo} = useActiveConvo()
     const [changeColor, setChangeColor] = useState(false)
-    const [otherUserNotRevealed, setOtherUserNotRevealed] = useState(false)
     const {togglerStateArray} = useTogglerState()
-
 
     let id = localStorage.getItem('currentUserID')
     //filter array which contains the state of the toggler for each convo to get
     //the one matching this specific ChatListItem
-
+    console.log('Here')
+    console.log(coloredArray)
     let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === conv_id)
 
     const handleClick = () => {
+
         //change all the values that signify whether a button is colored to false because we want to un-color all
         //buttons that were previously colored so not more than 1 at a time is colored
-        coloredArray.forEach((convo, i) => coloredArray[i] = false)
+        coloredArray.forEach((convo, i) => coloredArray[i]['colored'] = false)
         //after they're all set to false, change the color of the 1 button clicked to purple
-        coloredArray[index] = !coloredArray[index]
+        coloredArray[index]['colored'] = !coloredArray[index]['colored']
 
         fetch(`http://127.0.0.1:5000/api/user-conversation-partner/${id}/${name}`,
             authRequestOptions(('GET')))
@@ -50,7 +50,6 @@ export default function ChatListItems({
                 // console.log(data[0])
 
                 //set activeConvo  the ID of the convo clicked on the left
-                console.log(`activeConvo data from ChatListItems: ${data[0].convo_id}`)
                 setActiveConvo(data[0].convo_id)
                 //use [0] because only 1 convo is returned in the data
                 setMessages(data[0].messages)
@@ -60,14 +59,12 @@ export default function ChatListItems({
             .catch(error => console.log(error))
     }
     return (
-        <StyledChatListItemsContainer onClick={handleClick} colored={coloredArray[index]}>
-
+        <StyledChatListItemsContainer onClick={handleClick} colored={coloredArray[index]['colored']}>
             <StyledChatListItemsAvatar
 
                 avatar={revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
                                             ? real_avatar
                                             : avatar}
-                // avatar={togglerStateArray.length > 0 && revealed_status_individual_convo[0]['partner_revealed'] && revealed_status_individual_convo[0]['revealed'] ? real_avatar : avatar}
                 />
 
 

@@ -58,6 +58,7 @@ export default function ChatList() {
             id !== undefined && fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${id}`, requestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     //if user has no existing convos on redirect to chat, open modal
                     if (data.length == 0) {
                         setModalOpen(true)
@@ -68,9 +69,15 @@ export default function ChatList() {
                     setConvoIDArrayLocalStorage(convoIDArray)
 
                     //have an array of booleans that signify whether a chat on the left has been clicked
-                    // start array with only false with the same length as the data
-                    setColoredArray(Array(data.length).fill(false))
+                    // for the active chat on signin/page load, want the ChatListItem to be highlited purple by default
+                    let tempArray = []
+                    data.forEach(convo => {
+                        if (convo.conv_id == activeConvo) {
+                            tempArray.push({convo_id: convo.conv_id, colored: true})
+                        } else {tempArray.push({convo_id: convo.conv_id, colored: false})}
 
+                    })
+                    setColoredArray(tempArray)
                     setSideBarMessages(data)
 
                     //if active conversation is set, it means a different convo than the default
@@ -129,7 +136,7 @@ export default function ChatList() {
                 {sideBarMessages.map((convo, index) => (
                     <ChatListItems
                         key={uuidv4()}
-                        name={ convo.conv_partner}
+                        name={convo.conv_partner}
                         conv_partner_real_name={convo.conv_partner_real_name}
                         conv_id={convo.conv_id}
                         text={convo.last_message}

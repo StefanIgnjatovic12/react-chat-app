@@ -38,11 +38,8 @@ export default function SignIn() {
         progress: undefined,
     });
 
-    //checks if
     useEffect(() => {
-
         //don't show the alert if the user came from the chat url
-
         if (path === '/') {
             console.log('alert not shown')
         } else if (showAlert) {
@@ -54,7 +51,6 @@ export default function SignIn() {
     const signInUser = async (body) => {
         let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
         response.json().then(data => {
-                // localStorage.setItem('userIsSignedIn', true)
                 localStorage.setItem('token', data.access_token)
                 //reset active convo to default
                 setActiveConvo('')
@@ -72,12 +68,9 @@ export default function SignIn() {
         }
 
     }
-
     const onSubmit = data => {
         console.log(data)
         signInUser(data)
-
-
     }
 
     const demoAccount = () => openAlert()
