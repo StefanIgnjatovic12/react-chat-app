@@ -1,19 +1,10 @@
 import {useLocation, Navigate, Outlet} from "react-router";
 import {useCurrentUser} from "../../context/CurrentUserContext";
+import {useState} from "react";
 
 const RequireAuth = () => {
-
-    // const userIsSignedIn = localStorage.getItem('userIsSignedIn')
-    // const userIsSignedIn = true
-    const {userIsSignedIn} = useCurrentUser()
-    // console.log(localStorage.getItem('userIsSignedIn'))
-    const location = useLocation()
+    const userIsSignedIn = localStorage.getItem('userIsSignedIn')
     return (
-
-        // if allowedRole for that route is current role, ok
-        // if not but is logged in user, redirect to unauthorized page
-        // if not logged in,
-
         userIsSignedIn
             ? <Outlet/>
             : <Navigate
@@ -26,4 +17,24 @@ const RequireAuth = () => {
 
 export default RequireAuth;
 
-
+// const useAuth=()=>{
+// 	  const user=localStorage.getItem('user')
+// 	  if(user){
+// 	    return true
+// 	  } else {
+// 	    return false
+// 	  }
+// 	}
+//
+//
+// 	const  PublicRoutes=(props:any) =>{
+//
+//
+// 	  const auth=useAuth()
+//
+//
+// 	  return auth?<Navigate to="/dashboard"/>: <Outlet/>
+// 	}
+//
+//
+// 	export default PublicRoutes;;

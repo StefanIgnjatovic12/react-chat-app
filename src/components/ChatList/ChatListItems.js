@@ -30,8 +30,6 @@ export default function ChatListItems({
     let id = localStorage.getItem('currentUserID')
     //filter array which contains the state of the toggler for each convo to get
     //the one matching this specific ChatListItem
-    console.log('Here')
-    console.log(coloredArray)
     let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === conv_id)
 
     const handleClick = () => {

@@ -16,15 +16,17 @@ import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {StyledToastContainer} from "../styles/ToastContainer.styled";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useCurrentUser} from "../../context/CurrentUserContext";
+import useLocalStorage from "use-local-storage";
 
 export default function SignIn() {
 
     const {register, handleSubmit, watch, formState: {errors}, setError, clearErrors} = useForm()
     const navigate = useNavigate()
     const {setActiveConvo} = useActiveConvo()
-    const {setUserIsSignedIn} = useCurrentUser()
+    // const {setUserIsSignedIn} = useCurrentUser()
+    const [userIsSignedIn, setUserIsSignedIn] = useLocalStorage('userIsSignedIn', false)
     const {state: showAlert, pathname: path} = useLocation()
     // console.log(path)
     //alert when redirected from sign up page
@@ -50,26 +52,47 @@ export default function SignIn() {
 
     const signInUser = async (body) => {
         let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
-        response.json().then(data => {
-                localStorage.setItem('token', data.access_token)
-                //reset active convo to default
-                setActiveConvo('')
-            }
-        )
-
         if (response.status === 200 || response.status === 201) {
-            setUserIsSignedIn(true)
-            navigate('/chat')
+            localStorage.setItem('userIsSignedIn', true)
+            response.json().then(data => {
+                    localStorage.setItem('token', data.access_token)
+                    setActiveConvo('')
+                    navigate('/chat')
+                }
+            )
         } else if (response.status === 400) {
             setError('server', {
                 type: "server",
                 message: 'Incorrect credentials, please try again',
             })
         }
-
     }
+    // const signInUser = async (body) => {
+    //     let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
+    //     if (response.status === 200 || response.status === 201) {
+    //         console.log('succesfuly logged in')
+    //     } else if (response.status === 400) {
+    //         setError('server', {
+    //             type: "server",
+    //             message: 'Incorrect credentials, please try again',
+    //         })
+    //     }
+    //     response.json().then(data => {
+    //             console.log('token set')
+    //             localStorage.setItem('token', data.access_token)
+    //             //reset active convo to default
+    //             setActiveConvo('')
+    //             navigate('/chat')
+    //             // userIsSignedIn ? navigate('/chat') : navigate('/signin')
+    //
+    //         }
+    //     )
+    //
+    //
+    // }
+
     const onSubmit = data => {
-        console.log(data)
+        // console.log(data)
         signInUser(data)
     }
 
