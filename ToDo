@@ -1,3 +1,17 @@
+-handle registration email conf - dont need confirmation but need forgot password
+-case: user doesnt have a real avatar uploaded>
+> breaks chat when both both users are revealed in convo > make sure the same avatar is used in all endpoints if oyu
+need to assign one > DONE
+-new chat wont go over 3? - DONE
+- when user creates their first chat, there is already a message there "First message" - not issue anymore?
+-fix default avatar pics - done
+-breaks when user hasnt set a real name - DONE
+- when user creates first chat upon registering, toggler and see icon are both seth to yes incorrectly - not issue also?
+- fix avatar sizing in chatlistitems and chat main menu - done?
+CHAT MESSAGES ALL FUCKED UP - works, dont be logged in twice from same ip
+_______________________________________________________________
+LOG:
+
 Fix messages not appearing for correct user before refresh
 Auto update the subtext on the chatlist on the left when a new message is sent - done but below
 Check why the reload on message sent isn't working properly > happens when messages are sent within 1
@@ -24,40 +38,68 @@ JWT
 -check to see how youre probably supposed to store the token received from the server
 
 General
--make default names and avatars
--make text in profile responsive
+-make default names and avatars - just avatars - done
+-make text in profile responsive - done
 -make profile reveal only apply to other person in that 1 chat - done
 -figure out a way to determine if both users in convo have clicked reveal - done
 -add option to re-hide profile after youve revealed it - done
 -add option to delete convo - done
 
 -IMPORTANT - make it so that the same ID cant be for the first_member and second_member
--make conversation that opens after sign in highlighted in chatlist by default
+-make conversation that opens after sign in highlighted in chatlist by default - done in create chat which should
+prevent it
+
 -change font for chat messages to the Q - done
+
 -make your own profile editable - done
+
 -registration page with required fields - done
-- change color for hover StyledChatLinkIcon
--error handling on login and register
+
+- change color for hover StyledChatLinkIcon - no
+
+-error handling on login and register - done
+
 -demo account
 -add upload for real_avatar in profile edit form - done
--CHECK WHY CHATMAINTITLE LINE 143 DOESNT WORK - IMP.
--Fix height of drop zone in profile edit form - done
-- convo with no messages breaks the app - done
--MAKE ACTIVE CONVO SWITCH TO NEW CHAT WHEN CREATED
--HANDLE CASE WHEN USER FIRST REGISTERS AND HAS NO CONVOS > POPUP TELLING THEM TO CLICK THE BUTTON TO GENERATE
-- STYLING FOR THE WELCOME, CLICK HERE TO BE MATCHED WITH A RANDOM USER MODAL - DONE, WAITING FOR LOGO
-- DONT SHOW THE ICONS IN MAINTITLE IF NO CHAT IS SELECTED - DONE
-- SHOW IF CONVO PARTNER IS ONLINE IN CHAT LIST
-- FIX SPACING BETWEEN CHAT PARTNER NAME AND LATEST MESSAGE IN CHATTITLE
--TOGGLERSTATE > ADD CHECK IF BOTH PEOPLE HAVE REVEALED BEFORE CHANGING NAME IN TITLE AND SIDE
 
--handle registration email conf
--when profile is revealed, change the data/names being shown in the chattitle - IMP - halfway done
-- Yeah, for reveal/hide profile a toggle could work.
-Then I could use an icon for delete chat. For see partners profile I'd need something intuitive.
-Maybe if the toggle is set to reveal, I could display a popup above the icon for see partners profile with some brief instructions. Thanks
-- Check why user with filled out profile redirected to profile fill out on login
-- make subtext in chat title and sidebar items shorten to X characters (ie: 'blabla we shou...'
+-Fix height of drop zone in profile edit form - done
+
+- convo with no messages breaks the app - done
+
+-MAKE ACTIVE CONVO SWITCH TO NEW CHAT WHEN CREATED
+
+-HANDLE CASE WHEN USER FIRST REGISTERS AND HAS NO CONVOS - DONE
+
+- STYLING FOR THE WELCOME, CLICK HERE TO BE MATCHED WITH A RANDOM USER MODAL - DONE, WAITING FOR LOGO
+
+- DONT SHOW THE ICONS IN MAINTITLE IF NO CHAT IS SELECTED - DONE
+
+- SHOW IF CONVO PARTNER IS ONLINE IN CHAT LIST - DONE
+
+- FIX SPACING BETWEEN CHAT PARTNER NAME AND LATEST MESSAGE IN CHATTITLE - DONE
+
+-TOGGLERSTATE > ADD CHECK IF BOTH PEOPLE HAVE REVEALED BEFORE CHANGING NAME IN TITLE AND SIDE - DONE
+
+- THOROUGHLY TEST WHEN OTHER USER LOGS IN - done
+
+-PROFILEEDIT FORM VALIDATION? - DONE
+setUserProfileFilledOut(true) - FIX IN PROFILEEDITFORM
+-line 99 in views breaks (loading avatar) if user didnt add one during profile editing stage
+
+-check length of name for maintitle and chatlistitems - DONE
+
+- coloring of chatlistitems thorough testing (kill me) - done
+
+
+-make routes protected - done - recheck - recheck done, fixed
+-not redirecting to profile on register - done - same as above, part of same issue
+
+
+-when profile is revealed, change the data/names being shown in the chattitle - DONE
+
+- Check why user with filled out profile redirected to profile fill out on login - maybe done?
+- make subtext in chat title and sidebar items shorten to X characters (ie: 'blabla we shou...' - DONE
+
 MAIN STUFF
 - Chat functionality - 90%
 - See and edit your own profile page - 90%

@@ -101,7 +101,7 @@ export default function ChatMainTitle() {
     // console.log('revealed_status_individual_convo')
     // console.log(revealed_status_individual_convo)
     useEffect(() => {
-        console.log(revealed_status_individual_convo)
+        // console.log(revealed_status_individual_convo)
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
             // console.log(`This is activeConvo: ${activeConvo}`)
@@ -217,9 +217,11 @@ export default function ChatMainTitle() {
                                 <div>
                                     {/*only show partners real name if both user and partner have revealed their
                                      profiles*/}
-                                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
-                                        ? headerConvo?.conv_partner_real_name.substring(0, 40) + "..."
-                                        : headerConvo?.conv_partner.substring(0, 40) + "..."
+                                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']  && headerConvo?.conv_partner_real_name
+                                            ? headerConvo?.conv_partner_real_name.substring(0, 10) + "..."
+                                            : headerConvo?.conv_partner.length > 10
+                                                ? headerConvo?.conv_partner.substring(0, 10) + "..."
+                                                : headerConvo?.conv_partner
                                     }
 
                                     {headerConvo.is_online

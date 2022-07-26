@@ -58,7 +58,7 @@ export default function ChatList() {
             id !== undefined && fetch(`http://127.0.0.1:5000/api/user-conversation-brief/${id}`, requestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
+                    // console.log(data)
                     //if user has no existing convos on redirect to chat, open modal
                     if (data.length == 0) {
                         setModalOpen(true)

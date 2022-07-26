@@ -45,6 +45,7 @@ export const  ProfileAvatar = styled.div`
 `
 
 export const  ProfileNameTextBox = styled.div`
+  
   font-family: "Quicksand Medium", serif;
   font-size: 1.25rem;
   color: #F6F6F6;

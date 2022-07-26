@@ -1,12 +1,12 @@
-import FemaleAvatar1 from './default_avatars/AvatarFemale1.jpg'
-import FemaleAvatar2 from  './default_avatars/AvatarFemale2.jpg'
-import FemaleAvatar3 from  './default_avatars/AvatarFemale3.jpg'
-import FemaleAvatar4 from  './default_avatars/AvatarFemale1.jpg'
-import MaleAvatar1 from  './default_avatars/AvatarMale1.jpg'
-import MaleAvatar2 from  './default_avatars/AvatarMale2.jpg'
-import MaleAvatar3 from  './default_avatars/AvatarMale3.jpg'
+import FemaleAvatar1 from './default_avatars/AvatarFemale1.png'
+import FemaleAvatar2 from  './default_avatars/AvatarFemale2.png'
+import FemaleAvatar3 from  './default_avatars/AvatarFemale3.png'
+import FemaleAvatar4 from  './default_avatars/AvatarFemale1.png'
+import MaleAvatar1 from  './default_avatars/AvatarMale1.png'
+import MaleAvatar2 from  './default_avatars/AvatarMale2.png'
+import MaleAvatar3 from  './default_avatars/AvatarMale3.png'
 
-import MaleAvatar4 from './default_avatars/AvatarMale4.jpg'
+import MaleAvatar4 from './default_avatars/AvatarMale4.png'
 
 export const avatarFileArray = [
     FemaleAvatar1,

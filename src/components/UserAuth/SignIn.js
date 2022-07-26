@@ -9,7 +9,7 @@ import
     Form,
     Button,
     Icon,
-    InputWrapper, HaveAccount, ButtonWrapper, FormTitle, ErrorMessageText
+    InputWrapper, HaveAccount, ButtonWrapper, FormTitle, ErrorMessageText, ButtonDemoAccount
 }
     from "../styles/UserAuth.styled";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
@@ -67,36 +67,27 @@ export default function SignIn() {
             })
         }
     }
-    // const signInUser = async (body) => {
-    //     let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
-    //     if (response.status === 200 || response.status === 201) {
-    //         console.log('succesfuly logged in')
-    //     } else if (response.status === 400) {
-    //         setError('server', {
-    //             type: "server",
-    //             message: 'Incorrect credentials, please try again',
-    //         })
-    //     }
-    //     response.json().then(data => {
-    //             console.log('token set')
-    //             localStorage.setItem('token', data.access_token)
-    //             //reset active convo to default
-    //             setActiveConvo('')
-    //             navigate('/chat')
-    //             // userIsSignedIn ? navigate('/chat') : navigate('/signin')
-    //
-    //         }
-    //     )
-    //
-    //
-    // }
+
 
     const onSubmit = data => {
         // console.log(data)
         signInUser(data)
     }
 
-    const demoAccount = () => openAlert()
+    const demoAccount = () => {
+        fetch(`http://127.0.0.1:5000/api/demo-account-signin/`, requestOptions('POST'))
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                localStorage.setItem('token', data.access_token)
+                setActiveConvo('')
+                navigate('/chat')
+                //state in context that will be used to tell
+                //other components to re-render once a new chat is created
+
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <Background>
@@ -147,15 +138,18 @@ export default function SignIn() {
                 </InputWrapper>
 
                 <ButtonWrapper>
-                    <Button type="submit"
-                            value="Submit"
-                        // margin_top='1.25rem'
+                    <Button
+                        type="submit"
+                        value="Submit"
                     />
-                    <Button type="submit"
-                            value="Sample account"
-                            onClick={handleSubmit(demoAccount)}
-                        // margin_top='0.05rem'
-                    />
+                    {/*different component and type so it wont trigger errors due to empty fields*/}
+                    <ButtonDemoAccount
+                        // type='submit'
+                        onClick={demoAccount}
+                        type="reset"
+                    >
+                        Sample account
+                    </ButtonDemoAccount>
                 </ButtonWrapper>
 
 

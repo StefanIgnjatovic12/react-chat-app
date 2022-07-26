@@ -1,7 +1,7 @@
 import {StyledChatLinkBar} from "./styles/ChatContainer.styled";
 import styled from 'styled-components'
 import {Link, useNavigate} from "react-router-dom";
-import {authRequestOptions} from "../hooks/requestOptions";
+import {authRequestOptions, requestOptions} from "../hooks/requestOptions";
 import {useCreateNewChat} from "../context/CreateNewChatContext";
 import {usePopper} from "react-popper";
 import {StyledChatMainTitlePopup} from "./styles/ChatMainTitle.styled";
@@ -102,6 +102,20 @@ export default function ChatLinkBar() {
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         name={'github'}
+                    onClick={() => {
+
+                        fetch(`http://127.0.0.1:5000/api/test/`, requestOptions('POST'))
+                            .then(response => console.log(response.json()))
+                            .then(data => {
+                                console.log(data)
+                                //state in context that will be used to tell
+                                //other components to re-render once a new chat is created
+
+                            })
+                            .catch(error => console.log(error))
+
+
+                    }}
                 />
 
 

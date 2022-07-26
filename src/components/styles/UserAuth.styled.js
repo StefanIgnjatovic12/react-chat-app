@@ -98,6 +98,21 @@ export const Button = styled.input`
     cursor: pointer;
   }
 `
+export const ButtonDemoAccount = styled.button`
+  background-color: #726DFE;
+  font-size: 13px;
+  font-family: "Quicksand Medium", serif;
+  border: none;
+  color: #F6F6F6;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
+  width: 70%;
+
+  :hover {
+    background-color: #7F7AF8;
+    cursor: pointer;
+  }
+`
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;

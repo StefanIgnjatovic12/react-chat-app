@@ -66,6 +66,8 @@ export default function ChatMainMessages() {
                             } else {
                                 // console.log(`activeConvo data from ChatMainMessages: ${data[0].id}`)
                                 setActiveConvo(data[0].id)
+                                console.log('messages:')
+                                console.log(data[0].messages)
                                 setMessages(data[0].messages)
                             }
 

@@ -42,19 +42,55 @@ export default function ProfilePopup() {
                     <ProfileAvatar
                         avatar={profileInfo.real_avatar}
                     />
-                    <ProfileNameTextBox>{profileInfo.real_name}, {profileInfo.age}</ProfileNameTextBox>
-                    <ProfileSmallTextBox>Lives in {profileInfo.location}</ProfileSmallTextBox>
+                    <ProfileNameTextBox>
+                        {
+                            profileInfo.real_name ? `${profileInfo.real_name}`: "Real name not" +
+                        " provided"
+                        }
+
+                        {
+                            profileInfo.age
+                                ? `, ${profileInfo.age}`
+                                : null
+                        }
+
+                    </ProfileNameTextBox>
+                    {/*<ProfileSmallTextBox>Lives in {profileInfo.location}</ProfileSmallTextBox>*/}
+                    <ProfileSmallTextBox>{
+                        profileInfo.location
+                            ? `Lives in ${profileInfo.location}`
+                            : 'Location not provided'
+                    }
+                        </ProfileSmallTextBox>
 
                 </ProfileSmallContainer>
 
                 <ProfileTextBoxHeading>Description</ProfileTextBoxHeading>
-                <ProfileLargeTextBox>{profileInfo.description}</ProfileLargeTextBox>
+                <ProfileLargeTextBox>
+                    {
+                        profileInfo.description
+                            ? profileInfo.description
+                            : 'None provided yet'
+                    }
+                </ProfileLargeTextBox>
 
                 <ProfileTextBoxHeading>Interests</ProfileTextBoxHeading>
-                <ProfileLargeTextBox>{profileInfo.interests}</ProfileLargeTextBox>
+                <ProfileLargeTextBox>
+                    {
+                    profileInfo.interests
+                        ? profileInfo.interests
+                        : 'None provided yet'
+                }
+                </ProfileLargeTextBox>
 
                 <ProfileTextBoxHeading>Reason</ProfileTextBoxHeading>
-                <ProfileLargeTextBox>{profileInfo.reason}</ProfileLargeTextBox>
+                <ProfileLargeTextBox>
+                    {
+                        profileInfo.reason
+                            ? profileInfo.reason
+                            : 'None provided yet'
+                    }
+                </ProfileLargeTextBox>
             </>
             :
             <AccessDeniedContainer>
