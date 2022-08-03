@@ -5,7 +5,7 @@ import {ImageUploadMainText} from "../styles/ImageUpload.styled";
 import {useImageUploadData} from "../../context/ImageUploadDataContext";
 
 export default function ImageUpload() {
-    const {uploadedImage, setUploadedImage} = useImageUploadData()
+    const {setUploadedImage} = useImageUploadData()
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file) => {
             const reader = new FileReader()
@@ -17,7 +17,6 @@ export default function ImageUpload() {
                 const avatarBase64 = reader.result
                 //using context so the image data can be sent from the ProfileEditForm component
                 setUploadedImage(avatarBase64)
-                // console.log(binaryStr)
             }
             reader.readAsDataURL(file)
         })

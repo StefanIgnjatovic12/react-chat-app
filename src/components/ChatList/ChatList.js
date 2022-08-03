@@ -1,13 +1,11 @@
 import {
     StyledChatList,
-    StyledNoChatsYetModal,
     StyledNoChatsYetModalContainer, StyledNoChatsYetModalImage,
     StyledNoChatsYetModalText
 } from "../styles/ChatContainer.styled";
 import ChatListItems from "./ChatListItems";
 import {v4 as uuidv4} from "uuid"
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {authRequestOptions, requestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
@@ -37,7 +35,6 @@ const modalStyle = {
         justifyContent: 'center',
         height: '20vh',
         width: '28vw',
-        // overflowY: 'auto'
     }
 }
 export default function ChatList() {
@@ -49,7 +46,6 @@ export default function ChatList() {
     const [convoIDArrayLocalStorage, setConvoIDArrayLocalStorage] = useLocalStorage('convoIDArrayLocalStorage', [])
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
     const [modalOpen, setModalOpen] = useState(false)
-    const navigate = useNavigate()
     const {togglerStateArray} = useTogglerState()
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
@@ -74,7 +70,9 @@ export default function ChatList() {
                     data.forEach(convo => {
                         if (convo.conv_id == activeConvo) {
                             tempArray.push({convo_id: convo.conv_id, colored: true})
-                        } else {tempArray.push({convo_id: convo.conv_id, colored: false})}
+                        } else {
+                            tempArray.push({convo_id: convo.conv_id, colored: false})
+                        }
 
                     })
                     setColoredArray(tempArray)
@@ -97,21 +95,19 @@ export default function ChatList() {
         })
     }, [reloadSideBar, convoDeleteDone, newChatCreated, togglerStateArray])
 
-
-    const handleModalClose = () => setModalOpen(false)
     return (
         loading &&
         <>
             <Modal
                 isOpen={modalOpen}
-                // onRequestClose={handleModalClose}
                 style={modalStyle}
             >
                 <StyledNoChatsYetModalContainer>
+
                     <StyledNoChatsYetModalText>
                         Welcome to AnonChat, please click below to start chatting with a random user!
-
                     </StyledNoChatsYetModalText>
+
                     <StyledNoChatsYetModalImage
                         image={'/newchat.png'}
                         onClick={() => {
@@ -130,6 +126,7 @@ export default function ChatList() {
                         }}
                     >
                     </StyledNoChatsYetModalImage>
+
                 </StyledNoChatsYetModalContainer>
             </Modal>
             <StyledChatList>

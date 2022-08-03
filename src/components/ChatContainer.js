@@ -9,7 +9,6 @@ import {authRequestOptions} from "../hooks/requestOptions";
 import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
 
 
-
 export const ChatBackground = styled.div`
   display: flex;
   height: 100vh;
@@ -28,7 +27,6 @@ export default function ChatContainer() {
             .then(data => setUserProfileFilledOut(data.profile_filled_check))
             .catch(error => console.log(error))
     }, [])
-
 
 
     return (

@@ -2,33 +2,31 @@ import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
 import {requestOptions} from "../../hooks/requestOptions";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import
-{
+import {
     Background,
     InputField,
     Form,
     Button,
     Icon,
-    InputWrapper, HaveAccount, ButtonWrapper, FormTitle, ErrorMessageText, ButtonDemoAccount
-}
-    from "../styles/UserAuth.styled";
+    InputWrapper,
+    HaveAccount,
+    ButtonWrapper,
+    FormTitle,
+    ErrorMessageText,
+    ButtonDemoAccount
+} from "../styles/UserAuth.styled";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {StyledToastContainer} from "../styles/ToastContainer.styled";
-import {useEffect, useState} from "react";
-import {useCurrentUser} from "../../context/CurrentUserContext";
-import useLocalStorage from "use-local-storage";
+import {useEffect} from "react";
 
 export default function SignIn() {
 
-    const {register, handleSubmit, watch, formState: {errors}, setError, clearErrors} = useForm()
+    const {register, handleSubmit, formState: {errors}, setError, clearErrors} = useForm()
     const navigate = useNavigate()
     const {setActiveConvo} = useActiveConvo()
-    // const {setUserIsSignedIn} = useCurrentUser()
-    const [userIsSignedIn, setUserIsSignedIn] = useLocalStorage('userIsSignedIn', false)
     const {state: showAlert, pathname: path} = useLocation()
-    // console.log(path)
     //alert when redirected from sign up page
     const openAlert = () => toast('You have succesfuly registered, please sign in.', {
         position: "top-center",
@@ -55,22 +53,19 @@ export default function SignIn() {
         if (response.status === 200 || response.status === 201) {
             localStorage.setItem('userIsSignedIn', true)
             response.json().then(data => {
-                    localStorage.setItem('token', data.access_token)
-                    setActiveConvo('')
-                    navigate('/chat')
-                }
-            )
+                localStorage.setItem('token', data.access_token)
+                setActiveConvo('')
+                navigate('/chat')
+            })
         } else if (response.status === 400) {
             setError('server', {
-                type: "server",
-                message: 'Incorrect credentials, please try again',
+                type: "server", message: 'Incorrect credentials, please try again',
             })
         }
     }
 
 
     const onSubmit = data => {
-        // console.log(data)
         signInUser(data)
     }
 
@@ -78,13 +73,9 @@ export default function SignIn() {
         fetch(`http://127.0.0.1:5000/api/demo-account-signin/`, requestOptions('POST'))
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 localStorage.setItem('token', data.access_token)
                 setActiveConvo('')
                 navigate('/chat')
-                //state in context that will be used to tell
-                //other components to re-render once a new chat is created
-
             })
             .catch(error => console.log(error))
     }
@@ -160,6 +151,5 @@ export default function SignIn() {
                     </Link>
                 </HaveAccount>
             </Form>
-        </Background>
-    )
+        </Background>)
 }

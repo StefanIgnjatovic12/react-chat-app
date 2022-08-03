@@ -7,7 +7,6 @@ const RequireAuth = () => {
             ? <Outlet/>
             : <Navigate
                 to="signin"
-                // state={location}
                 replace
             />
     )

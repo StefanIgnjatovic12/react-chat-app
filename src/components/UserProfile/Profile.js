@@ -15,7 +15,6 @@ import {
 import {StyledChatMainTitleButton} from "../styles/ChatMainTitle.styled";
 
 import Modal from 'react-modal';
-import ProfilePopup from "./ProfilePopup";
 import ProfileEditForm from "./ProfileEditForm";
 import {ButtonWrapper} from "../styles/UserAuth.styled";
 import {useNavigate} from "react-router-dom";

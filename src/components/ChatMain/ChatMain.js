@@ -5,7 +5,7 @@ import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useEffect} from "react";
 
 export default function ChatMain(){
-    const { currentUser, fetchCurrentUser } = useCurrentUser()
+    const {fetchCurrentUser } = useCurrentUser()
     useEffect(() => {
         fetchCurrentUser()
     },[])

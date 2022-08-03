@@ -2,25 +2,19 @@ import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {
     StyledChatMainTitle,
     StyledChatMainTitleContainer,
-    StyledChatMainTitleText,
     StyledChatMainTitleAvatar,
     StyledChatMainTitleSubtext,
-    StyledChatMainTitleButton,
-    Test,
     StyledChatMainTitleButtonContainer,
     StyledChatMainTitleAvatarTextContainer,
     StyledChatMainTitleTextContainer,
     TogglerContainer, StyledChatMainTitlePopup, StyledChatMainTitleClickableIcon
 } from "../styles/ChatMainTitle.styled";
-import {useEffect, useRef, useState} from "react";
-import {useCurrentUser} from "../../context/CurrentUserContext";
+import {useEffect, useState} from "react";
 import {authRequestOptions} from "../../hooks/requestOptions";
 import Modal from 'react-modal';
-import Profile from "../UserProfile/Profile";
 import ProfilePopup from "../UserProfile/ProfilePopup";
 import ToggleButton from 'react-toggle-button'
 import {usePopper} from 'react-popper';
-
 import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
@@ -217,11 +211,11 @@ export default function ChatMainTitle() {
                                 <div>
                                     {/*only show partners real name if both user and partner have revealed their
                                      profiles*/}
-                                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']  && headerConvo?.conv_partner_real_name
-                                            ? headerConvo?.conv_partner_real_name.substring(0, 10) + "..."
-                                            : headerConvo?.conv_partner.length > 10
-                                                ? headerConvo?.conv_partner.substring(0, 10) + "..."
-                                                : headerConvo?.conv_partner
+                                    {revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed'] && headerConvo?.conv_partner_real_name
+                                        ? headerConvo?.conv_partner_real_name.substring(0, 10) + "..."
+                                        : headerConvo?.conv_partner.length > 10
+                                            ? headerConvo?.conv_partner.substring(0, 10) + "..."
+                                            : headerConvo?.conv_partner
                                     }
 
                                     {headerConvo.is_online

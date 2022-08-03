@@ -4,15 +4,14 @@ import
 {
     InputField,
     Button,
-    InputWrapper, HaveAccount, ButtonWrapper, FormTitle, ErrorMessageText
+    InputWrapper, ButtonWrapper, FormTitle, ErrorMessageText
 }
     from "../styles/UserAuth.styled";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {
     AvatarSelectModalButton, AvatarSelectModalButtonWrapper,
     AvatarSelectModalContainer,
     AvatarSelectModalImage,
-    ColoredText,
     EditForm, ImageUploadWrapper,
     LargeInputField,
     LargeInputWrapper,
@@ -55,11 +54,11 @@ const modalStyle = {
     }
 }
 export default function ProfileEditForm({handleModalClose, firstTimeFillingProfile, setUserProfileFilledOut}) {
-    const {register, handleSubmit, watch, formState: {errors}, setError, clearErrors} = useForm()
+    const {register, handleSubmit, formState: {errors}, setError, clearErrors} = useForm()
     const {uploadedImage} = useImageUploadData()
     const location = useLocation().pathname
-    const navigate = useNavigate()
-    const {profileInfo, setProfileInfo} = useProfileInfo()
+
+    const {profileInfo} = useProfileInfo()
     const [modalOpen, setModalOpen] = useState(false)
     const [avatarSelectedArray, setAvatarSelectedArray] = useState(avatarSelectedData)
     const [avatarFilePath, setAvatarFilePath] = useState(null)
@@ -94,12 +93,7 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
                 .catch(error => console.log(error))
 
         }
-
-
-        //for ChatContainer component so the proper info is shown
-        // setUserProfileFilledOut(true)
     }
-
 
     return (
         <EditForm
@@ -188,6 +182,7 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
                         : 'Edit your profile'
                 }
             </FormTitle>
+
             <ErrorMessage
                 errors={errors}
                 name="all_fields_empty"

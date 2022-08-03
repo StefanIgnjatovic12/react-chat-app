@@ -17,7 +17,7 @@ export default function SignOut() {
             })
             .then(navigate('/signin'))
             .catch(error => console.log(error))
-    },[])
+    }, [])
 
 
     return (

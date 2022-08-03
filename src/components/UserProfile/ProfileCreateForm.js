@@ -7,8 +7,8 @@ export default function ProfileCreateForm({setUserProfileFilledOut}) {
         <ProfileBackground>
             <ProfileMainContainer>
                 <ProfileEditForm
-                firstTimeFillingProfile={firstTimeFillingProfile}
-                setUserProfileFilledOut={setUserProfileFilledOut}
+                    firstTimeFillingProfile={firstTimeFillingProfile}
+                    setUserProfileFilledOut={setUserProfileFilledOut}
                 />
             </ProfileMainContainer>
         </ProfileBackground>

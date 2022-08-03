@@ -1,8 +1,5 @@
-import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useEffect, useState} from "react";
 import {
-    ProfileBackground,
-    ProfileMainContainer,
     ProfileTextBoxHeading,
     ProfileAvatar,
     ProfileNameTextBox,
@@ -12,11 +9,12 @@ import {
 } from "../styles/Profile.styled";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {authRequestOptions} from "../../hooks/requestOptions";
-import {AccessDeniedContainer, AccessDeniedImage, AccessDeniedMessage, Test} from "../styles/ChatMainTitle.styled";
+import {AccessDeniedContainer, AccessDeniedImage, AccessDeniedMessage} from "../styles/ChatMainTitle.styled";
 
 export default function ProfilePopup() {
     const {activeConvo, headerConvo} = useActiveConvo()
     const [profileInfo, setProfileInfo] = useState([])
+    const [loading, setLoading] = useState(false)
     //checks if other convo member has also revealed their profile within convo
     const [otherUserNotRevealed, setOtherUserNotRevealed] = useState(false)
     useEffect(() => {
@@ -24,6 +22,7 @@ export default function ProfilePopup() {
             authRequestOptions('GET'))
             .then(response => response.json())
             .then(data => {
+                setLoading(true)
                 if (data == "1 or more members havent revealed their profile") {
                     console.log('Other member hasnt revealed')
                     setOtherUserNotRevealed(true)
@@ -35,6 +34,7 @@ export default function ProfilePopup() {
             .catch(error => console.log(error))
     }, [activeConvo])
     return (
+        loading &&
         !otherUserNotRevealed ?
             <>
                 <ProfileSmallContainer>

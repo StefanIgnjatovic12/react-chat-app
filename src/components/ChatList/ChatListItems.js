@@ -7,7 +7,6 @@ import {
     from "../styles/ChatListItems.styled";
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
-import {useEffect, useState} from "react";
 import {useTogglerState} from "../../context/TogglerStateContext";
 
 
@@ -23,10 +22,8 @@ export default function ChatListItems({
                                           is_online
                                           // togglerStateArray
                                       }) {
-    const {activeConvo, setActiveConvo, messages, setMessages, headerConvo, setHeaderConvo} = useActiveConvo()
-    const [changeColor, setChangeColor] = useState(false)
+    const {setActiveConvo, setMessages, setHeaderConvo} = useActiveConvo()
     const {togglerStateArray} = useTogglerState()
-
     let id = localStorage.getItem('currentUserID')
     //filter array which contains the state of the toggler for each convo to get
     //the one matching this specific ChatListItem
@@ -61,9 +58,9 @@ export default function ChatListItems({
             <StyledChatListItemsAvatar
 
                 avatar={revealed_status_individual_convo?.[0]?.['partner_revealed'] && revealed_status_individual_convo?.[0]?.['revealed']
-                                            ? real_avatar
-                                            : avatar}
-                />
+                    ? real_avatar
+                    : avatar}
+            />
 
 
             <StyledChatListItemsText>
@@ -73,13 +70,13 @@ export default function ChatListItems({
                      over 10 characters long and shorten them if so*/}
                     {
                         revealed_status_individual_convo?.[0]?.['partner_revealed']
-                    && revealed_status_individual_convo?.[0]?.['revealed']
-                    && conv_partner_real_name
-                    && conv_partner_real_name.length > 10
-                        ? conv_partner_real_name.substring(0, 10) + "..."
-                        : name.length > 10
-                            ? name.substring(0, 10) + "..."
-                            : name
+                        && revealed_status_individual_convo?.[0]?.['revealed']
+                        && conv_partner_real_name
+                        && conv_partner_real_name.length > 10
+                            ? conv_partner_real_name.substring(0, 10) + "..."
+                            : name.length > 10
+                                ? name.substring(0, 10) + "..."
+                                : name
                     }
 
                     {is_online

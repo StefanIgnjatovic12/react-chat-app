@@ -29,6 +29,8 @@ export const FormTitle = styled.div`
   margin-bottom: 1rem;
 
 `
+
+
 export const InputField = styled.input`
   background-color: transparent;
   font-size: 15px;
@@ -137,7 +139,7 @@ export const HaveAccount = styled.div`
 
 export const ErrorMessageText = styled.div`
   color: #ff4d4d;,
-  font-family: "Quicksand Medium", serif;
+font-family: "Quicksand Medium", serif;
   font-size: ${props => props.message_length > 45 ? '13px' : '16px'};
 
 

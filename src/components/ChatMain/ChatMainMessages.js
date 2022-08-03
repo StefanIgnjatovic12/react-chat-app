@@ -1,6 +1,5 @@
-import styled from 'styled-components'
 import {useChat} from '../../hooks/useChat'
-import {useEffect, useState, useRef} from "react"
+import {useEffect, useState} from "react"
 import {v4 as uuidv4} from "uuid"
 import {
     StyledChatMainMessages,
@@ -9,7 +8,8 @@ import {
     ChatMessageContainer,
     ChatMessageList,
     ChatMyMessage,
-    ChatReceivedMessage, ChatNoMessagesYetContainer
+    ChatReceivedMessage,
+    ChatNoMessagesYetContainer
 } from '../styles/ChatMainMessages.styled'
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
@@ -23,12 +23,7 @@ export default function ChatMainMessages() {
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
     const {
-        messages,
-        setMessages,
-        activeConvo,
-        setHeaderConvo,
-        setActiveConvo,
-        convoDeleteDone,
+        messages, setMessages, activeConvo, setActiveConvo, convoDeleteDone,
     } = useActiveConvo()
 
 
@@ -45,42 +40,27 @@ export default function ChatMainMessages() {
 
         fetchCurrentUser()
             .then(id => {
-                    localStorage.setItem('currentUserID', id)
-                    fetch(`http://127.0.0.1:5000/api/user-conversation/${id}`,
-                        authRequestOptions(('GET')))
-                        .then(response => response.json())
-                        .then(data => {
-
-                            // console.log(`old message data:`)
-                            // console.log(data)
-                            //if active conversation is set, it means a different convo than the default
-                            //one was selected so set messages to that on page reload
-                            //if no activeConvo, set messages to the convo with the newest message
-                            if (activeConvo) {
-                                // console.log(`activeConvo from ChatMainMessages: ${activeConvo}`)
-                                // console.log(`activeConvo data from ChatMainMessages: ${data[0].id}`)
-
-                                let filteredMessageArr = data.filter(convo => convo.id == activeConvo)
-                                // console.log(filteredMessageArr[0].messages)
-                                setMessages(filteredMessageArr[0].messages)
-                            } else {
-                                // console.log(`activeConvo data from ChatMainMessages: ${data[0].id}`)
-                                setActiveConvo(data[0].id)
-                                console.log('messages:')
-                                console.log(data[0].messages)
-                                setMessages(data[0].messages)
-                            }
-
-                            // setMessages(data[0].messages)
-                        })
-                        .catch(error => console.log(error))
-                }
-            )
+                localStorage.setItem('currentUserID', id)
+                fetch(`http://127.0.0.1:5000/api/user-conversation/${id}`, authRequestOptions(('GET')))
+                    .then(response => response.json())
+                    .then(data => {
+                        //if active conversation is set, it means a different convo than the default
+                        //one was selected so set messages to that on page reload
+                        //if no activeConvo, set messages to the convo with the newest message
+                        if (activeConvo) {
+                            let filteredMessageArr = data.filter(convo => convo.id == activeConvo)
+                            setMessages(filteredMessageArr[0].messages)
+                        } else {
+                            setActiveConvo(data[0].id)
+                            setMessages(data[0].messages)
+                        }
+                    })
+                    .catch(error => console.log(error))
+            })
     }, [convoDeleteDone])
     return (
         <>
-            {messages == null || messages.length == 0
-                ? <StyledChatMainMessages>
+            {messages == null || messages.length == 0 ? <StyledChatMainMessages>
                     <ChatNoMessagesYetContainer>
                         There are no messages in this chat yet...
                     </ChatNoMessagesYetContainer>
@@ -90,26 +70,20 @@ export default function ChatMainMessages() {
                     <ChatMessageContainer>
                         <ChatMessageList>
                             {/*Map over messages saved in database and load them in chat*/}
-                            {messages && messages.map((message, i) => (
-                                message.created_by == localStorage.getItem('currentUserID')
-                                    ?
+                            {messages && messages.map((message) => (message.created_by == localStorage.getItem('currentUserID') ?
                                     <ChatMyMessage
                                         key={uuidv4()}
                                     >
                                         {message.message}
-                                    </ChatMyMessage>
-                                    :
-                                    <ChatReceivedMessage
+                                    </ChatMyMessage> : <ChatReceivedMessage
                                         key={uuidv4()}
                                     >
                                         {message.message}
 
-                                    </ChatReceivedMessage>
-                            ))}
+                                    </ChatReceivedMessage>))}
                         </ChatMessageList>
                     </ChatMessageContainer>
-                </StyledChatMainMessages>
-            }
+                </StyledChatMainMessages>}
 
             <ChatInputContainer>
 
@@ -117,11 +91,9 @@ export default function ChatMainMessages() {
                 <input
                     type="image"
                     src="/send-message-test.png"
-                    // style={{width: '3rem', height: '3rem'}}
                     onClick={handleSubmit}
                 />
 
             </ChatInputContainer>
-        </>
-    )
+        </>)
 }
