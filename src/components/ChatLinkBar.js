@@ -79,7 +79,7 @@ export default function ChatLinkBar() {
                     icon={'/newchatgray.png'}
                     onClick={() => {
 
-                        fetch(`http://127.0.0.1:5000/api/create-new-chat/`, authRequestOptions('GET'))
+                        fetch(`https://drf-react-chat-backend.herokuapp.com/api/create-new-chat/`, authRequestOptions('GET'))
                             .then(response => response.json())
                             .then(data => {
                                 console.log(data)

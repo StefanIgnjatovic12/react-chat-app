@@ -7,7 +7,7 @@ export default function SignOut() {
     const navigate = useNavigate()
     const {setProfileInfo} = useProfileInfo()
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/dj-rest-auth/logout/', authRequestOptions('POST'))
+        fetch('https://drf-react-chat-backend.herokuapp.com/dj-rest-auth/logout/', authRequestOptions('POST'))
             .then(response => response.json())
             .then(data => {
                 // localStorage.setItem('token', '')

@@ -99,7 +99,7 @@ export default function ChatMainTitle() {
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
             // console.log(`This is activeConvo: ${activeConvo}`)
-            fetch(`http://127.0.0.1:5000/api/check-reveal-status/${activeConvo}`, authRequestOptions('GET'))
+            fetch(`https://drf-react-chat-backend.herokuapp.com/api/check-reveal-status/${activeConvo}`, authRequestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
                         setStoredRevealStatus(data)
@@ -110,7 +110,7 @@ export default function ChatMainTitle() {
                 )
                 .catch(error => console.log(error))
 
-            fetch(`http://127.0.0.1:5000/api/reveal-status-for-all-user-convos/`, authRequestOptions('GET'))
+            fetch(`https://drf-react-chat-backend.herokuapp.com/api/reveal-status-for-all-user-convos/`, authRequestOptions('GET'))
                 .then(response => response.json())
                 .then(data => {
                     // console.log('togglerStateArray api call made')
@@ -139,7 +139,7 @@ export default function ChatMainTitle() {
             //if active convo is set, use the ID of that convo, else use the id of the convo for the header convo
             conversation: activeConvo ? activeConvo : headerConvo.conv_id
         }
-        fetch(`http://127.0.0.1:5000/api/reveal-profile/`, authRequestOptions('POST', payload))
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/reveal-profile/`, authRequestOptions('POST', payload))
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -164,7 +164,7 @@ export default function ChatMainTitle() {
             //if active convo is set, use the ID of that convo, else use the id of the convo for the header convo
             conversation: activeConvo ? activeConvo : headerConvo.conv_id
         }
-        fetch(`http://127.0.0.1:5000/api/hide-profile/`, authRequestOptions('POST', payload))
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/hide-profile/`, authRequestOptions('POST', payload))
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -173,7 +173,7 @@ export default function ChatMainTitle() {
 
     }
     const handleDelete = () => {
-        fetch(`http://127.0.0.1:5000/api/delete-convo/${activeConvo ? activeConvo : headerConvo.conv_id}`, authRequestOptions('DELETE'))
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/delete-convo/${activeConvo ? activeConvo : headerConvo.conv_id}`, authRequestOptions('DELETE'))
             .then(response => response.json())
             .catch(error => console.log(error))
         setConvoDeleteDone(convoDeleteDone + 1)

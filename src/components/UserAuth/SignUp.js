@@ -13,7 +13,7 @@ export default function SignUp() {
     const navigate = useNavigate()
 
     const registerUser = async (body) => {
-        let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/register/', requestOptions('POST', body))
+        let response = await fetch('https://drf-react-chat-backend.herokuapp.com/dj-rest-auth/register/', requestOptions('POST', body))
         console.log(response.status)
         response.json().then(data => {
             if (response.status === 400) {

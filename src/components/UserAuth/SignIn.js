@@ -49,7 +49,7 @@ export default function SignIn() {
 
 
     const signInUser = async (body) => {
-        let response = await fetch('http://127.0.0.1:5000/dj-rest-auth/signin/', requestOptions('POST', body))
+        let response = await fetch('https://drf-react-chat-backend.herokuapp.com/dj-rest-auth/signin/', requestOptions('POST', body))
         if (response.status === 200 || response.status === 201) {
             localStorage.setItem('userIsSignedIn', true)
             response.json().then(data => {
@@ -70,7 +70,7 @@ export default function SignIn() {
     }
 
     const demoAccount = () => {
-        fetch(`http://127.0.0.1:5000/api/demo-account-signin/`, requestOptions('POST'))
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/demo-account-signin/`, requestOptions('POST'))
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem('token', data.access_token)

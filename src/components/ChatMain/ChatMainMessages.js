@@ -41,7 +41,7 @@ export default function ChatMainMessages() {
         fetchCurrentUser()
             .then(id => {
                 localStorage.setItem('currentUserID', id)
-                fetch(`http://127.0.0.1:5000/api/user-conversation/${id}`, authRequestOptions(('GET')))
+                fetch(`https://drf-react-chat-backend.herokuapp.com/api/user-conversation/${id}`, authRequestOptions(('GET')))
                     .then(response => response.json())
                     .then(data => {
                         //if active conversation is set, it means a different convo than the default

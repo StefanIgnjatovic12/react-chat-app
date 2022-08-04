@@ -49,7 +49,7 @@ export const useChat = (roomId) => {
             convo_id: activeConvo ? activeConvo : headerConvo
 
         }
-        fetch(`http://127.0.0.1:5000/api/save-message/`, authRequestOptions(('POST'), fetchContents))
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/save-message/`, authRequestOptions(('POST'), fetchContents))
             .then(response => response.json())
             .then(setReloadSideBar(reloadSideBar + 1))
             .catch(error => console.log(error))

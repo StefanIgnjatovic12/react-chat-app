@@ -52,7 +52,7 @@ export default function Profile() {
     //modalOpen in dep. array so that profile data is refreshed on modalClose
     useEffect(() => {
         fetchCurrentUser().then(id => {
-            id !== undefined && fetch(`http://127.0.0.1:5000/api/user-profile/${id}`)
+            id !== undefined && fetch(`https://drf-react-chat-backend.herokuapp.com/api/user-profile/${id}`)
                 .then(response => response.json())
                 .then(data => {
                     setProfileInfo(data[0])

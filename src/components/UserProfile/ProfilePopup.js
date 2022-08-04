@@ -18,7 +18,7 @@ export default function ProfilePopup() {
     //checks if other convo member has also revealed their profile within convo
     const [otherUserNotRevealed, setOtherUserNotRevealed] = useState(false)
     useEffect(() => {
-        fetch(`http://127.0.0.1:5000/api/revealed-profile-data/${activeConvo ? activeConvo : headerConvo.conv_id}`,
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/revealed-profile-data/${activeConvo ? activeConvo : headerConvo.conv_id}`,
             authRequestOptions('GET'))
             .then(response => response.json())
             .then(data => {

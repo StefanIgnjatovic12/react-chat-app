@@ -21,7 +21,7 @@ export default function ChatContainer() {
     const [userProfileFilledOut, setUserProfileFilledOut] = useState()
     useEffect(() => {
         console.log('useEffect Ran')
-        fetch(`http://127.0.0.1:5000/api/profile-check-first-signin/`,
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/profile-check-first-signin/`,
             authRequestOptions('GET'))
             .then(response => response.json())
             .then(data => setUserProfileFilledOut(data.profile_filled_check))

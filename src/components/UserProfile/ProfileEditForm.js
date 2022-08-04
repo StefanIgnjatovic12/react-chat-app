@@ -76,7 +76,7 @@ export default function ProfileEditForm({handleModalClose, firstTimeFillingProfi
         //get base64 of image uploaded within the form from the ImageUploadDataContext
         else {
             let formDataFinal = {avatar: avatarBase64, real_avatar: uploadedImage, ...formData}
-            fetch(`http://127.0.0.1:5000/api/edit-profile/`,
+            fetch(`https://drf-react-chat-backend.herokuapp.com/api/edit-profile/`,
                 authRequestOptions('PATCH', formDataFinal))
                 .then(response => response.json())
                 .then(data => {

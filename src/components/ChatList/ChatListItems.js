@@ -37,7 +37,7 @@ export default function ChatListItems({
         //after they're all set to false, change the color of the 1 button clicked to purple
         coloredArray[index]['colored'] = !coloredArray[index]['colored']
 
-        fetch(`http://127.0.0.1:5000/api/user-conversation-partner/${id}/${name}`,
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/user-conversation-partner/${id}/${name}`,
             authRequestOptions(('GET')))
             .then(response => response.json())
             .then(data => {
