@@ -10,7 +10,7 @@ const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 io.on("connection", (socket) => {
 
-    // Join a conversation
+    // Join a conversation.
     const {roomId} = socket.handshake.query;
     socket.join(roomId);
 
