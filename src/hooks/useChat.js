@@ -6,7 +6,8 @@ import {useActiveConvo} from "../context/ActiveConvoContext";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 // const SOCKET_SERVER_URL = "http://localhost:4000";
-const SOCKET_SERVER_URL = "wss://drf-react-chat-frontend.herokuapp.com";
+const PORT = process.env.PORT || 3000;
+const SOCKET_SERVER_URL = `wss://drf-react-chat-frontend.herokuapp.com:${PORT}`;
 
 export const useChat = (roomId) => {
     // const [messages, setMessages] = useState([]); // Sent and received messages
