@@ -8,7 +8,7 @@ const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 // const SOCKET_SERVER_URL = "http://localhost:4000";
 // const PORT = process.env.PORT || 3000;
 // const SOCKET_SERVER_URL = `https://drf-react-chat-frontend.herokuapp.com:${PORT}`;
-const SOCKET_SERVER_URL = `https://drf-react-chat-frontend.herokuapp.com`;
+const SOCKET_SERVER_URL = `https://drf-react-chat-socket-server.herokuapp.com/`;
 
 export const useChat = () => {
 
