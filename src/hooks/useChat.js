@@ -16,6 +16,7 @@ export const useChat = () => {
     const {messages, setMessages, activeConvo, headerConvo, reloadSideBar, setReloadSideBar} = useActiveConvo()
     const roomId = activeConvo
     useEffect(() => {
+        console.log('useChat useEffect ran')
         // Creates a WebSocket connection
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
             query: {roomId},
@@ -28,6 +29,7 @@ export const useChat = () => {
                 created_by: localStorage.getItem('currentUserID'),
 
             };
+            console.log('messages set in useChat useFfect')
             setMessages((messages) => [...messages, incomingMessage]);
 
         });
@@ -37,7 +39,7 @@ export const useChat = () => {
         return () => {
             socketRef.current.disconnect();
         };
-    }, [roomId, reloadSideBar]);
+    }, [roomId]);
 
     // Sends a message to the server that
     // forwards it to all users in the same room

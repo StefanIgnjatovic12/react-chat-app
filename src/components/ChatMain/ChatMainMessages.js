@@ -47,9 +47,11 @@ export default function ChatMainMessages() {
                         if (activeConvo) {
                             let filteredMessageArr = data.filter(convo => convo.id == activeConvo)
                             setMessages(filteredMessageArr[0].messages)
+
                         } else {
                             setActiveConvo(data[0].id)
                             setMessages(data[0].messages)
+
                         }
                     })
                     .catch(error => console.log(error))

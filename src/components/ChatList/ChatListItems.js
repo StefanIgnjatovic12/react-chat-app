@@ -30,7 +30,6 @@ export default function ChatListItems({
     let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === conv_id)
 
     const handleClick = () => {
-
         //change all the values that signify whether a button is colored to false because we want to un-color all
         //buttons that were previously colored so not more than 1 at a time is colored
         coloredArray.forEach((convo, i) => coloredArray[i]['colored'] = false)
@@ -49,7 +48,6 @@ export default function ChatListItems({
                 //use [0] because only 1 convo is returned in the data
                 setMessages(data[0].messages)
                 setHeaderConvo(data[0])
-
             })
             .catch(error => console.log(error))
     }
