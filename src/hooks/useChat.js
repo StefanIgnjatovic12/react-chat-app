@@ -9,11 +9,12 @@ const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 const PORT = process.env.PORT || 3000;
 const SOCKET_SERVER_URL = `wss://drf-react-chat-frontend.herokuapp.com:${PORT}`;
 
-export const useChat = (roomId) => {
+export const useChat = () => {
+
     // const [messages, setMessages] = useState([]); // Sent and received messages
     const socketRef = useRef();
     const {messages, setMessages, activeConvo, headerConvo, reloadSideBar, setReloadSideBar} = useActiveConvo()
-
+    const roomId = activeConvo || headerConvo.conv_id
     useEffect(() => {
         // Creates a WebSocket connection
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {

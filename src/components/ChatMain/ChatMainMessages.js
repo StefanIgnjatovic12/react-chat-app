@@ -17,8 +17,7 @@ import {useActiveConvo} from "../../context/ActiveConvoContext";
 
 
 export default function ChatMainMessages() {
-    const {roomId} = 'test' // Gets roomId from URL
-    const {sendMessage} = useChat(roomId); // Creates a websocket and manages messaging
+    const {sendMessage} = useChat(); // Creates a websocket and manages messaging
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
