@@ -15,7 +15,7 @@ export const useChat = () => {
     // const [messages, setMessages] = useState([]); // Sent and received messages
     const socketRef = useRef();
     const {messages, setMessages, activeConvo, headerConvo, reloadSideBar, setReloadSideBar} = useActiveConvo()
-    const roomId = activeConvo
+    const roomId = activeConvo ? activeConvo : headerConvo.conv_id
     useEffect(() => {
         console.log('useChat useEffect ran')
         // Creates a WebSocket connection
