@@ -24,7 +24,6 @@ export default function ChatMainMessages() {
     const {
         messages, setMessages, activeConvo, setActiveConvo, convoDeleteDone,
     } = useActiveConvo()
-    console.log(messages)
     const handleChange = (e) => {
         setNewMessage(e.target.value)
     };

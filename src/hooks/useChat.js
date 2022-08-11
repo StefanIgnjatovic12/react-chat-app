@@ -37,7 +37,7 @@ export const useChat = () => {
         return () => {
             socketRef.current.disconnect();
         };
-    }, [roomId]);
+    }, [roomId, reloadSideBar]);
 
     // Sends a message to the server that
     // forwards it to all users in the same room
