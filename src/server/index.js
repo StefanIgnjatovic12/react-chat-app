@@ -5,11 +5,11 @@ const io = require("socket.io")(server, {
     },
 });
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 io.on("connection", (socket) => {
-
+    console.log('Client connected')
     // Join a conversation.
     const {roomId} = socket.handshake.query;
     socket.join(roomId);
@@ -25,6 +25,7 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, (error) => {
+    if (error) throw error;
     console.log(`Listening on port ${PORT}`);
 });

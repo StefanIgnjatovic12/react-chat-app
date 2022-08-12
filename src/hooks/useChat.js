@@ -5,7 +5,6 @@ import {useActiveConvo} from "../context/ActiveConvoContext";
 
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
-// const PORT = process.env.PORT || 3000;
 const SOCKET_SERVER_URL = `https://drf-react-chat-frontend.herokuapp.com`;
 
 export const useChat = () => {
