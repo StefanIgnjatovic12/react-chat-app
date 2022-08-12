@@ -69,16 +69,22 @@ export default function SignIn() {
         signInUser(data)
     }
 
-    const demoAccount = () => {
-        fetch(`https://drf-react-chat-backend.herokuapp.com/api/demo-account-signin/`, requestOptions('POST'))
-            .then(response => response.json())
-            .then(data => {
+    const demoAccount = async () => {
+        let response = await fetch(`https://drf-react-chat-backend.herokuapp.com/api/demo-account-signin/`, requestOptions('POST'))
+        if (response.status === 200 || response.status === 201) {
+            localStorage.setItem('userIsSignedIn', true)
+            response.json().then(data => {
                 localStorage.setItem('token', data.access_token)
                 setActiveConvo('')
                 navigate('/chat')
             })
-            .catch(error => console.log(error))
+        } else if (response.status === 400) {
+            setError('server', {
+                type: "server", message: 'Incorrect credentials, please try again',
+            })
+        }
     }
+
 
     return (
         <Background>
