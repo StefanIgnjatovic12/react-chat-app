@@ -9,7 +9,6 @@ const SOCKET_SERVER_URL = `https://drf-react-chat-frontend.herokuapp.com`;
 
 export const useChat = () => {
 
-    // const [messages, setMessages] = useState([]); // Sent and received messages
     const socketRef = useRef();
     const {messages, setMessages, activeConvo, headerConvo, reloadSideBar, setReloadSideBar} = useActiveConvo()
     const roomId = activeConvo
