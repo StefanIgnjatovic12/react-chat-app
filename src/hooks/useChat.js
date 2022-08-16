@@ -18,7 +18,8 @@ export const useChat = () => {
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
             query: {roomId},
         });
-
+        console.log('SocketRef.current:')
+        console.log(socketRef.current)
         // Listens for incoming messages
         socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
             const incomingMessage = {
