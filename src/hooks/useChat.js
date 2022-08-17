@@ -17,6 +17,7 @@ export const useChat = () => {
         console.log('useChat useEffect ran')
         // Creates a WebSocket connection
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
+            transports: ['websocket', 'polling', 'flashsocket'],
             query: {roomId},
         });
         console.log('SocketRef.current:')
