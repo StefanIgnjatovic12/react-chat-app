@@ -9,7 +9,7 @@ import {
     ChatMessageList,
     ChatMyMessage,
     ChatReceivedMessage,
-    ChatNoMessagesYetContainer
+    ChatNoMessagesYetContainer, ChatSendMessageButton
 } from '../styles/ChatMainMessages.styled'
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
@@ -84,13 +84,12 @@ export default function ChatMainMessages() {
                     </ChatMessageContainer>
                 </StyledChatMainMessages>}
 
-            <ChatInputContainer>
+            <ChatInputContainer onSubmit={handleSubmit}>
 
                 <ChatInputBox type="text" value={newMessage} onChange={handleChange}/>
-                <input
-                    type="image"
-                    src="/send-message-test.png"
-                    onClick={handleSubmit}
+                <ChatSendMessageButton
+                    image={"/send-message.png"}
+                    type='submit'
                 />
 
             </ChatInputContainer>

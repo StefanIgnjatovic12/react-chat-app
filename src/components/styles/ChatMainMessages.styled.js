@@ -9,7 +9,7 @@ export const StyledChatMainMessages = styled.div`
   
 
 `
-export const ChatInputContainer = styled.div`
+export const ChatInputContainer = styled.form`
   display: flex;
   justify-content: space-between;
   margin: auto;
@@ -32,6 +32,18 @@ export const ChatInputBox = styled.input`
   box-shadow: none;
   resize: none;
   //
+`
+export const ChatSendMessageButton = styled.button`
+  background-image: url('${props => props.image}');
+  background-size: cover;
+  background-position: top center;
+  border-radius: 50%;
+  border: none;
+  align-self: center;
+  aspect-ratio : 1 / 1;
+  height: 100%;
+  cursor: pointer;
+
 `
 
 export const ChatMessageContainer = styled.div`
