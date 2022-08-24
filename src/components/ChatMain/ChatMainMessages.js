@@ -85,7 +85,6 @@ export default function ChatMainMessages() {
                 </StyledChatMainMessages>}
 
             <ChatInputContainer onSubmit={handleSubmit}>
-
                 <ChatInputBox type="text" value={newMessage} onChange={handleChange}/>
                 <ChatSendMessageButton
                     image={"/send-message.png"}
