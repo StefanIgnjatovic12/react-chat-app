@@ -10,7 +10,7 @@ export const ActiveConvoProvider = ({children}) => {
     const [headerConvo, setHeaderConvo] = useState(null)
     //used to load messages saved to database
     //set on page load and on click of chats on the left side
-    const [messages, setMessages] = useState(null)
+    const [messages, setMessages] = useState('empty')
     //put into dependency array for ChatList. Increment it on new message sent
     //so that ChatList wil update
     const [reloadSideBar, setReloadSideBar] = useState(0)

@@ -2,11 +2,11 @@ import {StyledChatContainer} from "./styles/ChatContainer.styled";
 import ChatLinkBar from "./ChatLinkBar";
 import ChatList from "./ChatList/ChatList"
 import ChatMain from "./ChatMain/ChatMain";
-
 import styled from 'styled-components'
 import {useEffect, useState} from "react";
 import {authRequestOptions} from "../hooks/requestOptions";
 import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
+import {BeatLoader} from "react-spinners";
 
 
 export const ChatBackground = styled.div`
@@ -29,20 +29,19 @@ export default function ChatContainer() {
     }, [])
 
 
-    return (
+   return (
+        userProfileFilledOut === null
+            ? <ChatBackground><BeatLoader color={"#404757"}/></ChatBackground>
+            : userProfileFilledOut
+                ? <ChatBackground>
+                    <StyledChatContainer>
+                        <ChatLinkBar/>
+                        <ChatList/>
+                        <ChatMain/>
+                    </StyledChatContainer>
+                </ChatBackground>
 
-        userProfileFilledOut
-            ? <ChatBackground>
-                <StyledChatContainer>
-                    <ChatLinkBar/>
-                    <ChatList/>
-                    <ChatMain/>
-                </StyledChatContainer>
-            </ChatBackground>
-            : <ChatBackground>
-                <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
-            </ChatBackground>
-
+                : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
 
     )
 }

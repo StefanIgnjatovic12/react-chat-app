@@ -59,7 +59,16 @@ export default function ChatMainMessages() {
     }, [convoDeleteDone])
     return (
         <>
-            {messages == null || messages.length == 0 ? <StyledChatMainMessages>
+            {/*For initial render*/}
+            {messages === 'empty' ?
+                <StyledChatMainMessages>
+                    <ChatNoMessagesYetContainer>
+                    </ChatNoMessagesYetContainer>
+                </StyledChatMainMessages>
+
+                //For final render but there are no messages in the convo yet
+                : messages == null || messages.length == 0
+                ? <StyledChatMainMessages>
                     <ChatNoMessagesYetContainer>
                         There are no messages in this chat yet...
                     </ChatNoMessagesYetContainer>
