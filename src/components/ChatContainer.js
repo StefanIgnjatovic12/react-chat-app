@@ -18,7 +18,7 @@ export const ChatBackground = styled.div`
 `
 
 export default function ChatContainer() {
-    const [userProfileFilledOut, setUserProfileFilledOut] = useState()
+    const [userProfileFilledOut, setUserProfileFilledOut] = useState('initial')
     useEffect(() => {
         console.log('useEffect Ran')
         fetch(`https://drf-react-chat-backend.herokuapp.com/api/profile-check-first-signin/`,
@@ -30,7 +30,7 @@ export default function ChatContainer() {
 
 
    return (
-        userProfileFilledOut === null
+        userProfileFilledOut === 'initial'
             ? <ChatBackground><BeatLoader color={"#404757"}/></ChatBackground>
             : userProfileFilledOut
                 ? <ChatBackground>

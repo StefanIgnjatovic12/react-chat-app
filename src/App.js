@@ -1,4 +1,4 @@
-// import ChatContainer, {ChatBackground} from "./components/ChatContainer";
+import ChatContainer, {ChatBackground} from "./components/ChatContainer";
 import React, {Suspense} from "react";
 import {
     BrowserRouter as Router, Routes, Route,
@@ -14,9 +14,9 @@ import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
-import {ChatBackground} from "./components/ChatContainer";
 import {BeatLoader} from "react-spinners";
-const ChatContainer = React.lazy(() => import('./components/ChatContainer'))
+
+// const ChatContainer = React.lazy(() => import('./components/ChatContainer'))
 
 
 function App() {
@@ -24,32 +24,28 @@ function App() {
     return (
         <CurrentUserProvider>
             <ActiveConvoProvider>
-                    <ImageUploadDataProvider>
-                        <CreateNewChatProvider>
-                            <TogglerStateProvider>
-                                <ProfileInfoProvider>
-                                    <Router>
-                                        <Routes>
-                                            <Route>
-                                                <Route element={<RequireAuth/>}>
-                                                    <Route path="chat" element={
-                                                    <Suspense fallback={<ChatBackground><BeatLoader/></ChatBackground>}>
-                                                        <ChatContainer/>
-                                                    </Suspense>
-                                                }/>
-                                                    <Route path="profile" element={<Profile/>}/>
-                                                    <Route path="signout" element={<SignOut/>}/>
-                                                </Route>
-                                                <Route path="signup" element={<SignUp/>}/>
-                                                <Route path="signin" element={<SignIn/>}/>
-                                                <Route path="/" element={<SignIn/>}/>
+                <ImageUploadDataProvider>
+                    <CreateNewChatProvider>
+                        <TogglerStateProvider>
+                            <ProfileInfoProvider>
+                                <Router>
+                                    <Routes>
+                                        <Route>
+                                            <Route element={<RequireAuth/>}>
+                                                <Route path="chat" element={<ChatContainer/>}/>
+                                                <Route path="profile" element={<Profile/>}/>
+                                                <Route path="signout" element={<SignOut/>}/>
                                             </Route>
-                                        </Routes>
-                                    </Router>
-                                    </ProfileInfoProvider>
-                            </TogglerStateProvider>
-                        </CreateNewChatProvider>
-                    </ImageUploadDataProvider>
+                                            <Route path="signup" element={<SignUp/>}/>
+                                            <Route path="signin" element={<SignIn/>}/>
+                                            <Route path="/" element={<SignIn/>}/>
+                                        </Route>
+                                    </Routes>
+                                </Router>
+                            </ProfileInfoProvider>
+                        </TogglerStateProvider>
+                    </CreateNewChatProvider>
+                </ImageUploadDataProvider>
             </ActiveConvoProvider>
         </CurrentUserProvider>
 
