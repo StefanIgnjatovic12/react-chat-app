@@ -38,7 +38,7 @@ export default function ChatContainer() {
         userProfileFilledOut === 'initial'
             ? <ChatBackground><BeatLoader color={"#404757"}/></ChatBackground>
             : userProfileFilledOut
-                ? <ChatBackground>
+                ?
                     <StyledChatContainer>
                         <ChatLinkBar/>
                         <Suspense fallback={<Placeholder/>}>
@@ -48,7 +48,7 @@ export default function ChatContainer() {
                             <ChatMain/>
                         </Suspense>
                     </StyledChatContainer>
-                </ChatBackground>
+
 
                 : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
 
