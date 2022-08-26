@@ -1,5 +1,5 @@
-import ChatContainer from "./components/ChatContainer";
-
+// import ChatContainer, {ChatBackground} from "./components/ChatContainer";
+import React, {Suspense} from "react";
 import {
     BrowserRouter as Router, Routes, Route,
 } from "react-router-dom";
@@ -9,14 +9,14 @@ import SignOut from "./components/UserAuth/SignOut";
 import Profile from "./components/UserProfile/Profile";
 import {CurrentUserProvider} from "./context/CurrentUserContext";
 import {ActiveConvoProvider} from "./context/ActiveConvoContext";
-
-import ProfileEditForm from "./components/UserProfile/ProfileEditForm";
-import ProfileCreateForm from "./components/UserProfile/ProfileCreateForm";
 import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
 import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
+import {ChatBackground} from "./components/ChatContainer";
+import {BeatLoader} from "react-spinners";
+const ChatContainer = React.lazy(() => import('./components/ChatContainer'))
 
 
 function App() {
@@ -32,7 +32,11 @@ function App() {
                                         <Routes>
                                             <Route>
                                                 <Route element={<RequireAuth/>}>
-                                                    <Route path="chat" element={<ChatContainer/>}/>
+                                                    <Route path="chat" element={
+                                                    <Suspense fallback={<ChatBackground><BeatLoader/></ChatBackground>}>
+                                                        <ChatContainer/>
+                                                    </Suspense>
+                                                }/>
                                                     <Route path="profile" element={<Profile/>}/>
                                                     <Route path="signout" element={<SignOut/>}/>
                                                 </Route>
