@@ -1,5 +1,5 @@
 import {StyledChatContainer} from "./styles/ChatContainer.styled";
-import ChatLinkBar from "./ChatLinkBar";
+// import ChatLinkBar from "./ChatLinkBar";
 // import ChatList from "./ChatList/ChatList"
 // import ChatMain from "./ChatMain/ChatMain";
 import styled from 'styled-components'
@@ -9,21 +9,9 @@ import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
 import {BeatLoader} from "react-spinners";
 import React, {lazy, Suspense} from "react";
 
-const ChatList = lazy(() => {
-    return Promise.all([
-        import("./ChatList/ChatList"),
-        new Promise(resolve => setTimeout(resolve, 1000))
-    ])
-        .then(([moduleExports]) => moduleExports);
-});
-
-const ChatMain = lazy(() => {
-    return Promise.all([
-        import("./ChatMain/ChatMain"),
-        new Promise(resolve => setTimeout(resolve, 1000))
-    ])
-        .then(([moduleExports]) => moduleExports);
-});
+const ChatMain = lazy(() => import("./ChatMain/ChatMain"))
+const ChatList = lazy(() => import("./ChatList/ChatList"))
+const ChatLinkBar = lazy(() => import("./ChatLinkBar"))
 
 export const ChatBackground = styled.div`
   display: flex;
