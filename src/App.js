@@ -1,5 +1,6 @@
 // import ChatContainer, {ChatBackground} from "./components/ChatContainer";
 import React, {Suspense} from "react";
+import loadable from '@loadable/component'
 import {
     BrowserRouter as Router, Routes, Route,
 } from "react-router-dom";
@@ -16,7 +17,6 @@ import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
 import {ChatBackground} from "./components/ChatContainer";
 import {BeatLoader} from "react-spinners";
-import Chat from "./components/Chat";
 
 // const ChatContainer = React.lazy(() => {
 //   return Promise.all([
@@ -26,7 +26,7 @@ import Chat from "./components/Chat";
 //   .then(([moduleExports]) => moduleExports);
 // });
 
-const ChatContainer = React.lazy(() => import('./components/ChatContainer'))
+const ChatContainer = loadable(() => import('./components/ChatContainer'))
 function App() {
 
     return (
@@ -41,9 +41,9 @@ function App() {
                                         <Route>
                                             <Route element={<RequireAuth/>}>
                                                 <Route path="chat" element={
-                                                    <Suspense fallback={<ChatBackground><BeatLoader/></ChatBackground>}>
-                                                            <Chat/>
-                                                    </Suspense>
+
+                                                            <ChatContainer/>
+
                                                 }/>
                                                 <Route path="profile" element={<Profile/>}/>
                                                 <Route path="signout" element={<SignOut/>}/>
