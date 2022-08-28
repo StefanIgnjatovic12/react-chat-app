@@ -16,6 +16,7 @@ import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
 import {ChatBackground} from "./components/ChatContainer";
 import {BeatLoader} from "react-spinners";
+import Chat from "./components/Chat";
 
 // const ChatContainer = React.lazy(() => {
 //   return Promise.all([
@@ -41,7 +42,7 @@ function App() {
                                             <Route element={<RequireAuth/>}>
                                                 <Route path="chat" element={
                                                     <Suspense fallback={<ChatBackground><BeatLoader/></ChatBackground>}>
-                                                            <ChatContainer/>
+                                                            <Chat/>
                                                     </Suspense>
                                                 }/>
                                                 <Route path="profile" element={<Profile/>}/>
