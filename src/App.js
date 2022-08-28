@@ -17,7 +17,13 @@ import RequireAuth from "./components/UserAuth/RequireAuth";
 import {ChatBackground} from "./components/ChatContainer";
 import {BeatLoader} from "react-spinners";
 
-const ChatContainer = React.lazy(() => import('./components/ChatContainer'))
+const ChatContainer = React.lazy(() => {
+  return Promise.all([
+    import('./components/ChatContainer'),
+    new Promise(resolve => setTimeout(resolve, 300))
+  ])
+  .then(([moduleExports]) => moduleExports);
+});
 
 
 function App() {

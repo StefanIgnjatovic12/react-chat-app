@@ -1,19 +1,15 @@
 import {StyledChatContainer} from "./styles/ChatContainer.styled";
 import ChatLinkBar from "./ChatLinkBar";
-// import ChatList from "./ChatList/ChatList"
-// import ChatMain from "./ChatMain/ChatMain";
+import ChatList from "./ChatList/ChatList"
+import ChatMain from "./ChatMain/ChatMain";
 import styled from 'styled-components'
 import {useEffect, useState} from "react";
 import {authRequestOptions} from "../hooks/requestOptions";
 import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
 import {BeatLoader} from "react-spinners";
-import React, {Suspense} from "react";
 
-const ChatList = React.lazy(() => import("./ChatList/ChatList"))
-const ChatMain = React.lazy(() => import("./ChatMain/ChatMain"))
-const Placeholder = styled.div`
-  background-color: yellow;
-`
+
+
 export const ChatBackground = styled.div`
   display: flex;
   height: 100vh;
@@ -41,12 +37,8 @@ export default function ChatContainer() {
                 ?
                     <StyledChatContainer>
                         <ChatLinkBar/>
-                        <Suspense fallback={<Placeholder/>}>
                             <ChatList/>
-                        </Suspense>
-                        <Suspense fallback={<Placeholder/>}>
                             <ChatMain/>
-                        </Suspense>
                     </StyledChatContainer>
 
 
