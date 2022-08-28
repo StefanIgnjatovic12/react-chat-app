@@ -42,7 +42,13 @@ export default function ChatContainer() {
                 <StyledChatContainer>
                     <Suspense fallback={<BeatLoader color={"#404757"}/>}>
                         <ChatLinkBar/>
+                    </Suspense>
+                    <Suspense fallback={<BeatLoader color={"#404757"}/>}>
+
                         <ChatList/>
+                    </Suspense>
+                    <Suspense fallback={<BeatLoader color={"#404757"}/>}>
+
                         <ChatMain/>
                     </Suspense>
                 </StyledChatContainer>
