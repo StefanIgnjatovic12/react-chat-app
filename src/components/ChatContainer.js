@@ -33,21 +33,22 @@ export default function ChatContainer() {
     }, [])
 
 
-     return (
+    return (
         // userProfileFilledOut === 'initial'
         //     ? <ChatBackground><BeatLoader color={loadingSpinnerColor}/></ChatBackground>
         //     :
-            userProfileFilledOut
-                ? <ChatBackground>
-                    <Suspense fallback={<ChatBackground><BeatLoader color={"#404757"}/></ChatBackground>}>
-                        <StyledChatContainer>
-                            <ChatLinkBar/>
-                            <ChatList/>
-                            <ChatMain/>
-                        </StyledChatContainer>
+        userProfileFilledOut
+            ? <ChatBackground>
+                <StyledChatContainer>
+                    <Suspense fallback={<BeatLoader color={"#404757"}/>}>
+                        <ChatLinkBar/>
+                        <ChatList/>
+                        <ChatMain/>
                     </Suspense>
-                </ChatBackground>
-                : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
+                </StyledChatContainer>
+
+            </ChatBackground>
+            : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
 
     )
 }
