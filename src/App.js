@@ -17,15 +17,15 @@ import RequireAuth from "./components/UserAuth/RequireAuth";
 import {ChatBackground} from "./components/ChatContainer";
 import {BeatLoader} from "react-spinners";
 
-const ChatContainer = React.lazy(() => {
-  return Promise.all([
-    import('./components/ChatContainer'),
-    new Promise(resolve => setTimeout(resolve, 1000))
-  ])
-  .then(([moduleExports]) => moduleExports);
-});
+// const ChatContainer = React.lazy(() => {
+//   return Promise.all([
+//     import('./components/ChatContainer'),
+//     new Promise(resolve => setTimeout(resolve, 1000))
+//   ])
+//   .then(([moduleExports]) => moduleExports);
+// });
 
-
+const ChatContainer = React.lazy(() => import('./components/ChatContainer'))
 function App() {
 
     return (

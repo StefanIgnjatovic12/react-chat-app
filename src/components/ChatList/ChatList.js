@@ -129,7 +129,9 @@ export default function ChatList() {
 
                 </StyledNoChatsYetModalContainer>
             </Modal>
-            <StyledChatList>
+            {sideBarMessages === null
+                ? <StyledChatList/>
+                :<StyledChatList>
                 {sideBarMessages.map((convo, index) => (
                     <ChatListItems
                         key={uuidv4()}
@@ -146,6 +148,25 @@ export default function ChatList() {
                     />
                 ))}
             </StyledChatList>
+
+            }
+            {/*<StyledChatList>*/}
+            {/*    {sideBarMessages.map((convo, index) => (*/}
+            {/*        <ChatListItems*/}
+            {/*            key={uuidv4()}*/}
+            {/*            name={convo.conv_partner}*/}
+            {/*            conv_partner_real_name={convo.conv_partner_real_name}*/}
+            {/*            conv_id={convo.conv_id}*/}
+            {/*            text={convo.last_message}*/}
+            {/*            real_avatar={convo.real_avatar}*/}
+            {/*            avatar={convo.avatar}*/}
+            {/*            index={index}*/}
+            {/*            coloredArray={coloredArray}*/}
+            {/*            is_online={convo.is_online}*/}
+
+            {/*        />*/}
+            {/*    ))}*/}
+            {/*</StyledChatList>*/}
         </>
 
     )
