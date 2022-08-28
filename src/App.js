@@ -20,7 +20,7 @@ import {BeatLoader} from "react-spinners";
 const ChatContainer = React.lazy(() => {
   return Promise.all([
     import('./components/ChatContainer'),
-    new Promise(resolve => setTimeout(resolve, 300))
+    new Promise(resolve => setTimeout(resolve, 1000))
   ])
   .then(([moduleExports]) => moduleExports);
 });
