@@ -1,17 +1,13 @@
 import {StyledChatContainer} from "./styles/ChatContainer.styled";
-// import ChatLinkBar from "./ChatLinkBar";
-// import ChatList from "./ChatList/ChatList"
-// import ChatMain from "./ChatMain/ChatMain";
+import ChatLinkBar from "./ChatLinkBar";
+import ChatList from "./ChatList/ChatList"
+import ChatMain from "./ChatMain/ChatMain";
 import styled from 'styled-components'
 import {useEffect, useState} from "react";
 import {authRequestOptions} from "../hooks/requestOptions";
 import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
 import {BeatLoader} from "react-spinners";
-import React, {lazy, Suspense} from "react";
 
-const ChatMain = lazy(() => import("./ChatMain/ChatMain"))
-const ChatList = lazy(() => import("./ChatList/ChatList"))
-const ChatLinkBar = lazy(() => import("./ChatLinkBar"))
 
 export const ChatBackground = styled.div`
   display: flex;
@@ -35,25 +31,18 @@ export default function ChatContainer() {
 
     return (
         // userProfileFilledOut === 'initial'
-        //     ? <ChatBackground><BeatLoader color={loadingSpinnerColor}/></ChatBackground>
+        //     ? <ChatBackground><BeatLoader color={"#404757"}/></ChatBackground>
         //     :
         userProfileFilledOut
-            ? <ChatBackground>
+            ?
+            <ChatBackground>
                 <StyledChatContainer>
-                    <Suspense fallback={<BeatLoader color={"#404757"}/>}>
-                        <ChatLinkBar/>
-                    </Suspense>
-                    <Suspense fallback={<BeatLoader color={"#404757"}/>}>
-
-                        <ChatList/>
-                    </Suspense>
-                    <Suspense fallback={<BeatLoader color={"#404757"}/>}>
-
-                        <ChatMain/>
-                    </Suspense>
+                    <ChatLinkBar/>
+                    <ChatList/>
+                    <ChatMain/>
                 </StyledChatContainer>
-
             </ChatBackground>
+
             : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
 
     )

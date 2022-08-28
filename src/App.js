@@ -40,7 +40,9 @@ function App() {
                                         <Route>
                                             <Route element={<RequireAuth/>}>
                                                 <Route path="chat" element={
-                                                        <ChatContainer/>
+                                                    <Suspense fallback={<ChatBackground><BeatLoader/></ChatBackground>}>
+                                                            <ChatContainer/>
+                                                    </Suspense>
                                                 }/>
                                                 <Route path="profile" element={<Profile/>}/>
                                                 <Route path="signout" element={<SignOut/>}/>
