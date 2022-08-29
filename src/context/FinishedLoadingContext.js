@@ -3,7 +3,7 @@ import {createContext, useState, useContext} from "react";
 
 export const FinishedLoadingContext = createContext()
 
-export const CreateNewChatProvider = ({ children }) => {
+export const FinishedLoadingProvider = ({ children }) => {
   const [finishedLoadingArray,setFinishedLoadingArray] = useState([])
 
 
