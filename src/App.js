@@ -1,6 +1,5 @@
-// import ChatContainer, {ChatBackground} from "./components/ChatContainer";
+import ChatContainer, {ChatBackground} from "./components/ChatContainer";
 import React, {Suspense} from "react";
-import loadable from '@loadable/component'
 import {
     BrowserRouter as Router, Routes, Route,
 } from "react-router-dom";
@@ -15,8 +14,7 @@ import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
-import {ChatBackground} from "./components/ChatContainer";
-import {BeatLoader} from "react-spinners";
+
 
 // const ChatContainer = React.lazy(() => {
 //   return Promise.all([
@@ -26,7 +24,7 @@ import {BeatLoader} from "react-spinners";
 //   .then(([moduleExports]) => moduleExports);
 // });
 
-const ChatContainer = loadable(() => import('./components/ChatContainer'))
+
 function App() {
 
     return (
