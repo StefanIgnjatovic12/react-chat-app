@@ -20,21 +20,19 @@ const ChatMain = lazy(() => import("./ChatMain/ChatMain"))
 const ChatList = lazy(() => import("./ChatList/ChatList"))
 const ChatLinkBar = lazy(() => import("./ChatLinkBar"))
 export default function ChatContainer() {
-    const [userProfileFilledOut, setUserProfileFilledOut] = useState(true)
-    // useEffect(() => {
-    //     console.log('useEffect Ran')
-    //     fetch(`https://drf-react-chat-backend.herokuapp.com/api/profile-check-first-signin/`,
-    //         authRequestOptions('GET'))
-    //         .then(response => response.json())
-    //         .then(data => setUserProfileFilledOut(data.profile_filled_check))
-    //         .catch(error => console.log(error))
-    // }, [])
+    const [userProfileFilledOut, setUserProfileFilledOut] = useState(null)
+    useEffect(() => {
+        console.log('useEffect Ran')
+        fetch(`https://drf-react-chat-backend.herokuapp.com/api/profile-check-first-signin/`,
+            authRequestOptions('GET'))
+            .then(response => response.json())
+            .then(data => setUserProfileFilledOut(data.profile_filled_check))
+            .catch(error => console.log(error))
+    }, [])
 
 
     return (
-        // userProfileFilledOut === 'initial'
-        //     ? <ChatBackground><BeatLoader color={"#404757"}/></ChatBackground>
-        //     :
+
         userProfileFilledOut
             ?
             <ChatBackground>

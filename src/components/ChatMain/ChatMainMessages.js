@@ -14,6 +14,7 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
+import {useFinishedLoading} from "../../context/FinishedLoadingContext";
 
 
 export default function ChatMainMessages() {
@@ -21,6 +22,8 @@ export default function ChatMainMessages() {
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
+    const {setFinishedLoadingArray} = useFinishedLoading()
+
     const {
         messages, setMessages, activeConvo, setActiveConvo, convoDeleteDone,
     } = useActiveConvo()
@@ -55,6 +58,8 @@ export default function ChatMainMessages() {
                         }
                     })
                     .catch(error => console.log(error))
+                    .finally(setFinishedLoadingArray((prevState) => [...prevState, ...true]))
+
             })
     }, [convoDeleteDone])
     return (
@@ -68,17 +73,17 @@ export default function ChatMainMessages() {
 
                 //For final render but there are no messages in the convo yet
                 : messages == null || messages.length == 0
-                ? <StyledChatMainMessages>
-                    <ChatNoMessagesYetContainer>
-                        There are no messages in this chat yet...
-                    </ChatNoMessagesYetContainer>
-                </StyledChatMainMessages>
+                    ? <StyledChatMainMessages>
+                        <ChatNoMessagesYetContainer>
+                            There are no messages in this chat yet...
+                        </ChatNoMessagesYetContainer>
+                    </StyledChatMainMessages>
 
-                : <StyledChatMainMessages>
-                    <ChatMessageContainer>
-                        <ChatMessageList>
-                            {/*Map over messages saved in database and load them in chat*/}
-                            {messages && messages.map((message) => (message.created_by == localStorage.getItem('currentUserID') ?
+                    : <StyledChatMainMessages>
+                        <ChatMessageContainer>
+                            <ChatMessageList>
+                                {/*Map over messages saved in database and load them in chat*/}
+                                {messages && messages.map((message) => (message.created_by == localStorage.getItem('currentUserID') ?
                                     <ChatMyMessage
                                         key={uuidv4()}
                                     >
@@ -89,9 +94,9 @@ export default function ChatMainMessages() {
                                         {message.message}
 
                                     </ChatReceivedMessage>))}
-                        </ChatMessageList>
-                    </ChatMessageContainer>
-                </StyledChatMainMessages>}
+                            </ChatMessageList>
+                        </ChatMessageContainer>
+                    </StyledChatMainMessages>}
 
             <ChatInputContainer onSubmit={handleSubmit}>
                 <ChatInputBox type="text" value={newMessage} onChange={handleChange}/>
