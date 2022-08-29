@@ -13,7 +13,6 @@ import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
 import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
-import {FinishedLoadingProvider, useFinishedLoading} from "./context/FinishedLoadingContext"
 import RequireAuth from "./components/UserAuth/RequireAuth";
 import {BeatLoader} from "react-spinners";
 
@@ -28,7 +27,6 @@ import {BeatLoader} from "react-spinners";
 
 
 function App() {
-    const {finishedLoadingArray} = useFinishedLoading()
     return (
         <CurrentUserProvider>
             <ActiveConvoProvider>
@@ -36,15 +34,12 @@ function App() {
                     <CreateNewChatProvider>
                         <TogglerStateProvider>
                             <ProfileInfoProvider>
-                                <FinishedLoadingProvider>
                                     <Router>
                                         <Routes>
                                             <Route>
                                                 <Route element={<RequireAuth/>}>
                                                     <Route path="chat" element={
-                                                        finishedLoadingArray.length === 3
-                                                            ? <ChatBackground><BeatLoader/></ChatBackground>
-                                                            : <ChatContainer/>
+                                                             <ChatContainer/>
 
                                                     }/>
                                                     <Route path="profile" element={<Profile/>}/>
@@ -56,7 +51,6 @@ function App() {
                                             </Route>
                                         </Routes>
                                     </Router>
-                                </FinishedLoadingProvider>
                             </ProfileInfoProvider>
                         </TogglerStateProvider>
                     </CreateNewChatProvider>
