@@ -13,16 +13,16 @@ import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
 import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
+import {FinishedLoadingProvider} from "./context/FinishedLoadingContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
 import {useFinishedLoading} from "./context/FinishedLoadingContext";
 import {MoonLoader} from "react-spinners";
 
 
 function App() {
-    const {finishedLoadingArray, setFinishedLoadingArray} = useFinishedLoading()
-    setFinishedLoadingArray((prevState) => [...prevState, ...true])
+    const {finishedLoadingArray} = useFinishedLoading()
     return (
-
+        <FinishedLoadingProvider>
         <CurrentUserProvider>
             <ActiveConvoProvider>
                 <ImageUploadDataProvider>
@@ -53,7 +53,7 @@ function App() {
                 </ImageUploadDataProvider>
             </ActiveConvoProvider>
         </CurrentUserProvider>
-
+        </FinishedLoadingProvider>
     );
 }
 
