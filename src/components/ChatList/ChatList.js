@@ -40,7 +40,7 @@ const modalStyle = {
         width: '28vw',
     }
 }
-export default function ChatList({childComponentsLoadingCounter, setChildComponentsLoadingCounter}) {
+export default function ChatList() {
     const [sideBarMessages, setSideBarMessages] = useState(null)
     const [loading, setLoading] = useState(null)
     const {fetchCurrentUser} = useCurrentUser()
@@ -93,9 +93,6 @@ export default function ChatList({childComponentsLoadingCounter, setChildCompone
                         // console.log(data[0])
                         setHeaderConvo(data[0])
                     }
-                    console.log("childComponentsLoadingCounter ChatList:")
-                    console.log(childComponentsLoadingCounter)
-                    setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1)
                     setLoading(true)
 
                 })

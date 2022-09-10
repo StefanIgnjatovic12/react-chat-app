@@ -19,7 +19,7 @@ export const ChatBackground = styled.div`
 
 export default function ChatContainer() {
     const [userProfileFilledOut, setUserProfileFilledOut] = useState(null)
-    const [childComponentsLoadingCounter, setChildComponentsLoadingCounter] = useState(0)
+
     useEffect(() => {
         console.log('useEffect Ran')
         fetch(`https://drf-react-chat-backend.herokuapp.com/api/profile-check-first-signin/`,
@@ -28,15 +28,6 @@ export default function ChatContainer() {
             .then(data => setUserProfileFilledOut(data.profile_filled_check))
             .catch(error => console.log(error))
     }, [])
-    console.log("childComponentsLoadingCounter:")
-    console.log(childComponentsLoadingCounter)
-
-    while (childComponentsLoadingCounter < 3) {
-        return (
-        <BeatLoader/>
-    )
-    }
-
 
     return (
 
@@ -45,17 +36,13 @@ export default function ChatContainer() {
                 <ChatBackground>
                     <StyledChatContainer>
                         <ChatLinkBar
-                            childComponentsLoadingCounter={childComponentsLoadingCounter}
-                            setChildComponentsLoadingCounter={setChildComponentsLoadingCounter}
                         />
                         <ChatList
-                            childComponentsLoadingCounter={childComponentsLoadingCounter}
-                            setChildComponentsLoadingCounter={setChildComponentsLoadingCounter}
+
 
                         />
                         <ChatMain
-                            childComponentsLoadingCounter={childComponentsLoadingCounter}
-                            setChildComponentsLoadingCounter={setChildComponentsLoadingCounter}
+
 
                         />
                     </StyledChatContainer>

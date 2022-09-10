@@ -16,7 +16,7 @@ import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 
 
-export default function ChatMainMessages({childComponentsLoadingCounter, setChildComponentsLoadingCounter}) {
+export default function ChatMainMessages() {
     const {sendMessage} = useChat(); // Creates a websocket and manages messaging
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
@@ -56,8 +56,6 @@ export default function ChatMainMessages({childComponentsLoadingCounter, setChil
 
                         }
                     })
-                    .then(setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1))
-                    .then(console.log(`childComponentsLoadingCounter ChatMainMessages: ${childComponentsLoadingCounter}`))
                     .catch(error => console.log(error))
 
 

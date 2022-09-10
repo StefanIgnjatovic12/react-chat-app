@@ -67,7 +67,7 @@ const deniedModalStyle = {
         // overflowY: 'auto'
     }
 }
-export default function ChatMainTitle({childComponentsLoadingCounter, setChildComponentsLoadingCounter}) {
+export default function ChatMainTitle() {
     const {headerConvo, activeConvo, setActiveConvo, convoDeleteDone, setConvoDeleteDone} = useActiveConvo()
     //state for managing in-session clicks on reveal button ie locally and not from DB
     const [localRevealStatus, setLocalRevealStatus] = useState([])
@@ -121,9 +121,7 @@ export default function ChatMainTitle({childComponentsLoadingCounter, setChildCo
                     setTogglerStateArray(data)
                 })
                 .catch(error => console.log(error))
-            console.log("childComponentsLoadingCounter ChatMainTitle:")
-            console.log(childComponentsLoadingCounter)
-            setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1)
+
 
         }
 
