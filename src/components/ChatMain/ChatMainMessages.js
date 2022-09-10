@@ -57,6 +57,7 @@ export default function ChatMainMessages({childComponentsLoadingCounter, setChil
                         }
                     })
                     .then(setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1))
+                    .then(console.log(`childComponentsLoadingCounter ChatMainMessages: ${childComponentsLoadingCounter}`))
                     .catch(error => console.log(error))
 
 

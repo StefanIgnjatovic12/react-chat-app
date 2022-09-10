@@ -121,7 +121,8 @@ export default function ChatMainTitle({childComponentsLoadingCounter, setChildCo
                     setTogglerStateArray(data)
                 })
                 .catch(error => console.log(error))
-
+            console.log("childComponentsLoadingCounter ChatMainTitle:")
+            console.log(childComponentsLoadingCounter)
             setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1)
 
         }

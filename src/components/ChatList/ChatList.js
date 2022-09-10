@@ -93,6 +93,8 @@ export default function ChatList({childComponentsLoadingCounter, setChildCompone
                         // console.log(data[0])
                         setHeaderConvo(data[0])
                     }
+                    console.log("childComponentsLoadingCounter ChatList:")
+                    console.log(childComponentsLoadingCounter)
                     setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1)
                     setLoading(true)
 
