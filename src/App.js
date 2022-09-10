@@ -19,7 +19,8 @@ import {MoonLoader} from "react-spinners";
 
 
 function App() {
-    const {finishedLoadingArray} = useFinishedLoading()
+    const {finishedLoadingArray, setFinishedLoadingArray} = useFinishedLoading()
+    setFinishedLoadingArray((prevState) => [...prevState, ...true])
     return (
 
         <CurrentUserProvider>
