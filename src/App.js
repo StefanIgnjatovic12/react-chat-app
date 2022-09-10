@@ -14,17 +14,6 @@ import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
-import {BeatLoader} from "react-spinners";
-
-
-// const ChatContainer = React.lazy(() => {
-//   return Promise.all([
-//     import('./components/ChatContainer'),
-//     new Promise(resolve => setTimeout(resolve, 1000))
-//   ])
-//   .then(([moduleExports]) => moduleExports);
-// });
-
 
 function App() {
     return (
