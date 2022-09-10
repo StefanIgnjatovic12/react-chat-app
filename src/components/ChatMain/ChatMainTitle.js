@@ -123,7 +123,7 @@ export default function ChatMainTitle() {
                 .catch(error => console.log(error))
 
         }
-        setFinishedLoadingArray((prevState) => [...prevState, ...true])
+        setFinishedLoadingArray((prevState) => [...prevState, true])
 
     }, [activeConvo, newChatCreated, convoDeleteDone])
 

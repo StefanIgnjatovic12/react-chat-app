@@ -61,7 +61,7 @@ export default function ChatMainMessages() {
                     .catch(error => console.log(error))
 
             })
-        setFinishedLoadingArray((prevState) => [...prevState, ...true])
+        setFinishedLoadingArray((prevState) => [...prevState, true])
 
     }, [convoDeleteDone])
     return (

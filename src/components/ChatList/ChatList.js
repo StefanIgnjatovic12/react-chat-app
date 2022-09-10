@@ -94,7 +94,7 @@ export default function ChatList() {
                         setHeaderConvo(data[0])
                     }
                     setLoading(true)
-                    setFinishedLoadingArray((prevState) => [...prevState, ...true])
+                    setFinishedLoadingArray((prevState) => [...prevState, true])
                 })
                 .catch(error => console.log(error))
 
