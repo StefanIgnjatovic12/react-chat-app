@@ -3,7 +3,7 @@ import {createContext, useState, useContext} from "react";
 export const FinishedLoadingContext = createContext()
 
 export const FinishedLoadingProvider = ({children}) => {
-    const [finishedLoadingArray, setFinishedLoadingArray] = useState([])
+    const [finishedLoadingArray, setFinishedLoadingArray] = useState(['placeholder'])
     return (
         <FinishedLoadingContext.Provider value={{finishedLoadingArray, setFinishedLoadingArray}}>
             {children}

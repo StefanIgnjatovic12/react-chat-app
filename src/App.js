@@ -17,9 +17,11 @@ import RequireAuth from "./components/UserAuth/RequireAuth";
 import {useFinishedLoading} from "./context/FinishedLoadingContext";
 import {MoonLoader} from "react-spinners";
 
+
 function App() {
     const {finishedLoadingArray} = useFinishedLoading()
     return (
+
         <CurrentUserProvider>
             <ActiveConvoProvider>
                 <ImageUploadDataProvider>
@@ -31,7 +33,7 @@ function App() {
                                         <Route>
                                             <Route element={<RequireAuth/>}>
                                                 <Route path="chat" element={
-                                                    finishedLoadingArray !== null && finishedLoadingArray.length === 3
+                                                    finishedLoadingArray !== null && finishedLoadingArray.length === 4
                                                         ? <MoonLoader/>
                                                         : <ChatContainer/>
                                                 }/>
