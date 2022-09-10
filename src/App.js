@@ -15,12 +15,10 @@ import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import {FinishedLoadingProvider} from "./context/FinishedLoadingContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
-import {useFinishedLoading} from "./context/FinishedLoadingContext";
 import {MoonLoader} from "react-spinners";
 
 
 function App() {
-    const {finishedLoadingArray} = useFinishedLoading()
     return (
         <FinishedLoadingProvider>
         <CurrentUserProvider>
@@ -33,10 +31,7 @@ function App() {
                                     <Routes>
                                         <Route>
                                             <Route element={<RequireAuth/>}>
-                                                <Route path="chat" element={
-                                                    finishedLoadingArray !== null && finishedLoadingArray.length === 4
-                                                        ? <MoonLoader/>
-                                                        : <ChatContainer/>
+                                                <Route path="chat" element={<ChatContainer/>
                                                 }/>
                                                 <Route path="profile" element={<Profile/>}/>
                                                 <Route path="signout" element={<SignOut/>}/>
