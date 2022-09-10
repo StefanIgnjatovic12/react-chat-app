@@ -31,8 +31,14 @@ export default function ChatContainer() {
     console.log("childComponentsLoadingCounter:")
     console.log(childComponentsLoadingCounter)
 
-    if (childComponentsLoadingCounter === 3) {
+    while (childComponentsLoadingCounter < 3) {
         return (
+        <BeatLoader/>
+    )
+    }
+
+
+    return (
 
             userProfileFilledOut
                 ?
@@ -58,8 +64,4 @@ export default function ChatContainer() {
                 : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
 
         )
-    }
-    return (
-        <BeatLoader/>
-    )
 }
