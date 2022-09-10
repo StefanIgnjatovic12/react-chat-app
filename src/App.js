@@ -13,14 +13,12 @@ import {ImageUploadDataProvider} from "./context/ImageUploadDataContext";
 import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
-import {FinishedLoadingProvider} from "./context/FinishedLoadingContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
 import {MoonLoader} from "react-spinners";
 
 
 function App() {
     return (
-        <FinishedLoadingProvider>
         <CurrentUserProvider>
             <ActiveConvoProvider>
                 <ImageUploadDataProvider>
@@ -48,7 +46,6 @@ function App() {
                 </ImageUploadDataProvider>
             </ActiveConvoProvider>
         </CurrentUserProvider>
-        </FinishedLoadingProvider>
     );
 }
 
