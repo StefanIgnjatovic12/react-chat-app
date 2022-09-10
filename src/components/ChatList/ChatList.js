@@ -11,6 +11,8 @@ import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 import useLocalStorage from "use-local-storage";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
+import {MoonLoader} from "react-spinners";
+
 //Modal
 import Modal from 'react-modal';
 import {useTogglerState} from "../../context/TogglerStateContext";
@@ -97,7 +99,11 @@ export default function ChatList() {
 
     if (!loading) {
         return (
-            <div>LOADING</div>
+            <StyledChatList>
+                <MoonLoader
+                color={'#B1B4BB'}
+                />
+            </StyledChatList>
         )
     }
 
