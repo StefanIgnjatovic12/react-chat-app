@@ -16,7 +16,7 @@ import {MoonLoader} from "react-spinners";
 //Modal
 import Modal from 'react-modal';
 import {useTogglerState} from "../../context/TogglerStateContext";
-import {useFinishedLoading} from "../../context/FinishedLoadingContext";
+
 
 Modal.setAppElement(document.getElementById('root'));
 const modalStyle = {
@@ -40,7 +40,7 @@ const modalStyle = {
         width: '28vw',
     }
 }
-export default function ChatList() {
+export default function ChatList({childComponentsLoadingCounter, setChildComponentsLoadingCounter}) {
     const [sideBarMessages, setSideBarMessages] = useState(null)
     const [loading, setLoading] = useState(null)
     const {fetchCurrentUser} = useCurrentUser()
@@ -50,7 +50,7 @@ export default function ChatList() {
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
     const [modalOpen, setModalOpen] = useState(false)
     const {togglerStateArray} = useTogglerState()
-    const {setFinishedLoadingArray} = useFinishedLoading()
+
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
 
@@ -94,8 +94,9 @@ export default function ChatList() {
                         setHeaderConvo(data[0])
                     }
                     setLoading(true)
-                    setFinishedLoadingArray((prevState) => [...prevState, true])
+
                 })
+                .then(setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1))
                 .catch(error => console.log(error))
 
         })
@@ -147,23 +148,23 @@ export default function ChatList() {
             </Modal>
             {sideBarMessages === null
                 ? <StyledChatList/>
-                :<StyledChatList>
-                {sideBarMessages.map((convo, index) => (
-                    <ChatListItems
-                        key={uuidv4()}
-                        name={convo.conv_partner}
-                        conv_partner_real_name={convo.conv_partner_real_name}
-                        conv_id={convo.conv_id}
-                        text={convo.last_message}
-                        real_avatar={convo.real_avatar}
-                        avatar={convo.avatar}
-                        index={index}
-                        coloredArray={coloredArray}
-                        is_online={convo.is_online}
+                : <StyledChatList>
+                    {sideBarMessages.map((convo, index) => (
+                        <ChatListItems
+                            key={uuidv4()}
+                            name={convo.conv_partner}
+                            conv_partner_real_name={convo.conv_partner_real_name}
+                            conv_id={convo.conv_id}
+                            text={convo.last_message}
+                            real_avatar={convo.real_avatar}
+                            avatar={convo.avatar}
+                            index={index}
+                            coloredArray={coloredArray}
+                            is_online={convo.is_online}
 
-                    />
-                ))}
-            </StyledChatList>
+                        />
+                    ))}
+                </StyledChatList>
 
             }
             {/*<StyledChatList>*/}

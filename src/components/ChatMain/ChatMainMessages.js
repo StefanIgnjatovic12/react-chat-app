@@ -14,15 +14,13 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
-import {useFinishedLoading} from "../../context/FinishedLoadingContext";
 
 
-export default function ChatMainMessages() {
+export default function ChatMainMessages({childComponentsLoadingCounter, setChildComponentsLoadingCounter}) {
     const {sendMessage} = useChat(); // Creates a websocket and manages messaging
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
-    const {setFinishedLoadingArray} = useFinishedLoading()
 
 
     const {
@@ -58,10 +56,12 @@ export default function ChatMainMessages() {
 
                         }
                     })
+                    .then(setChildComponentsLoadingCounter(childComponentsLoadingCounter + 1))
                     .catch(error => console.log(error))
 
+
             })
-        setFinishedLoadingArray((prevState) => [...prevState, true])
+
 
     }, [convoDeleteDone])
     return (

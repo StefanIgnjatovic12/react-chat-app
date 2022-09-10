@@ -7,7 +7,6 @@ import {useEffect, useState} from "react";
 import {authRequestOptions} from "../hooks/requestOptions";
 import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
 import {BeatLoader} from "react-spinners";
-import {useFinishedLoading} from "../context/FinishedLoadingContext";
 
 
 export const ChatBackground = styled.div`
@@ -20,7 +19,7 @@ export const ChatBackground = styled.div`
 
 export default function ChatContainer() {
     const [userProfileFilledOut, setUserProfileFilledOut] = useState(null)
-    const {finishedLoadingArray} = useFinishedLoading()
+    const [childComponentsLoadingCounter, setChildComponentsLoadingCounter] = useState(0)
     useEffect(() => {
         console.log('useEffect Ran')
         fetch(`https://drf-react-chat-backend.herokuapp.com/api/profile-check-first-signin/`,
@@ -30,25 +29,35 @@ export default function ChatContainer() {
             .catch(error => console.log(error))
     }, [])
 
-    if (finishedLoadingArray !== null && finishedLoadingArray.length === 4) {
+    if (childComponentsLoadingCounter === 3) {
         return (
-            <BeatLoader/>
+
+            userProfileFilledOut
+                ?
+                <ChatBackground>
+                    <StyledChatContainer>
+                        <ChatLinkBar
+                            childComponentsLoadingCounter={childComponentsLoadingCounter}
+                            setChildComponentsLoadingCounter={setChildComponentsLoadingCounter}
+                        />
+                        <ChatList
+                            childComponentsLoadingCounter={childComponentsLoadingCounter}
+                            setChildComponentsLoadingCounter={setChildComponentsLoadingCounter}
+
+                        />
+                        <ChatMain
+                            childComponentsLoadingCounter={childComponentsLoadingCounter}
+                            setChildComponentsLoadingCounter={setChildComponentsLoadingCounter}
+
+                        />
+                    </StyledChatContainer>
+                </ChatBackground>
+
+                : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
+
         )
     }
-
     return (
-
-        userProfileFilledOut
-            ?
-            <ChatBackground>
-                <StyledChatContainer>
-                        <ChatLinkBar/>
-                        <ChatList/>
-                        <ChatMain/>
-                </StyledChatContainer>
-            </ChatBackground>
-
-            : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
-
+        <BeatLoader/>
     )
 }
