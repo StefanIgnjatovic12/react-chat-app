@@ -28,6 +28,8 @@ export default function ChatContainer() {
             .then(data => setUserProfileFilledOut(data.profile_filled_check))
             .catch(error => console.log(error))
     }, [])
+    console.log("childComponentsLoadingCounter:")
+    console.log(childComponentsLoadingCounter)
 
     if (childComponentsLoadingCounter === 3) {
         return (
