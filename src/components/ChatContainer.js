@@ -30,7 +30,7 @@ export default function ChatContainer() {
             .catch(error => console.log(error))
     }, [])
 
-    if (finishedLoadingArray !== null && finishedLoadingArray.length === 3) {
+    if (finishedLoadingArray !== null && finishedLoadingArray.length === 4) {
         return (
             <BeatLoader/>
         )
