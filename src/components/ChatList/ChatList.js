@@ -95,6 +95,12 @@ export default function ChatList() {
         })
     }, [reloadSideBar, convoDeleteDone, newChatCreated, togglerStateArray])
 
+    if (!loading) {
+        return (
+            <div>LOADING</div>
+        )
+    }
+
     return (
         loading &&
         <>
