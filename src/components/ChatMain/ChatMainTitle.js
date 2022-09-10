@@ -19,6 +19,7 @@ import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
 import {StyledOfflineIndicatorDot, StyledOnlineIndicatorDot} from "../styles/ChatListItems.styled";
+import {useFinishedLoading} from "../../context/FinishedLoadingContext";
 
 Modal.setAppElement(document.getElementById('root'));
 //style to use for Modal when it contains the profile data
@@ -84,6 +85,7 @@ export default function ChatMainTitle() {
     //same time as the name in the ChatMainTitle
     const {togglerStateArray, setTogglerStateArray} = useTogglerState()
     const {newChatCreated} = useCreateNewChat()
+    const {setFinishedLoadingArray} = useFinishedLoading()
 
     //profileReveal is that same state but available globally
     const [elementHoveredOn, setElementHoveredOn] = useState(null)
@@ -121,6 +123,8 @@ export default function ChatMainTitle() {
                 .catch(error => console.log(error))
 
         }
+        setFinishedLoadingArray((prevState) => [...prevState, ...true])
+
     }, [activeConvo, newChatCreated, convoDeleteDone])
 
     const handleMouseEnter = (e) => {

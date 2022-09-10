@@ -14,8 +14,11 @@ import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
+import {useFinishedLoading} from "./context/FinishedLoadingContext";
+import {MoonLoader} from "react-spinners";
 
 function App() {
+    const {finishedLoadingArray} = useFinishedLoading()
     return (
         <CurrentUserProvider>
             <ActiveConvoProvider>
@@ -23,23 +26,24 @@ function App() {
                     <CreateNewChatProvider>
                         <TogglerStateProvider>
                             <ProfileInfoProvider>
-                                    <Router>
-                                        <Routes>
-                                            <Route>
-                                                <Route element={<RequireAuth/>}>
-                                                    <Route path="chat" element={
-                                                             <ChatContainer/>
-
-                                                    }/>
-                                                    <Route path="profile" element={<Profile/>}/>
-                                                    <Route path="signout" element={<SignOut/>}/>
-                                                </Route>
-                                                <Route path="signup" element={<SignUp/>}/>
-                                                <Route path="signin" element={<SignIn/>}/>
-                                                <Route path="/" element={<SignIn/>}/>
+                                <Router>
+                                    <Routes>
+                                        <Route>
+                                            <Route element={<RequireAuth/>}>
+                                                <Route path="chat" element={
+                                                    finishedLoadingArray !== null && finishedLoadingArray.length === 3
+                                                        ? <MoonLoader/>
+                                                        : <ChatContainer/>
+                                                }/>
+                                                <Route path="profile" element={<Profile/>}/>
+                                                <Route path="signout" element={<SignOut/>}/>
                                             </Route>
-                                        </Routes>
-                                    </Router>
+                                            <Route path="signup" element={<SignUp/>}/>
+                                            <Route path="signin" element={<SignIn/>}/>
+                                            <Route path="/" element={<SignIn/>}/>
+                                        </Route>
+                                    </Routes>
+                                </Router>
                             </ProfileInfoProvider>
                         </TogglerStateProvider>
                     </CreateNewChatProvider>

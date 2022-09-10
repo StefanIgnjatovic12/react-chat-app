@@ -14,6 +14,7 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
+import {useFinishedLoading} from "../../context/FinishedLoadingContext";
 
 
 export default function ChatMainMessages() {
@@ -21,6 +22,8 @@ export default function ChatMainMessages() {
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
+    const {setFinishedLoadingArray} = useFinishedLoading()
+
 
     const {
         messages, setMessages, activeConvo, setActiveConvo, convoDeleteDone,
@@ -58,6 +61,8 @@ export default function ChatMainMessages() {
                     .catch(error => console.log(error))
 
             })
+        setFinishedLoadingArray((prevState) => [...prevState, ...true])
+
     }, [convoDeleteDone])
     return (
         <>

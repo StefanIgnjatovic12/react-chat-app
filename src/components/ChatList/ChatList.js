@@ -16,6 +16,7 @@ import {MoonLoader} from "react-spinners";
 //Modal
 import Modal from 'react-modal';
 import {useTogglerState} from "../../context/TogglerStateContext";
+import {useFinishedLoading} from "../../context/FinishedLoadingContext";
 
 Modal.setAppElement(document.getElementById('root'));
 const modalStyle = {
@@ -49,6 +50,7 @@ export default function ChatList() {
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
     const [modalOpen, setModalOpen] = useState(false)
     const {togglerStateArray} = useTogglerState()
+    const {setFinishedLoadingArray} = useFinishedLoading()
     //fetch data to populate sidebar with convos, convo partner and last message in convo
     useEffect(() => {
 
@@ -92,20 +94,22 @@ export default function ChatList() {
                         setHeaderConvo(data[0])
                     }
                     setLoading(true)
+                    setFinishedLoadingArray((prevState) => [...prevState, ...true])
                 })
                 .catch(error => console.log(error))
+
         })
     }, [reloadSideBar, convoDeleteDone, newChatCreated, togglerStateArray])
 
-    if (!loading) {
-        return (
-            <StyledChatList>
-                <MoonLoader
-                color={'#B1B4BB'}
-                />
-            </StyledChatList>
-        )
-    }
+    // if (!loading) {
+    //     return (
+    //         <StyledChatList>
+    //             <MoonLoader
+    //             color={'#B1B4BB'}
+    //             />
+    //         </StyledChatList>
+    //     )
+    // }
 
     return (
         loading &&
