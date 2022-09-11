@@ -14,7 +14,7 @@ import {CreateNewChatProvider} from "./context/CreateNewChatContext";
 import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
-import {BeatLoader, MoonLoader} from "react-spinners";
+import {MoonLoader} from "react-spinners";
 
 
 function App() {
@@ -30,31 +30,24 @@ function App() {
                                     <Routes>
                                         <Route>
                                             <Route element={<RequireAuth/>}>
-                                                <Route
-                                                    path="chat"
-                                                    element={
-                                                    <Suspense
-                                                        fallback={<ChatBackground><BeatLoader/></ChatBackground>}>
-                                                        <ChatContainer/>
-                                                    </Suspense>
-                                                    }
-                                                />
-                                                    <Route path="profile" element={<Profile/>}/>
-                                                    <Route path="signout" element={<SignOut/>}/>
-                                                    </Route>
-                                                    <Route path="signup" element={<SignUp/>}/>
-                                                    <Route path="signin" element={<SignIn/>}/>
-                                                    <Route path="/" element={<SignIn/>}/>
-                                                    </Route>
-                                                    </Routes>
-                                                    </Router>
-                                                    </ProfileInfoProvider>
-                                                    </TogglerStateProvider>
-                                                    </CreateNewChatProvider>
-                                                    </ImageUploadDataProvider>
-                                                    </ActiveConvoProvider>
-                                                    </CurrentUserProvider>
-                                                    );
-                                                }
+                                                <Route path="chat" element={<ChatContainer/>
+                                                }/>
+                                                <Route path="profile" element={<Profile/>}/>
+                                                <Route path="signout" element={<SignOut/>}/>
+                                            </Route>
+                                            <Route path="signup" element={<SignUp/>}/>
+                                            <Route path="signin" element={<SignIn/>}/>
+                                            <Route path="/" element={<SignIn/>}/>
+                                        </Route>
+                                    </Routes>
+                                </Router>
+                            </ProfileInfoProvider>
+                        </TogglerStateProvider>
+                    </CreateNewChatProvider>
+                </ImageUploadDataProvider>
+            </ActiveConvoProvider>
+        </CurrentUserProvider>
+    );
+}
 
-                                                       export default App;
+export default App;

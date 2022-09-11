@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {authRequestOptions} from "../hooks/requestOptions";
 import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
 import {BeatLoader} from "react-spinners";
+import {Suspense} from 'react'
 
 
 export const ChatBackground = styled.div`
@@ -31,24 +32,19 @@ export default function ChatContainer() {
 
     return (
 
-            userProfileFilledOut
-                ?
-                <ChatBackground>
+        userProfileFilledOut
+            ?
+            <ChatBackground>
+                <Suspense fallback={<BeatLoader/>}>
                     <StyledChatContainer>
-                        <ChatLinkBar
-                        />
-                        <ChatList
-
-
-                        />
-                        <ChatMain
-
-
-                        />
+                        <ChatLinkBar/>
+                        <ChatList/>
+                        <ChatMain/>
                     </StyledChatContainer>
-                </ChatBackground>
+                </Suspense>
+            </ChatBackground>
 
-                : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
+            : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
 
-        )
+    )
 }

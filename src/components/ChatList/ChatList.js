@@ -12,7 +12,7 @@ import {useActiveConvo} from "../../context/ActiveConvoContext";
 import useLocalStorage from "use-local-storage";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
 import {MoonLoader} from "react-spinners";
-
+import { suspend } from 'suspend-react'
 //Modal
 import Modal from 'react-modal';
 import {useTogglerState} from "../../context/TogglerStateContext";
@@ -52,7 +52,7 @@ export default function ChatList() {
     const {togglerStateArray} = useTogglerState()
 
     //fetch data to populate sidebar with convos, convo partner and last message in convo
-    useEffect(() => {
+    suspend(() => {
 
         fetchCurrentUser().then(id => {
             id !== undefined && fetch(`https://drf-react-chat-backend.herokuapp.com/api/user-conversation-brief/${id}`, requestOptions('GET'))

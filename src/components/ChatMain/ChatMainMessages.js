@@ -14,7 +14,7 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
-
+import { suspend } from 'suspend-react'
 
 export default function ChatMainMessages() {
     const {sendMessage} = useChat(); // Creates a websocket and manages messaging
@@ -35,7 +35,7 @@ export default function ChatMainMessages() {
         sendMessage(newMessage)
         setNewMessage("")
     }
-    useEffect(() => {
+    suspend(() => {
 
         fetchCurrentUser()
             .then(id => {
