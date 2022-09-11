@@ -101,15 +101,6 @@ export default function ChatList() {
         })
     }, [reloadSideBar, convoDeleteDone, newChatCreated, togglerStateArray])
 
-    // if (!loading) {
-    //     return (
-    //         <StyledChatList>
-    //             <MoonLoader
-    //             color={'#B1B4BB'}
-    //             />
-    //         </StyledChatList>
-    //     )
-    // }
 
     return (
         loading &&

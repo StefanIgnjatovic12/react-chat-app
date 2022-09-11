@@ -35,13 +35,15 @@ export default function ChatContainer() {
         userProfileFilledOut
             ?
             <ChatBackground>
-                <Suspense fallback={<BeatLoader/>}>
-                    <StyledChatContainer>
-                        <ChatLinkBar/>
+
+                <StyledChatContainer>
+                    <ChatLinkBar/>
+                    <Suspense fallback={<BeatLoader/>}>
                         <ChatList/>
-                        <ChatMain/>
-                    </StyledChatContainer>
-                </Suspense>
+                    </Suspense>
+
+                    <ChatMain/>
+                </StyledChatContainer>
             </ChatBackground>
 
             : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>

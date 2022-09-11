@@ -19,7 +19,7 @@ import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
 import {StyledOfflineIndicatorDot, StyledOnlineIndicatorDot} from "../styles/ChatListItems.styled";
-import { suspend } from 'suspend-react'
+
 
 Modal.setAppElement(document.getElementById('root'));
 //style to use for Modal when it contains the profile data
@@ -97,7 +97,7 @@ export default function ChatMainTitle() {
     let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === activeConvo)
     // console.log('revealed_status_individual_convo')
     // console.log(revealed_status_individual_convo)
-    suspend(() => {
+    useEffect(() => {
         // console.log(revealed_status_individual_convo)
         //Call to the check if partner in convo has revealed their profile for that convo
         if (activeConvo) {
