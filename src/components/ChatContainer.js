@@ -41,7 +41,6 @@ export default function ChatContainer() {
                     <Suspense fallback={<BeatLoader/>}>
                         <ChatList/>
                     </Suspense>
-
                     <ChatMain/>
                 </StyledChatContainer>
             </ChatBackground>

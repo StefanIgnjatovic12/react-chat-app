@@ -14,6 +14,7 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
+import {BeatLoader} from "react-spinners";
 
 
 export default function ChatMainMessages() {
@@ -21,7 +22,7 @@ export default function ChatMainMessages() {
     const [newMessage, setNewMessage] = useState(""); // Message to be sent
     // const [messages, setMessages] = useState([]) // Previous messages fetched from DB
     const {fetchCurrentUser} = useCurrentUser()
-
+    const [loading, setLoading] = useState(false)
 
     const {
         messages, setMessages, activeConvo, setActiveConvo, convoDeleteDone,
@@ -55,14 +56,26 @@ export default function ChatMainMessages() {
                             setMessages(data[0].messages)
 
                         }
+
                     })
                     .catch(error => console.log(error))
 
+                setLoading(true)
 
             })
 
 
     }, [convoDeleteDone])
+
+    if (!loading) {
+        return (
+            <StyledChatMainMessages>
+                <ChatNoMessagesYetContainer>
+                    <BeatLoader/>
+                </ChatNoMessagesYetContainer>
+            </StyledChatMainMessages>
+        )
+    }
     return (
         <>
             {/*For initial render*/}

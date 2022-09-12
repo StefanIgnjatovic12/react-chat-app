@@ -19,6 +19,7 @@ import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
 import {StyledOfflineIndicatorDot, StyledOnlineIndicatorDot} from "../styles/ChatListItems.styled";
+import {BeatLoader} from "react-spinners";
 
 
 Modal.setAppElement(document.getElementById('root'));
@@ -93,10 +94,10 @@ export default function ChatMainTitle() {
     const [popperElement, setPopperElement] = useState()
     const [showPopper, setShowPopper] = useState(false)
     let {styles, attributes} = usePopper(referenceElement, popperElement, {placement: "top"})
+    const [loading, setLoading] = useState(false)
     //filtered toggleStateArray to only contain the data for the active convo
     let revealed_status_individual_convo = togglerStateArray.filter(convo => convo.convo_id === activeConvo)
-    // console.log('revealed_status_individual_convo')
-    // console.log(revealed_status_individual_convo)
+
     useEffect(() => {
         // console.log(revealed_status_individual_convo)
         //Call to the check if partner in convo has revealed their profile for that convo
@@ -124,7 +125,7 @@ export default function ChatMainTitle() {
 
 
         }
-
+        setLoading(true)
 
     }, [activeConvo, newChatCreated, convoDeleteDone])
 
@@ -188,6 +189,16 @@ export default function ChatMainTitle() {
         //ie set the active convo to the first convo ID in the array in LS
         setActiveConvo((JSON.parse(localStorage.getItem('convoIDArrayLocalStorage')))[0])
 
+    }
+
+    if (!loading) {
+        return (
+            <StyledChatMainTitle>
+                <StyledChatMainTitleContainer>
+                    <BeatLoader/>
+                </StyledChatMainTitleContainer>
+            </StyledChatMainTitle>
+        )
     }
     return (
 
