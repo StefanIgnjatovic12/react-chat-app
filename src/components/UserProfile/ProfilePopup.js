@@ -38,7 +38,7 @@ export default function ProfilePopup() {
 
     return (
         otherUserRevealed === null
-            ? <div>Empty</div>
+            ? null
             : loading && otherUserRevealed
                 ? <>
                     <ProfileSmallContainer>
