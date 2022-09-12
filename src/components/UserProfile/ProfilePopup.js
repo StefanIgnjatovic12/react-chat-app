@@ -10,6 +10,7 @@ import {
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {AccessDeniedContainer, AccessDeniedImage, AccessDeniedMessage} from "../styles/ChatMainTitle.styled";
+import {MoonLoader} from "react-spinners";
 
 export default function ProfilePopup() {
     const {activeConvo, headerConvo} = useActiveConvo()
@@ -38,7 +39,9 @@ export default function ProfilePopup() {
 
     return (
         otherUserRevealed === null
-            ? null
+            ? <MoonLoader
+                color={'#F6F6F6'}
+            />
             : loading && otherUserRevealed
                 ? <>
                     <ProfileSmallContainer>
