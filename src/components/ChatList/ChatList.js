@@ -105,7 +105,7 @@ useEffect(() => {
         return (
             <StyledChatList>
                 <MoonLoader
-                color={'#B1B4BB'}
+                color={'#F6F6F6'}
                 />
             </StyledChatList>
 

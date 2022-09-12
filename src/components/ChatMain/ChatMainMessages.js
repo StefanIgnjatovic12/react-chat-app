@@ -72,7 +72,7 @@ export default function ChatMainMessages() {
             <StyledChatMainMessages>
                 <ChatNoMessagesYetContainer>
                     <MoonLoader
-                        color={"#B1B4BB"}
+                        color={"#F6F6F6"}
                     />
                 </ChatNoMessagesYetContainer>
             </StyledChatMainMessages>
