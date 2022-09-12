@@ -113,9 +113,3 @@ export const ProfileSmallTextColored = styled.div`
   margin-left: 3%;
 `
 
-export const ProfileSpinnerContainer = styled.div`
-  height: 85vh;
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-`

@@ -40,11 +40,9 @@ export default function ProfilePopup() {
     return (
         otherUserRevealed === null
             ?
-            <ProfileSpinnerContainer>
                 <MoonLoader
                     color={'#F6F6F6'}
                 />
-            </ProfileSpinnerContainer>
             : loading && otherUserRevealed
                 ? <>
                     <ProfileSmallContainer>
