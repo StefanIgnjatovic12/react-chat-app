@@ -16,7 +16,8 @@ export default function ProfilePopup() {
     const [profileInfo, setProfileInfo] = useState([])
     const [loading, setLoading] = useState(false)
     //checks if other convo member has also revealed their profile within convo
-    const [otherUserNotRevealed, setOtherUserNotRevealed] = useState(false)
+    const [otherUserRevealed, setOtherUserRevealed] = useState(null)
+
     useEffect(() => {
         fetch(`https://drf-react-chat-backend.herokuapp.com/api/revealed-profile-data/${activeConvo ? activeConvo : headerConvo.conv_id}`,
             authRequestOptions('GET'))
@@ -25,81 +26,84 @@ export default function ProfilePopup() {
                 setLoading(true)
                 if (data == "1 or more members havent revealed their profile") {
                     console.log('Other member hasnt revealed')
-                    setOtherUserNotRevealed(true)
+                    setOtherUserRevealed(false)
                 } else {
                     setProfileInfo(data[0])
+                    setOtherUserRevealed(true)
                 }
 
             })
             .catch(error => console.log(error))
     }, [activeConvo])
+
     return (
-        loading &&
-        !otherUserNotRevealed ?
-            <>
-                <ProfileSmallContainer>
+        otherUserRevealed === null
+            ? <div>Empty</div>
+            : loading && otherUserRevealed
+                ? <>
+                    <ProfileSmallContainer>
 
-                    <ProfileAvatar
-                        avatar={profileInfo.real_avatar}
-                    />
-                    <ProfileNameTextBox>
-                        {
-                            profileInfo.real_name ? `${profileInfo.real_name}`: "Real name not" +
-                        " provided"
+                        <ProfileAvatar
+                            avatar={profileInfo.real_avatar}
+                        />
+                        <ProfileNameTextBox>
+                            {
+                                profileInfo.real_name ? `${profileInfo.real_name}` : "Real name not" +
+                                    " provided"
+                            }
+
+                            {
+                                profileInfo.age
+                                    ? `, ${profileInfo.age}`
+                                    : null
+                            }
+
+                        </ProfileNameTextBox>
+                        {/*<ProfileSmallTextBox>Lives in {profileInfo.location}</ProfileSmallTextBox>*/}
+                        <ProfileSmallTextBox>{
+                            profileInfo.location
+                                ? `Lives in ${profileInfo.location}`
+                                : 'Location not provided'
                         }
-
-                        {
-                            profileInfo.age
-                                ? `, ${profileInfo.age}`
-                                : null
-                        }
-
-                    </ProfileNameTextBox>
-                    {/*<ProfileSmallTextBox>Lives in {profileInfo.location}</ProfileSmallTextBox>*/}
-                    <ProfileSmallTextBox>{
-                        profileInfo.location
-                            ? `Lives in ${profileInfo.location}`
-                            : 'Location not provided'
-                    }
                         </ProfileSmallTextBox>
 
-                </ProfileSmallContainer>
+                    </ProfileSmallContainer>
 
-                <ProfileTextBoxHeading>Description</ProfileTextBoxHeading>
-                <ProfileLargeTextBox>
-                    {
-                        profileInfo.description
-                            ? profileInfo.description
-                            : 'None provided yet'
-                    }
-                </ProfileLargeTextBox>
+                    <ProfileTextBoxHeading>Description</ProfileTextBoxHeading>
+                    <ProfileLargeTextBox>
+                        {
+                            profileInfo.description
+                                ? profileInfo.description
+                                : 'None provided yet'
+                        }
+                    </ProfileLargeTextBox>
 
-                <ProfileTextBoxHeading>Interests</ProfileTextBoxHeading>
-                <ProfileLargeTextBox>
-                    {
-                    profileInfo.interests
-                        ? profileInfo.interests
-                        : 'None provided yet'
-                }
-                </ProfileLargeTextBox>
+                    <ProfileTextBoxHeading>Interests</ProfileTextBoxHeading>
+                    <ProfileLargeTextBox>
+                        {
+                            profileInfo.interests
+                                ? profileInfo.interests
+                                : 'None provided yet'
+                        }
+                    </ProfileLargeTextBox>
 
-                <ProfileTextBoxHeading>Reason</ProfileTextBoxHeading>
-                <ProfileLargeTextBox>
-                    {
-                        profileInfo.reason
-                            ? profileInfo.reason
-                            : 'None provided yet'
-                    }
-                </ProfileLargeTextBox>
-            </>
-            :
-            <AccessDeniedContainer>
-                <AccessDeniedImage
-                    image={'/oops2.png'}
-                />
-                <AccessDeniedMessage>One of the chat members has not revealed their profile yet.
-                </AccessDeniedMessage>
-            </AccessDeniedContainer>
+                    <ProfileTextBoxHeading>Reason</ProfileTextBoxHeading>
+                    <ProfileLargeTextBox>
+                        {
+                            profileInfo.reason
+                                ? profileInfo.reason
+                                : 'None provided yet'
+                        }
+                    </ProfileLargeTextBox>
+                </>
+                : <AccessDeniedContainer>
+                    <AccessDeniedImage
+                        image={'/oops2.png'}
+                    />
+                    <AccessDeniedMessage>One of the chat members has not revealed their profile yet.
+                    </AccessDeniedMessage>
+                </AccessDeniedContainer>
+
 
     )
 }
