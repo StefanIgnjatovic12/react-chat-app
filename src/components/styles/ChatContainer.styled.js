@@ -46,7 +46,16 @@ export const StyledChatList = styled.div`
     background-color: #525A6D;
   }
   
-
+`
+export const StyledChatListForLoader = styled.div`
+  width: 25%;
+  border-right-color: #575D6B;
+  border-right-style: solid;
+  border-right-width: 1px;
+  padding: 10px 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 export const StyledChatMain = styled.div`

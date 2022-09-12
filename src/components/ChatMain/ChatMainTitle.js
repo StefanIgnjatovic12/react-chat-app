@@ -198,6 +198,7 @@ export default function ChatMainTitle() {
                 <StyledChatMainTitleContainer>
                     <MoonLoader
                         color={"#F6F6F6"}
+                        size={30}
                     />
                 </StyledChatMainTitleContainer>
             </StyledChatMainTitle>

@@ -1,5 +1,5 @@
 import {
-    StyledChatList,
+    StyledChatList, StyledChatListForLoader,
     StyledNoChatsYetModalContainer, StyledNoChatsYetModalImage,
     StyledNoChatsYetModalText
 } from "../styles/ChatContainer.styled";
@@ -103,11 +103,11 @@ useEffect(() => {
 
     if (!loading) {
         return (
-            <StyledChatList>
+            <StyledChatListForLoader>
                 <MoonLoader
                 color={'#F6F6F6'}
                 />
-            </StyledChatList>
+            </StyledChatListForLoader>
 
         )
     }
