@@ -56,11 +56,11 @@ export default function ChatMainMessages() {
                             setMessages(data[0].messages)
 
                         }
+                        setLoading(true)
 
                     })
                     .catch(error => console.log(error))
 
-                setLoading(true)
 
             })
 
@@ -72,7 +72,7 @@ export default function ChatMainMessages() {
             <StyledChatMainMessages>
                 <ChatNoMessagesYetContainer>
                     <MoonLoader
-                    color={"#B1B4BB"}
+                        color={"#B1B4BB"}
                     />
                 </ChatNoMessagesYetContainer>
             </StyledChatMainMessages>

@@ -120,12 +120,13 @@ export default function ChatMainTitle() {
                     // console.log('togglerStateArray api call made')
                     // console.log(data.togglerStateArray.filter(convo => convo.convo_id === activeConvo))
                     setTogglerStateArray(data)
+                    setLoading(true)
+
                 })
                 .catch(error => console.log(error))
 
 
         }
-        setLoading(true)
 
     }, [activeConvo, newChatCreated, convoDeleteDone])
 
@@ -196,7 +197,7 @@ export default function ChatMainTitle() {
             <StyledChatMainTitle>
                 <StyledChatMainTitleContainer>
                     <MoonLoader
-                    color={"#B1B4BB"}
+                        color={"#B1B4BB"}
                     />
                 </StyledChatMainTitleContainer>
             </StyledChatMainTitle>
