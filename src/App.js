@@ -15,12 +15,10 @@ import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
 import {MoonLoader} from "react-spinners";
-import {FinishedLoadingProvider} from "./context/FinishedLoadingContext";
 
 
 function App() {
     return (
-        <FinishedLoadingProvider>
             <CurrentUserProvider>
                 <ActiveConvoProvider>
                     <ImageUploadDataProvider>
@@ -48,7 +46,6 @@ function App() {
                     </ImageUploadDataProvider>
                 </ActiveConvoProvider>
             </CurrentUserProvider>
-        </FinishedLoadingProvider>
     );
 }
 

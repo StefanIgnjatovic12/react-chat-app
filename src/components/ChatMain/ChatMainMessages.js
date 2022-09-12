@@ -14,7 +14,7 @@ import {
 import {authRequestOptions} from "../../hooks/requestOptions";
 import {useCurrentUser} from "../../context/CurrentUserContext";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
-import {BeatLoader} from "react-spinners";
+import {MoonLoader} from "react-spinners";
 
 
 export default function ChatMainMessages() {
@@ -67,15 +67,17 @@ export default function ChatMainMessages() {
 
     }, [convoDeleteDone])
 
-    // if (!loading) {
-    //     return (
-    //         <StyledChatMainMessages>
-    //             <ChatNoMessagesYetContainer>
-    //                 <BeatLoader/>
-    //             </ChatNoMessagesYetContainer>
-    //         </StyledChatMainMessages>
-    //     )
-    // }
+    if (!loading) {
+        return (
+            <StyledChatMainMessages>
+                <ChatNoMessagesYetContainer>
+                    <MoonLoader
+                    color={"#B1B4BB"}
+                    />
+                </ChatNoMessagesYetContainer>
+            </StyledChatMainMessages>
+        )
+    }
     return (
         <>
             {/*For initial render*/}

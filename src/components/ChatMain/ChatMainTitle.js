@@ -19,7 +19,7 @@ import useLocalStorage from "use-local-storage";
 import {useTogglerState} from "../../context/TogglerStateContext";
 import {useCreateNewChat} from "../../context/CreateNewChatContext";
 import {StyledOfflineIndicatorDot, StyledOnlineIndicatorDot} from "../styles/ChatListItems.styled";
-import {BeatLoader} from "react-spinners";
+import {MoonLoader} from "react-spinners";
 
 
 Modal.setAppElement(document.getElementById('root'));
@@ -191,15 +191,17 @@ export default function ChatMainTitle() {
 
     }
 
-    // if (!loading) {
-    //     return (
-    //         <StyledChatMainTitle>
-    //             <StyledChatMainTitleContainer>
-    //                 <BeatLoader/>
-    //             </StyledChatMainTitleContainer>
-    //         </StyledChatMainTitle>
-    //     )
-    // }
+    if (!loading) {
+        return (
+            <StyledChatMainTitle>
+                <StyledChatMainTitleContainer>
+                    <MoonLoader
+                    color={"#B1B4BB"}
+                    />
+                </StyledChatMainTitleContainer>
+            </StyledChatMainTitle>
+        )
+    }
     return (
 
 

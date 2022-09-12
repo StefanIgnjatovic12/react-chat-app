@@ -16,7 +16,6 @@ import {suspend} from 'suspend-react'
 //Modal
 import Modal from 'react-modal';
 import {useTogglerState} from "../../context/TogglerStateContext";
-import {useFinishedLoading} from "../../context/FinishedLoadingContext";
 
 
 Modal.setAppElement(document.getElementById('root'));
@@ -45,7 +44,6 @@ export default function ChatList() {
     const [sideBarMessages, setSideBarMessages] = useState(null)
     const [loading, setLoading] = useState(null)
     const {fetchCurrentUser} = useCurrentUser()
-    const {setFinishedLoading} = useFinishedLoading()
     const {setHeaderConvo, activeConvo, reloadSideBar, convoDeleteDone} = useActiveConvo()
     const [coloredArray, setColoredArray] = useState([]);
     const [convoIDArrayLocalStorage, setConvoIDArrayLocalStorage] = useLocalStorage('convoIDArrayLocalStorage', [])
@@ -95,7 +93,6 @@ useEffect(() => {
                     // console.log(data[0])
                     setHeaderConvo(data[0])
                 }
-                setFinishedLoading(true)
                 setLoading(true)
 
             })
@@ -104,14 +101,16 @@ useEffect(() => {
     })
 }, [reloadSideBar, convoDeleteDone, newChatCreated, togglerStateArray])
 
-    // if (!loading) {
-    //     return (
-    //         <StyledChatList>
-    //             <BeatLoader/>
-    //         </StyledChatList>
-    //
-    //     )
-    // }
+    if (!loading) {
+        return (
+            <StyledChatList>
+                <MoonLoader
+                color={'#B1B4BB'}
+                />
+            </StyledChatList>
+
+        )
+    }
 
 return (
     loading &&
