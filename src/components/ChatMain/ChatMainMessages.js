@@ -64,20 +64,8 @@ export default function ChatMainMessages() {
 
             })
 
-
     }, [convoDeleteDone])
 
-    // if (!loading) {
-    //     return (
-    //         <StyledChatMainMessages>
-    //             <ChatNoMessagesYetContainer>
-    //                 <MoonLoader
-    //                     color={"#F6F6F6"}
-    //                 />
-    //             </ChatNoMessagesYetContainer>
-    //         </StyledChatMainMessages>
-    //     )
-    // }
     return (
         <>
             {/*For initial render*/}
