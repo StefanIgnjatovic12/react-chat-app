@@ -112,3 +112,8 @@ export const ProfileSmallTextColored = styled.div`
   color: #F6F6F6;
   margin-left: 3%;
 `
+
+export const ProfileSpinnerContainer = styled.div`
+padding-top: 300px;
+  padding-bottom: 300px;
+`

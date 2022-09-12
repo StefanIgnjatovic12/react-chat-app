@@ -5,7 +5,7 @@ import {
     ProfileNameTextBox,
     ProfileSmallTextBox,
     ProfileSmallContainer,
-    ProfileLargeTextBox
+    ProfileLargeTextBox, ProfileSpinnerContainer
 } from "../styles/Profile.styled";
 import {useActiveConvo} from "../../context/ActiveConvoContext";
 import {authRequestOptions} from "../../hooks/requestOptions";
@@ -39,9 +39,12 @@ export default function ProfilePopup() {
 
     return (
         otherUserRevealed === null
-            ? <MoonLoader
-                color={'#F6F6F6'}
-            />
+            ?
+            <ProfileSpinnerContainer>
+                <MoonLoader
+                    color={'#F6F6F6'}
+                />
+            </ProfileSpinnerContainer>
             : loading && otherUserRevealed
                 ? <>
                     <ProfileSmallContainer>
