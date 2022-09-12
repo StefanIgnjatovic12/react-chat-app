@@ -15,38 +15,40 @@ import {TogglerStateProvider} from "./context/TogglerStateContext";
 import {ProfileInfoProvider} from "./context/ProfileInfoContext";
 import RequireAuth from "./components/UserAuth/RequireAuth";
 import {MoonLoader} from "react-spinners";
+import {FinishedLoadingProvider} from "./context/FinishedLoadingContext";
 
 
 function App() {
-    const ChatContainer = React.lazy(() => import('./components/ChatContainer'))
     return (
-        <CurrentUserProvider>
-            <ActiveConvoProvider>
-                <ImageUploadDataProvider>
-                    <CreateNewChatProvider>
-                        <TogglerStateProvider>
-                            <ProfileInfoProvider>
-                                <Router>
-                                    <Routes>
-                                        <Route>
-                                            <Route element={<RequireAuth/>}>
-                                                <Route path="chat" element={<ChatContainer/>
-                                                }/>
-                                                <Route path="profile" element={<Profile/>}/>
-                                                <Route path="signout" element={<SignOut/>}/>
+        <FinishedLoadingProvider>
+            <CurrentUserProvider>
+                <ActiveConvoProvider>
+                    <ImageUploadDataProvider>
+                        <CreateNewChatProvider>
+                            <TogglerStateProvider>
+                                <ProfileInfoProvider>
+                                    <Router>
+                                        <Routes>
+                                            <Route>
+                                                <Route element={<RequireAuth/>}>
+                                                    <Route path="chat" element={<ChatContainer/>
+                                                    }/>
+                                                    <Route path="profile" element={<Profile/>}/>
+                                                    <Route path="signout" element={<SignOut/>}/>
+                                                </Route>
+                                                <Route path="signup" element={<SignUp/>}/>
+                                                <Route path="signin" element={<SignIn/>}/>
+                                                <Route path="/" element={<SignIn/>}/>
                                             </Route>
-                                            <Route path="signup" element={<SignUp/>}/>
-                                            <Route path="signin" element={<SignIn/>}/>
-                                            <Route path="/" element={<SignIn/>}/>
-                                        </Route>
-                                    </Routes>
-                                </Router>
-                            </ProfileInfoProvider>
-                        </TogglerStateProvider>
-                    </CreateNewChatProvider>
-                </ImageUploadDataProvider>
-            </ActiveConvoProvider>
-        </CurrentUserProvider>
+                                        </Routes>
+                                    </Router>
+                                </ProfileInfoProvider>
+                            </TogglerStateProvider>
+                        </CreateNewChatProvider>
+                    </ImageUploadDataProvider>
+                </ActiveConvoProvider>
+            </CurrentUserProvider>
+        </FinishedLoadingProvider>
     );
 }
 

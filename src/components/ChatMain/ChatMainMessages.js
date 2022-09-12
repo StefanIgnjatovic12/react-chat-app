@@ -67,15 +67,15 @@ export default function ChatMainMessages() {
 
     }, [convoDeleteDone])
 
-    if (!loading) {
-        return (
-            <StyledChatMainMessages>
-                <ChatNoMessagesYetContainer>
-                    <BeatLoader/>
-                </ChatNoMessagesYetContainer>
-            </StyledChatMainMessages>
-        )
-    }
+    // if (!loading) {
+    //     return (
+    //         <StyledChatMainMessages>
+    //             <ChatNoMessagesYetContainer>
+    //                 <BeatLoader/>
+    //             </ChatNoMessagesYetContainer>
+    //         </StyledChatMainMessages>
+    //     )
+    // }
     return (
         <>
             {/*For initial render*/}

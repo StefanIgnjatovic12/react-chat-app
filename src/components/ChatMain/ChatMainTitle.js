@@ -191,15 +191,15 @@ export default function ChatMainTitle() {
 
     }
 
-    if (!loading) {
-        return (
-            <StyledChatMainTitle>
-                <StyledChatMainTitleContainer>
-                    <BeatLoader/>
-                </StyledChatMainTitleContainer>
-            </StyledChatMainTitle>
-        )
-    }
+    // if (!loading) {
+    //     return (
+    //         <StyledChatMainTitle>
+    //             <StyledChatMainTitleContainer>
+    //                 <BeatLoader/>
+    //             </StyledChatMainTitleContainer>
+    //         </StyledChatMainTitle>
+    //     )
+    // }
     return (
 
 

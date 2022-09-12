@@ -8,6 +8,7 @@ import {authRequestOptions} from "../hooks/requestOptions";
 import ProfileCreateForm from "./UserProfile/ProfileCreateForm";
 import {BeatLoader} from "react-spinners";
 import {Suspense} from 'react'
+import {useFinishedLoading} from "../context/FinishedLoadingContext";
 
 
 export const ChatBackground = styled.div`
@@ -20,7 +21,7 @@ export const ChatBackground = styled.div`
 
 export default function ChatContainer() {
     const [userProfileFilledOut, setUserProfileFilledOut] = useState(null)
-
+    const {finishedLoading} = useFinishedLoading()
     useEffect(() => {
         console.log('useEffect Ran')
         fetch(`https://drf-react-chat-backend.herokuapp.com/api/profile-check-first-signin/`,
@@ -30,17 +31,27 @@ export default function ChatContainer() {
             .catch(error => console.log(error))
     }, [])
 
+    if (!finishedLoading) {
+        return (
+            userProfileFilledOut
+            ?
+            <ChatBackground>
+                <StyledChatContainer>
+                    <BeatLoader/>
+                </StyledChatContainer>
+            </ChatBackground>
+
+            : <ProfileCreateForm setUserProfileFilledOut={setUserProfileFilledOut}/>
+        )
+    }
     return (
 
         userProfileFilledOut
             ?
             <ChatBackground>
-
                 <StyledChatContainer>
                     <ChatLinkBar/>
-                    <Suspense fallback={<BeatLoader/>}>
-                        <ChatList/>
-                    </Suspense>
+                    <ChatList/>
                     <ChatMain/>
                 </StyledChatContainer>
             </ChatBackground>
