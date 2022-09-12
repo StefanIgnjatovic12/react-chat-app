@@ -114,6 +114,5 @@ export const ProfileSmallTextColored = styled.div`
 `
 
 export const ProfileSpinnerContainer = styled.div`
-padding-top: 300px;
-  padding-bottom: 300px;
+  max-height: 70vh;
 `
