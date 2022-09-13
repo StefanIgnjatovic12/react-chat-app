@@ -6,6 +6,7 @@ import {useCreateNewChat} from "../context/CreateNewChatContext";
 import {usePopper} from "react-popper";
 import {StyledChatMainTitlePopup} from "./styles/ChatMainTitle.styled";
 import {useState} from "react";
+import {useActiveConvo} from "../context/ActiveConvoContext";
 
 const StyledChatLinkIcon = styled.div`
   background-image: url(${props => props.icon});
@@ -32,6 +33,7 @@ const StyledChatLinkIconContainer = styled.div`
 `
 export default function ChatLinkBar() {
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
+    const {setActiveConvo, setMessages} = useActiveConvo()
     const navigate = useNavigate()
     const [elementHoveredOn, setElementHoveredOn] = useState(null)
     const [referenceElement, setReferenceElement] = useState()
@@ -85,6 +87,8 @@ export default function ChatLinkBar() {
                                 console.log(data)
                                 //state in context that will be used to tell
                                 //other components to re-render once a new chat is created
+                                setActiveConvo(data[0].convo_id)
+                                setMessages(data[0].messages)
                                 setNewChatCreated(newChatCreated + 1)
                             })
                             .catch(error => console.log(error))
