@@ -44,7 +44,7 @@ export default function ChatList() {
     const [sideBarMessages, setSideBarMessages] = useState(null)
     const [loading, setLoading] = useState(null)
     const {fetchCurrentUser} = useCurrentUser()
-    const {setHeaderConvo, activeConvo, reloadSideBar, convoDeleteDone} = useActiveConvo()
+    const {setHeaderConvo, activeConvo, reloadSideBar, convoDeleteDone, setActiveConvo, setMessages} = useActiveConvo()
     const [coloredArray, setColoredArray] = useState([]);
     const [convoIDArrayLocalStorage, setConvoIDArrayLocalStorage] = useLocalStorage('convoIDArrayLocalStorage', [])
     const {newChatCreated, setNewChatCreated} = useCreateNewChat()
@@ -135,6 +135,8 @@ return (
                                 console.log(data)
                                 //state in context that will be used to tell
                                 //other components to re-render once a new chat is created
+                                setActiveConvo(data[0].convo_id)
+                                setMessages(data[0].messages)
                                 setNewChatCreated(newChatCreated + 1)
                             })
                             .catch(error => console.log(error))
