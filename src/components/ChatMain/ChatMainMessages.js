@@ -24,9 +24,20 @@ export default function ChatMainMessages() {
     const {fetchCurrentUser} = useCurrentUser()
     const [loading, setLoading] = useState(false)
 
-    const {
-        messages, setMessages, activeConvo, setActiveConvo, convoDeleteDone,
-    } = useActiveConvo()
+    const {messages, setMessages, activeConvo, setActiveConvo, convoDeleteDone} = useActiveConvo()
+
+    //makes the message get sent by pressing enter as well
+    const inputField = document.getElementById('inputfield')
+    if (inputField !== null) {
+        inputField.onkeyup = function (e) {
+            if (e.keyCode == 13) {
+                // sendMessage(newMessage)
+                // setNewMessage("")
+                console.log('enter')
+            }
+        }
+    }
+
     const handleChange = (e) => {
         setNewMessage(e.target.value)
     };
@@ -103,7 +114,7 @@ export default function ChatMainMessages() {
                     </StyledChatMainMessages>}
 
             <ChatInputContainer onSubmit={handleSubmit}>
-                <ChatInputBox type="text" value={newMessage} onChange={handleChange}/>
+                <ChatInputBox type="text" id='inputfield' value={newMessage} onChange={handleChange}/>
                 <ChatSendMessageButton
                     image={"/send-message.png"}
                     type='submit'
